@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>WEEK5</title>
+      <link href="/2023/12/02/WEEK5/"/>
+      <url>/2023/12/02/WEEK5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="WEEK-5-周报"><a href="#WEEK-5-周报" class="headerlink" title="WEEK 5 周报"></a><em>WEEK 5</em> 周报</h1><blockquote><p>高数期中考试，启动！所以这周没干啥。。。</p></blockquote><h3 id="张灏-2023-12-2"><a href="#张灏-2023-12-2" class="headerlink" title="张灏 2023&#x2F;12&#x2F;2"></a>张灏 2023&#x2F;12&#x2F;2</h3><h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><p>1.看wp复现了几道题</p><p>2.看学长之前发的教程视频</p><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="新工具"><a href="#新工具" class="headerlink" title="新工具"></a>新工具</h3><h4 id="UndertaleModTool探索史"><a href="#UndertaleModTool探索史" class="headerlink" title="UndertaleModTool探索史"></a>UndertaleModTool探索史</h4><p>虽然名叫<strong>Undertale Mod Tool</strong>，虽然用Undertale游戏命名，但随着功能的完善，已经不知可以拆UT了，相当于一款<strong>游戏反编译软件</strong>，比如这一次<strong>GEEK</strong>，我就用它来处理了一款<strong>近两年才发售的游戏Smilemo（快去玩，折磨人max）</strong>（GPT对这个游戏一无所知，一搜索果然这个游戏的发售晚于GPT诞生）</p><p>这道题的附件里有一款单机游戏Smilemo，通过6关即可获得flag。<br>1. 一开始自己玩了一下，发现连第一关的1&#x2F;4都过不去。<br>2.上<strong>b站</strong>搜教程，（越看越折磨）<br>3.既然是游戏，不得不想到<strong>风灵月影</strong>（结果<strong>风灵月影</strong>也没有对应的<strong>修改器</strong>）<br>4.接着又尝试了<strong>CE</strong>，似乎是能扫到<strong>受击次数</strong>，但扫不到别的有用数据<br>5.这个时候我又想在<strong>游戏存档</strong>上做文章，结果搜索发现这是一款<strong>无存档单机</strong>游戏<br>6.然后b站看到一篇文章<a href="https://www.bilibili.com/read/cv20722164/">浅谈Undertale修改—— 什么是GMS反编译，什么是data.win - 哔哩哔哩 (bilibili.com)</a><br>7.开始寻找smilemo是用什么引擎制作的以便使用相应的工具处理，结果游戏太<strong>新</strong>，<strong>GPT不认识</strong>，自己找也找不到，寄。<br>8.死马当活马医吧，直接用UndertaleModTool（毕竟这东西看名字像是只能拆Undertale，没想到smilemo也能用）<br>9.嘿！您猜怎么着，解析不出来，摆！</p><p>事实上，我的工具找对了，和<strong>官方WP</strong>是同一个工具，只是我下载的版本是<strong>V0.3.5.8</strong>，而大佬们用的是<strong>V0.5</strong>，版本太低，一步之遥。<br>后面就很简单啦，<strong>umt</strong>打开<strong>data.win</strong>，搜索<strong>flag</strong>，得到一个<strong>base64编码</strong>，<strong>解密</strong>，<strong>结束</strong></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> WEEK </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>WEEK 4 周报</title>
       <link href="/2023/11/27/WEEK4/"/>
       <url>/2023/11/27/WEEK4/</url>
