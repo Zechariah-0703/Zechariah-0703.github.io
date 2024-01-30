@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>网安导论汇报内容 | Zechariah的博客</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="12&#x2F;22网安导论汇报：非常简单浅显的杂凑&#x2F;散列&#x2F;哈希（hash）函数相关内容什么是hash函数？教材《网络空间安全导论》P70~79哈希函数是一个公开函数，可以将任意长度的消息M映射成为一个长度较短且长度固定的值H（M），称H（M）为哈希值、散列值（Hash Value）、杂凑值或者消息摘要。 它是一种单向密码体制，即一个从明文到密文的不可逆映射，只有加密过程，没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网安导论汇报内容">
+<meta property="og:url" content="https://zechariah-0703.github.io/2023/12/21/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%E5%86%85%E5%AE%B9/index.html">
+<meta property="og:site_name" content="Zechariah的博客">
+<meta property="og:description" content="12&#x2F;22网安导论汇报：非常简单浅显的杂凑&#x2F;散列&#x2F;哈希（hash）函数相关内容什么是hash函数？教材《网络空间安全导论》P70~79哈希函数是一个公开函数，可以将任意长度的消息M映射成为一个长度较短且长度固定的值H（M），称H（M）为哈希值、散列值（Hash Value）、杂凑值或者消息摘要。 它是一种单向密码体制，即一个从明文到密文的不可逆映射，只有加密过程，没有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/fengmian.png">
+<meta property="article:published_time" content="2023-12-21T13:06:03.000Z">
+<meta property="article:modified_time" content="2023-12-22T03:53:42.410Z">
+<meta property="article:author" content="Zechariah">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/fengmian.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/2023/12/21/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%E5%86%85%E5%AE%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '网安导论汇报内容',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-12-22 11:53:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 提瓦特</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 蒙德</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 璃月</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 稻妻</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 须弥</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 枫丹</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 纳塔</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 至冬</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Zechariah的博客"><span class="site-name">Zechariah的博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 提瓦特</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 蒙德</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 璃月</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 稻妻</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 须弥</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 枫丹</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 纳塔</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 至冬</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">网安导论汇报内容</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-21T13:06:03.000Z" title="发表于 2023-12-21 21:06:03">2023-12-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-22T03:53:42.410Z" title="更新于 2023-12-22 11:53:42">2023-12-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="网安导论汇报内容"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="12-22网安导论汇报："><a href="#12-22网安导论汇报：" class="headerlink" title="12&#x2F;22网安导论汇报："></a>12&#x2F;22网安导论汇报：</h1><h1 id="非常简单浅显的杂凑-散列-哈希（hash）函数相关内容"><a href="#非常简单浅显的杂凑-散列-哈希（hash）函数相关内容" class="headerlink" title="非常简单浅显的杂凑&#x2F;散列&#x2F;哈希（hash）函数相关内容"></a>非常简单浅显的杂凑&#x2F;散列&#x2F;哈希（hash）函数相关内容</h1><h2 id="什么是hash函数？"><a href="#什么是hash函数？" class="headerlink" title="什么是hash函数？"></a>什么是hash函数？</h2><p><strong>教材《网络空间安全导论》P70~79</strong><br><strong>哈希函数</strong>是一个<strong>公开函数</strong>，可以将任意长度的消息M映射成为一个<strong>长度较短且长度固定</strong>的值H（M），称H（M）为<strong>哈希值、散列值（Hash Value）、杂凑值或者消息摘要</strong>。</p>
+<p>它是一种<strong>单向密码体制</strong>，即一个从<strong>明文到密文的不可逆映射</strong>，<strong>只有加密过程，没有解密过程。</strong></p>
+<p><strong>说直白一点哈希算法就是把一堆东西、或者一堆信息、或者数字，进行建索引、建目录，归为固定的几类。因此， 首先你要确定需要分成几类，比如下面十个整数，你是要按照奇数偶数分类，还是按照除3的余数分类，这个分类规则也就是哈希函数。</strong></p>
+<blockquote>
+<p>原始数据：100,101,102,103,104,105,106,107,108,109</p>
+<p>哈希函数1：按照奇偶数分类（奇数为1，偶数为0）           |    哈希函数2：按照除3的余数分类</p>
+<p>计算结果：     Hash1（100）&#x3D;1，Hash1（101）&#x3D;0 ……   |   Hash2（100）&#x3D;1，Hash2（101）&#x3D;2，hash2（102）&#x3D;0……</p>
+</blockquote>
+<p>现在只要存储<strong>一位数</strong>就可以了，<strong>减少了存储的空间</strong>，并且从结果认不出来原来的数字了，达到了<strong>加密的效果</strong>。</p>
+<p>显然，也带来了问题，hash2（102）&#x3D; hash2（105）&#x3D; 0，如果我们知道哈希结果为0，是没有办法确定原始数字具体是102还是105，是没法反推的，不可逆。这就是哈希结果的冲突，数学家们就一直在找有没有使得结果不会冲突的算法。即使上面的这样的简单hash含糊在特定场景下也是有用的，比如：对于hash2函数，如果对方告诉了我哈希结果是1，同时我收到了他发给我的原始数字是102，那我可定可以判断这个数值肯定不对，因为hash2 （102）&#x3D; 0。</p>
+<p>“好的”哈希特性：</p>
+<ul>
+<li><p><strong>正向快速：</strong>给定一个原文，可以在一定的时间内快速算出hash值；</p>
+</li>
+<li><p><strong>逆向困难：</strong>当知道某一个hash值，没办法算出这个hash值所对应的原文；(演示hashcat)</p>
+<p>Hashcat是世界上最快的密码破解程序，是一个支持多平台、多算法的开源的分布式工具。<a target="_blank" rel="noopener" href="https://www.cnblogs.com/shiniancc/p/13658749.html">hashcat的学习 - Black323 - 博客园 (cnblogs.com)</a></p>
+<pre><code>2023GEEK真题再现：
+C:\Users\LENOVO\Desktop\ctf&gt;ncat 59.110.20.54 8763
+Ncat: 由于目标计算机积极拒绝，无法连接。
+
+#nc/ncat 是 netcat 的缩写，它可以读写 TCP 与 UDP 端口。简单地说，它可以在字符界面下，让你和服务器沟通交流。
+#一般来说，有很多题目都会要求你使用 nc 连接到他们的服务器，并且进行交互，获得 flag。
+
+C:\Users\LENOVO\Desktop\ctf&gt;ncat 59.110.20.54 8763
+sha256(XXXX+0xdE9hZC7HP2jWOi) == 762865cab8f09f8496fdcbb1845d7dbd324e76964f5ea7918f3b2c036ec74971
+Give me XXXX: Mthg
+</code></pre>
+</li>
+<li><p><strong>输入敏感：</strong>只要原文中有稍微的改动，哪怕只是增加了一个标点符号或者一个空格，都会导致得出的结果完全不同；</p>
+</li>
+<li><p><strong>避免冲突：</strong>不同的输入不能产生相同的输出，简单的说就是很难找到两段不同原文的hash值是一样的。</p>
+</li>
+</ul>
+<p>前面我们介绍的两个哈希函数举例只是为了讲解哈希原理， 显然都不是好的哈希算法或函数，因为不同的数值出来相同结果的冲突概率太大了。</p>
+<p><strong>应用场景</strong>：</p>
+<p><strong>1、安全加密，保密性</strong></p>
+<p><strong>2、唯一标识 ，快速查找，减少存储空间</strong></p>
+<p><strong>3、数据校验，快速的身份验证，信息完整性验证</strong></p>
+<h3 id="1-文件的hash（主要是md5）"><a href="#1-文件的hash（主要是md5）" class="headerlink" title="1.文件的hash（主要是md5）"></a>1.文件的hash（主要是md5）</h3><h4 id="演示环节"><a href="#演示环节" class="headerlink" title="演示环节"></a>演示环节</h4><blockquote>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt MD5<br>MD5 的 输入敏感.txt 哈希:<br><strong>c4ca4238a0b923820dcc509a6f75849b</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt Sha1<br>SHA1 的 输入敏感.txt 哈希:<br><strong>356a192b7913b04c54574d18c28d46e6395428ab</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt Sha256<br>SHA256 的 输入敏感.txt 哈希:<br><strong>6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt MD5<br>MD5 的 输入敏感.txt 哈希:<br><strong>9d9dff9320e27082b15b4ed7a086ba83</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt Sha1<br>SHA1 的 输入敏感.txt 哈希:<br><strong>d9195bedb8ccac0f0d4faac8d386491e7fe2ad0e</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+<p>C:\Users\LENOVO\Desktop\网络空间安全导论用&gt;certutil -hashfile 输入敏感.txt Sha256<br>SHA256 的 输入敏感.txt 哈希:<br><strong>0fc5165686190ca845407c03ad4572e801265487ce3d352487f32016af34ed05</strong><br>CertUtil: -hashfile 命令成功完成。</p>
+</blockquote>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ul>
+<li><p>检验文件是否被篡改。</p>
+</li>
+<li><p>网盘秒传↓</p>
+</li>
+<li><p>网盘封禁文件</p>
+</li>
+</ul>
+<h3 id="2-blockchain（区块链）（GEEK-Challenge真题再现）"><a href="#2-blockchain（区块链）（GEEK-Challenge真题再现）" class="headerlink" title="2.blockchain（区块链）（GEEK Challenge真题再现）"></a>2.blockchain（区块链）（GEEK Challenge真题再现）</h3><p>参考文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/625079495">区块链技术基础篇之二：白话哈希算法 - 知乎 (zhihu.com)</a></p>
+<h4 id="哈希在区块链中的应用场景"><a href="#哈希在区块链中的应用场景" class="headerlink" title="哈希在区块链中的应用场景"></a>哈希在区块链中的应用场景</h4><ul>
+<li>区块链中节点的钱包地址、公钥、私钥的加密（一个好笑的娱乐新闻）</li>
+<li>消息的完整性进行验证</li>
+<li>数字签名</li>
+</ul>
+<p>参考文章说得很明白了，就不多赘述。</p>
+<h4 id="Remix-IDE和Solidity语言？"><a href="#Remix-IDE和Solidity语言？" class="headerlink" title="Remix IDE和Solidity语言？"></a>Remix IDE和Solidity语言？</h4><blockquote>
+<p>Solidity 语言是一种面向合约的高级编程语言，用于在以太坊区块链网络上实现智能合约。Solidity 语言深受c++、Python 和 JavaScript 的影响，针对以太坊(Ethereum)虚拟机(EVM)设计。Solidity 语言是静态类型语言支持继承、库和复杂的用户定义类型。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_65436732/article/details/127583719">Solidity 介绍_solidity语言-CSDN博客</a></p>
+</blockquote>
+<p>汇率换算（当然我只有测试币）</p>
+<p>1 Ethereum ≈ 15913.7680 人民币</p>
+<p>时间：2023-12-21 22:54 数据仅供参考</p>
+<p><strong>尊嘟很简单的实际演示</strong></p>
+<h3 id="3-CTF真题（easy-MD5）"><a href="#3-CTF真题（easy-MD5）" class="headerlink" title="3.CTF真题（easy MD5）"></a>3.CTF真题（easy MD5）</h3><p>江苏移动预选赛真题（我称它为so easy MD5，平台已经关了，只剩截图）</p>
+<p>网上找的一道类似的easyMD5题[BUUCTF在线评测 (buuoj.cn)](<a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[BJDCTF2020]Easy">https://buuoj.cn/challenges#[BJDCTF2020]Easy</a> MD5)<br></p>
+<h4 id="1-ffifdyop绕过"><a href="#1-ffifdyop绕过" class="headerlink" title="1.ffifdyop绕过"></a>1.ffifdyop绕过</h4><p>随便输入内容。点击提交没有任何回显，想到查看网页源代码，是否会有线索解题，在源代码中看到“header”，考虑可以尝试抓包查看HTTP头。（其实应该用burpsuite，但我这里图方便就用在线工具了）<a target="_blank" rel="noopener" href="http://www.hiencode.com/http_head.html">CTF在线工具-在线查看HTTP&#x2F;HTTPS响应消息头|HTTP Response (hiencode.com)</a></p>
+<p>原理：</p>
+<p>ffifdyop经过md5加密后是：276f722736c95d99e921722cf9ed621c</p>
+<p>再转换字符串是：**’or’6&lt;乱码&gt;  即 ‘or’6É].é!r,ùíb.**</p>
+<p>利用方法：</p>
+<p><strong>select * from admin where password&#x3D;’’or’6&lt;乱码&gt;’</strong></p>
+<p>就相当于构成永真式，即万能密码，实现SQL注入</p>
+<pre><code class="sql">select * from admin where password=&#39;&#39;or 1
+</code></pre>
+<h4 id="2-0e漏洞"><a href="#2-0e漏洞" class="headerlink" title="2. 0e漏洞"></a>2. 0e漏洞</h4><pre><code class="php">&lt;!--
+$a = $GET[&#39;a&#39;]; 
+$b = $_GET[&#39;b&#39;];
+
+if($a != $b &amp;&amp; md5($a) == md5($b))&#123;
+--&gt;
+</code></pre>
+<p>参考文章<a target="_blank" rel="noopener" href="https://cn-sec.com/archives/1599509.html">浅谈在CTF题中三种MD5比较 | CN-SEC 中文网</a></p>
+<p>&#x3D;&#x3D; 是等于运算符，&#x3D;&#x3D;是一种常见于弱类型题目中，之所以常用于弱类型，是因为在进行比较时，不同类型的，会被转换成数字。同时还要特别提到一点，就是0exxxxxxxx，php在处理0e开头的字符串时，会当成科学计数法进行处理，0e后面跟任何<strong>数字</strong>都等于0（<strong>这是写在php手册里的</strong>）注意，0e后面<strong>只能跟数字</strong>，否则会返回False，具体原理可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/solitude0-c/p/17584388.html">php特性 </a>这篇文章（讲得真的很好）和php的松散比较表。</p>
+<p>此题转化为<strong>寻找两个值加密后以0e开头，且0e后面是纯数字的字符串即可</strong></p>
+<p>跑个程序先,太慢了所以我事先准备好了</p>
+<blockquote>
+<p>输入字符串: byGcY<br>MD5加密结果: 0e591948146966052067035298880982<br>输入字符串: aqNm7j<br>MD5加密结果: 0e689360761328193896196672040289</p>
+</blockquote>
+<p>payload:?a&#x3D;byGcY&amp;b&#x3D;314282422</p>
+<h4 id="3-数组绕过"><a href="#3-数组绕过" class="headerlink" title="3.数组绕过"></a>3.数组绕过</h4><pre><code class="php">&lt;?php
+error_reporting(0);
+include &quot;flag.php&quot;;
+
+highlight_file(__FILE__);
+
+if($_POST[&#39;param1&#39;]!==$_POST[&#39;param2&#39;]&amp;&amp;md5($_POST[&#39;param1&#39;])===md5($_POST[&#39;param2&#39;]))&#123;
+  echo $flag;
+&#125;
+</code></pre>
+<p>全等运算符“&#x3D;&#x3D;&#x3D;”，既比较值又比较类型。两个参数值要不相等，两个参数在md5加密后全相等，也就是说两个参数在md5加密后不仅值相等类型也要一致，此时就无法利用PHP 0e漏洞了，需要别的方法绕过。（<strong>为什么类型会不相等？</strong>）</p>
+<p><strong>可以利用md5在加密字符串时会warining，输出结果为NULL，传入两个数组，null&#x3D;&#x3D;&#x3D;null<br>这样就能使两个参数在md5加密后的类型是一致的。</strong></p>
+<p>利用<strong>hackbar</strong>进行<strong>post传参</strong>（关于get和post请求的区别，请见<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28586791">GET 和 POST 到底有什么区别？ - 知乎 (zhihu.com)</a>）payload:?<strong>param1[]&#x3D;1&amp;param2[]&#x3D;2</strong>，即可得到flag.</p>
+<h1 id="The-End"><a href="#The-End" class="headerlink" title="The End"></a>The End</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io">Zechariah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io/2023/12/21/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%E5%86%85%E5%AE%B9/">https://zechariah-0703.github.io/2023/12/21/网安导论汇报内容/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zechariah-0703.github.io" target="_blank">Zechariah的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/fengmian.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/12/02/WEEK5/" title="WEEK5"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">WEEK5</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zechariah</div><div class="author-info__description">赛博丁真不会梦见芙蓉网安院</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#12-22%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">12&#x2F;22网安导论汇报：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E5%B8%B8%E7%AE%80%E5%8D%95%E6%B5%85%E6%98%BE%E7%9A%84%E6%9D%82%E5%87%91-%E6%95%A3%E5%88%97-%E5%93%88%E5%B8%8C%EF%BC%88hash%EF%BC%89%E5%87%BD%E6%95%B0%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">非常简单浅显的杂凑&#x2F;散列&#x2F;哈希（hash）函数相关内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFhash%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="toc-number">2.1.</span> <span class="toc-text">什么是hash函数？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%96%87%E4%BB%B6%E7%9A%84hash%EF%BC%88%E4%B8%BB%E8%A6%81%E6%98%AFmd5%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.文件的hash（主要是md5）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%94%E7%A4%BA%E7%8E%AF%E8%8A%82"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">演示环节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">应用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-blockchain%EF%BC%88%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%89%EF%BC%88GEEK-Challenge%E7%9C%9F%E9%A2%98%E5%86%8D%E7%8E%B0%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.blockchain（区块链）（GEEK Challenge真题再现）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%9C%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">哈希在区块链中的应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Remix-IDE%E5%92%8CSolidity%E8%AF%AD%E8%A8%80%EF%BC%9F"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">Remix IDE和Solidity语言？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-CTF%E7%9C%9F%E9%A2%98%EF%BC%88easy-MD5%EF%BC%89"><span class="toc-number">2.1.3.</span> <span class="toc-text">3.CTF真题（easy MD5）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ffifdyop%E7%BB%95%E8%BF%87"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">1.ffifdyop绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-0e%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.1.3.2.</span> <span class="toc-text">2. 0e漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87"><span class="toc-number">2.1.3.3.</span> <span class="toc-text">3.数组绕过</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-End"><span class="toc-number">3.</span> <span class="toc-text">The End</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/12/21/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%E5%86%85%E5%AE%B9/" title="网安导论汇报内容"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网安导论汇报内容"/></a><div class="content"><a class="title" href="/2023/12/21/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA%E6%B1%87%E6%8A%A5%E5%86%85%E5%AE%B9/" title="网安导论汇报内容">网安导论汇报内容</a><time datetime="2023-12-21T13:06:03.000Z" title="发表于 2023-12-21 21:06:03">2023-12-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/02/WEEK5/" title="WEEK5"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WEEK5"/></a><div class="content"><a class="title" href="/2023/12/02/WEEK5/" title="WEEK5">WEEK5</a><time datetime="2023-12-02T02:47:46.000Z" title="发表于 2023-12-02 10:47:46">2023-12-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/27/WEEK4/" title="WEEK 4 周报"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WEEK 4 周报"/></a><div class="content"><a class="title" href="/2023/11/27/WEEK4/" title="WEEK 4 周报">WEEK 4 周报</a><time datetime="2023-11-27T10:49:47.000Z" title="发表于 2023-11-27 18:49:47">2023-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/20/WEEK3/" title="WEEK 3 周报"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WEEK 3 周报"/></a><div class="content"><a class="title" href="/2023/11/20/WEEK3/" title="WEEK 3 周报">WEEK 3 周报</a><time datetime="2023-11-20T10:49:47.000Z" title="发表于 2023-11-20 18:49:47">2023-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/12/WEEK2/" title="WEEK 2 周报"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WEEK 2 周报"/></a><div class="content"><a class="title" href="/2023/11/12/WEEK2/" title="WEEK 2 周报">WEEK 2 周报</a><time datetime="2023-11-11T17:12:57.000Z" title="发表于 2023-11-12 01:12:57">2023-11-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Zechariah</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
