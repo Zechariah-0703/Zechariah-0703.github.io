@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>工具篇·z3约束求解器</title>
+      <link href="/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"/>
+      <url>/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="z3库"><a href="#z3库" class="headerlink" title="z3库"></a>z3库</h1><hr><h2 id="下载z3库"><a href="#下载z3库" class="headerlink" title="下载z3库"></a>下载z3库</h2><p><code>pip3 install z3</code></p><p><code>pip3 install z3-solver</code></p><hr><h2 id="基本变量类型"><a href="#基本变量类型" class="headerlink" title="基本变量类型"></a>基本变量类型</h2><p>整型(Int)，实型(Real)和向量(BitVec)</p><h3 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h3><ol><li><p>Int(name, ctx=None)，创建一个整数变量，name是名字</p></li><li><p>Ints (names, ctx=None)，创建多个整数变量，names是空格分隔名字</p></li><li><p>IntVal (val, ctx=None)，创建一个整数常量，有初始值，没名字。</p></li></ol><h3 id="实数"><a href="#实数" class="headerlink" title="实数"></a>实数</h3><ol><li><p>real(name, ctx=None)，创建一个实变量，name是名字</p></li><li><p>reals (names, ctx=None)，创建多个实变量，names是空格分隔名字</p></li><li><p>realVal (val, ctx=None)，创建一个实常量，有初始值，没名字。</p></li></ol><h3 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h3><p>BitVec(变量名,变量的大小（单位bit）)</p><ol><li><p><code>BitVec(name,bv,ctx=None)</code>，创建一个位向量，name是他的名字，bv表示大小  </p></li><li><p><code>BitVecs(name,bv,ctx=None)</code>，创建一个有多变量的位向量，name是名字，bv表示大小  </p></li><li><p><code>BitVecVal(val,bv,ctx=None)</code>，创建一个位向量，有初始值，没名字。</p></li></ol><hr><h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><ol><li>创建约束求解器  <code>s = Solver()</code></li><li>添加求值所需要的条件（相当于是写上集合的描述法里面的条件）（这一步是z3求解的关键）  <code>s.add()</code></li><li>判断解是否存在 （存在就打印返回sat）<code>s.check()</code></li><li>求解  <code>print(s.model()[向量名])</code></li></ol><p>用起来还是挺简单的，只不过这里必须要加check()检测不然会报错，如图：</p><pre><code class="lang-py"># 导入Z3约束求解库from z3 import *# 定义一个名为&#39;x&#39;的整数符号变量x = Int(&#39;x&#39;)# 定义一个名为&#39;y&#39;的整数符号变量y = Int(&#39;y&#39;)# 创建一个新的求解器对象，用于解决一组约束s = Solver()# 向求解器添加三个约束条件：# 1. x 大于 2# 2. y 小于 10# 3. x 和 2倍的y 的和等于 7s.add(x &gt; 2, y &lt; 10, x + 2*y == 7)# 检查求解器中的约束是否有解s.check()# 如果求解器中的约束有解，则打印出满足这些约束的模型（即变量的赋值）print(s.model())</code></pre><hr><h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><pre><code class="lang-python">import z3s = z3.Solver()flag = [z3.BitVec(f&#39;flag_&#123;i&#125;&#39;, 8) for i in range(40)]cipher = [     98, 113, 163, 181, 115, 148, 166,  43,   9,  95,    165, 146,  79, 115, 146, 233, 112, 180,  48,  79,     65, 181, 113, 146,  46, 249,  78, 183,  79, 133,    180, 113, 146, 148, 163,  79,  78,  48, 231,  77]for i in range(40):    s.add(32 &lt;= flag[i], flag[i] &lt;= 126)    s.add(flag[i] * 17 == cipher[i])if s.check() == z3.sat:    m = s.model()    print(&#39;&#39;.join(chr(m[f].as_long()) for f in flag))# BaseCTF&#123;yoUr_CrYpt0_1earNinG_5tarTs_n0w&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 解题工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 解题工具 </tag>
+            
+            <tag> z3 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>筑基篇·椭圆曲线</title>
       <link href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/"/>
       <url>/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/</url>
