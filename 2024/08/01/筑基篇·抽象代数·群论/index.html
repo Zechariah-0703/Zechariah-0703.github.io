@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>筑基篇·抽象代数·群论 | Zechariahの博客</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="密码学学习笔记——筑基篇·卷二（群论） 进德修业，志道鼎新$Crypto\ dream,it’s\ mygo!!!!!$ 笔者常用ID: Zechariah &amp; Cucumber(两个id都是我本人捏😊)  email: Cucumber0703@outlook.com 笔者是一名来自NJUST的23级网安本科生，同时也是CTFer☝️🤓✌  PS1：由于各人编辑器的使用习惯差异，符号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="筑基篇·抽象代数·群论">
+<meta property="og:url" content="https://zechariah-0703.github.io/2024/08/01/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%BE%A4%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Zechariahの博客">
+<meta property="og:description" content="密码学学习笔记——筑基篇·卷二（群论） 进德修业，志道鼎新$Crypto\ dream,it’s\ mygo!!!!!$ 笔者常用ID: Zechariah &amp; Cucumber(两个id都是我本人捏😊)  email: Cucumber0703@outlook.com 笔者是一名来自NJUST的23级网安本科生，同时也是CTFer☝️🤓✌  PS1：由于各人编辑器的使用习惯差异，符号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/fengmian2.jpg">
+<meta property="article:published_time" content="2024-08-01T05:49:26.000Z">
+<meta property="article:modified_time" content="2024-08-18T01:30:27.990Z">
+<meta property="article:author" content="Zechariah">
+<meta property="article:tag" content="密码学">
+<meta property="article:tag" content="抽象代数">
+<meta property="article:tag" content="群论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/fengmian2.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/2024/08/01/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%BE%A4%E8%AE%BA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '筑基篇·抽象代数·群论',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-18 09:30:27'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 提瓦特</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 蒙德</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 璃月</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 稻妻</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 须弥</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 枫丹</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 纳塔</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 至冬</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Zechariahの博客"><span class="site-name">Zechariahの博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 提瓦特</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 蒙德</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 璃月</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 稻妻</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 须弥</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 枫丹</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 纳塔</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 至冬</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">筑基篇·抽象代数·群论</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-01T05:49:26.000Z" title="发表于 2024-08-01 13:49:26">2024-08-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-08-18T01:30:27.990Z" title="更新于 2024-08-18 09:30:27">2024-08-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Crypto%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">Crypto数学基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="筑基篇·抽象代数·群论"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="密码学学习笔记——筑基篇·卷二（群论）"><a href="#密码学学习笔记——筑基篇·卷二（群论）" class="headerlink" title="密码学学习笔记——筑基篇·卷二（群论）"></a>密码学学习笔记——筑基篇·卷二（群论）</h2><hr>
+<h3 id="进德修业，志道鼎新-Crypto-dream-it’s-mygo"><a href="#进德修业，志道鼎新-Crypto-dream-it’s-mygo" class="headerlink" title="进德修业，志道鼎新$Crypto\ dream,it’s\ mygo!!!!!$"></a>进德修业，志道鼎新<br>$Crypto\ dream,it’s\ mygo!!!!!$</h3><hr>
+<h3 id="笔者"><a href="#笔者" class="headerlink" title="笔者"></a>笔者</h3><p>常用ID: Zechariah &amp; Cucumber(两个id都是我本人捏😊)</p>
+<p><img src="/img/loading.gif" data-original="/2024/08/01/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%BE%A4%E8%AE%BA/logo-1722247468009-2.png" alt="logo"></p>
+<p>email: <strong>Cucumber0703@outlook.com</strong></p>
+<p>笔者是一名来自NJUST的23级网安本科生，同时也是CTFer☝️🤓✌</p>
+<blockquote>
+<p>PS1：由于各人编辑器的使用习惯差异，符号字母也是markdown公式编辑手搓出来的，发布出来的公式渲染可能会出一点点小问题，大家多包涵，<strong>对于渲染不出来的公式，大家可以自己复制到typora里看</strong>😀。</p>
+<p>PS2：编辑器和我个人水平差的缘故，可能排版、内容顺序杂乱，大家轻点喷</p>
+<p>PS3：有修改建议的话可以发邮件捏email: <strong>Cucumber0703@outlook.com</strong> ,看到后会光速滑轨修改的</p>
+</blockquote>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1838511">Markdown中的公式编辑, 看这一篇就够了！</a></p>
+<hr>
+<h1 id="群论"><a href="#群论" class="headerlink" title="群论"></a>群论</h1><hr>
+<h2 id="代数结构-algebraic-structure"><a href="#代数结构-algebraic-structure" class="headerlink" title="代数结构(algebraic structure)"></a>代数结构(algebraic structure)</h2><p>$(G,🐱,🥒\dots$)</p>
+<p>$G指非空集合，\underbrace{🐱, 🥒 ,\dots}_{二元运算(需要两个运算数)}$</p>
+<script type="math/tex; mode=display">\begin{align}   封闭性：\forall\ a,b & \in G,   \\   a🐱b & \in G\\a 🥒 b & \in G\\ \dots \\集合中任意两个元素运算&的结果仍然是这个集合里的元素\end{align}</script><p><strong>代数结构必须满足封闭性</strong></p>
+<blockquote>
+<p> ($Z,\div$)不是代数结构，首先不封闭（整数相除不一定是整数），其次运算不适用于所有元素，（0不能做除数）</p>
+</blockquote>
+<hr>
+<h2 id="群-Group"><a href="#群-Group" class="headerlink" title="群(Group)"></a>群(Group)</h2><p><strong>定义</strong>：若<script type="math/tex">(G,*)</script>是一个群，则它满足以下<strong>性质</strong>：</p>
+<ul>
+<li><p>封闭性：$ \forall a,b\in \mathbb{G}, a*b \in \mathbb{G}$</p>
+</li>
+<li><p>结合律：<script type="math/tex">\forall a,b,c\in \mathbb{G}, a*(b*c)=(a*b)*c</script></p>
+</li>
+<li><p>单位元(幺元,identity)：<script type="math/tex">\exists e\in \mathbb{G} , \forall a\in \mathbb{G} , a*e=e*a=a</script></p>
+<p><strong>定理1：群里的单位元是唯一的</strong></p>
+</li>
+<li><p>逆元(inverse)：<script type="math/tex">\exists b\in \mathbb{G} , a*b=b*a=e</script><br><script type="math/tex">a的逆元记为a^{-1},即a^{-1}=b,b^{-1}=a，\\单位元以自身为逆元</script></p>
+<p><strong>定理2:每个元素都有唯一的逆元</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>例：</p>
+<p>$(\mathbb{Z},+)$<br>封闭性：整数相加还是整数<br>结合律：整数相加满足加法结合律<br>单位元：0 (任何整数加0都等于它本身)<br>逆 元：整数的相反数<br><strong>是群😊</strong></p>
+<p>$(\mathbb{Q},\times)$<br>封闭性：有理数相乘还是有理数<br>结合律：有理数相乘满足乘法结合律<br>单位元：1 (任何有理数乘1都等于它本身)<br>逆 元：有理数的倒数(0除外)<br><strong>不是群😭</strong><br>$(\mathbb{Q}\setminus{0},\times)$就是<strong>群</strong>了</p>
+<p>$(\mathbb{Z_p^<em>},\times)$<br>封闭性：相乘再模p，还是$\mathbb{Z_p^</em>}$里的元素<br>结合律：模运算下乘法满足乘法结合律<br>单位元：1 <br>逆 元：乘法逆元<br><strong>是群😊</strong></p>
+</blockquote>
+<p>“$(\mathbb{G},*)$是一个群”,通常简写作：“$\mathbb{G}$是一个群”</p>
+<blockquote>
+<p>例：简称“$\mathbb{Z}_p^*$ 是一个群”,默认运算为“模$p$下的乘法”</p>
+</blockquote>
+<hr>
+<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p><strong>有限群</strong>：$\mathbb{G}$是有限集，比如 $(\mathbb{Z}_p^*,X)$称$\mathbb{G}$里元素个数为群$\mathbb{G}$的“阶”,记为$|\mathbb{G}|$</p>
+<p><strong>无限群</strong>：$\mathbb{G}$是无限集，比如$(\mathbb{Z},+)$、$(\mathbb{Q}\setminus{0},\times)$，群$\mathbb{G}$的“阶”为<strong>无限阶</strong></p>
+<p><strong>单位元、逆元</strong></p>
+<ul>
+<li>封闭性$\Rightarrow$左单位元=右单位元=单位元</li>
+<li>结合律$\Rightarrow$左逆元=右逆元=逆元</li>
+</ul>
+<p><strong>平凡群</strong>：群里只有一个元素时，称为“平凡群”。唯一元素就是单位元。</p>
+<blockquote>
+<p>如:$({1},\times)$<br>封闭性：1$\times$1=1<br>结合律：乘法结合律<br>单位元：1 <br>逆 元：1$\times$1=1<br></p>
+</blockquote>
+<hr>
+<h2 id="群的性质"><a href="#群的性质" class="headerlink" title="群的性质"></a>群的性质</h2><ul>
+<li>(消去律) <script type="math/tex">a*b=a*c\Rightarrow b=c</script></li>
+<li>方程$a*x=b\ 有唯一解下\in \mathbb{G}$</li>
+<li><script type="math/tex; mode=display">(a*b)^{-1}=b^{-1}*a^{-1}</script></li>
+<li>$(a^{-1})^{-1}=a$</li>
+</ul>
+<hr>
+<h2 id="阿贝尔群（abelian-group）"><a href="#阿贝尔群（abelian-group）" class="headerlink" title="阿贝尔群（abelian group）"></a>阿贝尔群（abelian group）</h2><p>又称<strong>交换群</strong>(commutative group)</p>
+<p><strong>定义：</strong>如果对于群$\mathbb{G}$中的任意元素$a,b\in \mathbb{G}$,都有$a<em>b=b</em>a,$则称$\mathbb{G}$为阿贝尔群。</p>
+<p><strong>定理</strong>：群$\mathbb{G}$是阿贝尔群，当且仅当，$\forall a,b\in \mathbb{G}$,有$(a<em>b)^2=a^2</em>b^2$</p>
+<p><strong>定理</strong>：群$\mathbb{G}$是阿贝尔群，$\forall a,b\in \mathbb{G}$,有$(a<em>b)^t=a^t</em>b^t$</p>
+<h3 id="群的简记符号"><a href="#群的简记符号" class="headerlink" title="群的简记符号"></a>群的简记符号</h3><p>t个a一起运算，简记为<script type="math/tex">a^t:a*a*\dots*a</script><br>并不表示t和a之间的运算，t是整数，a是群里的元素</p>
+<script type="math/tex; mode=display">a^{-t}: (a^{-1})^t=a^{-1}*a^{-1}*\cdots*a^{-1}</script><p>$(a^t)^m=a^{tm}$</p>
+<p>$a^t*a^m=a^{t+m}$</p>
+<p>$(a^{-1})^t=(a^t)^{-1}$</p>
+<hr>
+<h2 id="子群-subgroup"><a href="#子群-subgroup" class="headerlink" title="子群(subgroup)"></a>子群(subgroup)</h2><p><strong>定义</strong>：设<script type="math/tex">(\mathbb{G},*)</script>是群，$\mathbb{H}$是$\mathbb{G}$的非空子集，如果<script type="math/tex">(\mathbb{H},*)</script>是一个群，则称<script type="math/tex">(\mathbb{H},*)</script>是<script type="math/tex">(\mathbb{G},*)</script>的子群。</p>
+<h3 id="mathbb-G-的子群"><a href="#mathbb-G-的子群" class="headerlink" title="$\mathbb{G}的子群$"></a>$\mathbb{G}的子群$</h3><p>平凡子群：<script type="math/tex">(\{e\},*)、(\mathbb{G},*)</script><br>非平凡子群：<script type="math/tex">(\mathbb{H},*)</script> 且 $\mathbb{H}\neq { e} , G$ (又称真子群)</p>
+<p>阿贝尔群的子群也一定是阿贝尔群</p>
+<h3 id="子群的单位元"><a href="#子群的单位元" class="headerlink" title="子群的单位元"></a>子群的单位元</h3><p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的子群，$e\in \mathbb{G}$是单位元，则$e$ 也是子群$\mathbb{H}$的单位元。(<strong>省流：群的单位元也是其子群的单位元</strong>)</p>
+<h3 id="子群的逆元"><a href="#子群的逆元" class="headerlink" title="子群的逆元"></a>子群的逆元</h3><p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的子群，$a\in \mathbb{H}$是单位元，,则 $a^{-1}\in \mathbb{H}$(<strong>省流:元素在子群中,其逆元也必在该子群中</strong>)</p>
+<h3 id="判断子群"><a href="#判断子群" class="headerlink" title="判断子群"></a>判断子群</h3><p><strong>判断子群(1)</strong></p>
+<p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的非空子集，对于任意 $a,b\in \mathbb{H}$,都有 <script type="math/tex">a*b^{-1}\in \mathbb{H}</script>,则$\mathbb{H}$是<script type="math/tex">\mathbb{G}</script>的子群。</p>
+<p><strong>判断子群(2)</strong></p>
+<p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的非空子集，如果$\mathbb{H}$是有限集，而且$\mathbb{G}$的运算<em>在$\mathbb{H}$上满足封闭性，则$\mathbb{H}$是$\mathbb{G}$的子群。(<em>*省流：$\mathbb{H}$是有限集、封闭，便是子群</em></em>)</p>
+<h3 id="构造子群"><a href="#构造子群" class="headerlink" title="构造子群"></a>构造子群</h3><p><strong>方法1</strong></p>
+<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}^m:={a^m\mid a\in \mathbb{G}}$是$\mathbb{G}$的子群。</p>
+<script type="math/tex; mode=display">\mathbb{(Z_n^{*}})^2是\mathbb{Z_n^{*}}的子群</script><script type="math/tex; mode=display">\mathbb{(Z_n^{*}})^m是\mathbb{Z_n^{*}}的子群</script><p><strong>方法2</strong></p>
+<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}{m}:={a\in \mathbb{G}\mid a^m=e}$是$\mathbb{G}$的子群。</p>
+<blockquote>
+<p>例:$\mathbb{Z_n}{m}=\mathbb{Z_n}{d}=\frac nd\mathbb{Z_n}\quad d=gcd(m,n),且构造的子群只有d个元素$</p>
+</blockquote>
+<p><strong>方法3</strong></p>
+<p><strong>定理</strong>：<script type="math/tex">\begin{aligned}&\text{设}G\text{是群,}a\in G\text{,则}\\&<a>:=\{a^z\mid z\in Z\}\text{是由}a\text{生成的}G\text{的子群。}\end{aligned}</script></p>
+<h4 id="子群构造子群"><a href="#子群构造子群" class="headerlink" title="子群构造子群"></a>子群构造子群</h4><p><strong>定理1</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是阿贝尔群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\mathbb{H}_2$也是$G$的子群。<br>$H:=\mathbb{H}_1\mathbb{H}_2:={a_1*a_2|a_1\in \mathbb{H}_1,a_2\in \mathbb{H}_2}$</p>
+<p><strong>扩展</strong>：以上定理中的2个子群扩展至<strong>任意多个子群</strong>，结论依然成立</p>
+<hr>
+<p><strong>定理2</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2$<br>也是$\mathbb{G}$的子群。(省流：子群的交集是子群)<br>$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2:={a\mid a\in \mathbb{H}_1,a\in \mathbb{H}_2}$</p>
+<p><strong>扩展</strong>：以上定理中的2个子群扩展至<strong>任意多个子群</strong>，结论依然成立</p>
+<hr>
+<p><strong>子群的并集未必是子群</strong></p>
+<p><strong>定理3</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是群$\mathbb{G}$的非平凡子群，</p>
+<p>​                则$\mathbb{G}:\neq\mathbb{H}_1\cup \mathbb{H}_2$</p>
+<h3 id="整数群的子群"><a href="#整数群的子群" class="headerlink" title="整数群的子群"></a>整数群的子群</h3><p><strong>定理1</strong>：$\mathbb{H}$是$\mathbb{Z}$的子群，则存在唯一的非负整数 $m$,使得$\mathbb{H}=\boldsymbol{m}\mathbb{Z}$</p>
+<script type="math/tex; mode=display">\begin{aligned}m \mathbb{Z}&:=\{mz\mid z\in\mathbb{Z}\}\\&=\{0,\pm m,\pm2m,...\}\end{aligned}</script><p><strong>定理2</strong>：$m_1和m_2\text{是非负整数,则 }m_2|m_1\text{,当且}仅当,m_1\mathbb{Z}\subseteq m_2\mathbb{Z}。$</p>
+<p><strong>定理3</strong>：</p>
+<script type="math/tex; mode=display">\mathbb{H}是\mathbb{Z_n}的子群,\\ 1.存在n的唯一正因子 m,使得H=m\mathbb{Z_n}.\ \\x不是n的因子 \Rightarrow x\mathbb{Z_n}=m\mathbb{Z_n},\quad\exists m\mid n.\ \\2.m_1和m_2是n的正因子,则 m_2|m_1,当且仅当,m_1\mathbb{Z}\subseteq m_2\mathbb{Z}。</script><h3 id="正规子群-normal-subgroup"><a href="#正规子群-normal-subgroup" class="headerlink" title="正规子群(normal subgroup)"></a>正规子群(normal subgroup)</h3><p><strong>定义</strong>：$设\mathbb{N}是群\mathbb{G}的子群，如果对于\forall a\in \mathbb{G},都有a\mathbb{N}=\mathbb{N}a,称\mathbb{N}为\mathbb{G}的正规子群$</p>
+<p>阿贝尔群的子群都是正规子群</p>
+<blockquote>
+<p>现在不懂没关系，往下你就知道了：<strong>正规子群本身是商群的一个元素，叫作平凡陪集，包含群的单位元，本身还是商群的单位元，被分类到N的元素，必然是同态核里的元素，自然映射的同态核就是正规子群N</strong></p>
+</blockquote>
+<hr>
+<h2 id="陪集-coset"><a href="#陪集-coset" class="headerlink" title="陪集(coset)"></a>陪集(coset)</h2><p>定义：$\mathbb{H}$ 是群$\mathbb{G}$的子群，$a\in \mathbb{G}$,则</p>
+<script type="math/tex; mode=display">a\mathbb{H}:=\{a*h|h\in \mathbb{H}\}</script><p>称为 $\mathbb{H}$ 关于$a$在$\mathbb{G}$中的左陪集 (left cost)。同理，</p>
+<script type="math/tex; mode=display">\mathbb{H}a:=\{h*a|h\in \mathbb{H}\}</script><p>称为 $\mathbb{H}$ 关于$a$在$\mathbb{G}$中的右陪集 (right cost)。</p>
+<p>陪集：$[a]_\mathbb{H}$<br>左陪集：$a\mathbb{H}$<br>右陪集：$\mathbb{H}a$</p>
+<p><strong>左右陪集相等不能说明满足交换律，只能说明对于右陪集的一个元素存在左陪集的一个元素使得两者相等</strong></p>
+<p>$b=a<em>h或a=b</em>h，\exist h\in \mathbb{H}\a,b会被分类到同一个陪集$</p>
+<p>$a\equiv b \pmod {\mathbb{H}}:a和b在同一个(由\mathbb{H}构造的)陪集里$</p>
+<p>$\iff b\equiv a\pmod{\mathbb{H}}$</p>
+<p>$\iff b \equiv a*h,\exist\ h\in \mathbb{H}$</p>
+<p>$\iff b\in [a]_{\mathbb{H}}$</p>
+<p>$\iff [a]_\mathbb{H}=[b]_\mathbb{H}$</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ul>
+<li>$a\in [a]_\mathbb{H}$</li>
+<li>$[e]_\mathbb{H}=\mathbb{H}(平凡陪集)$</li>
+<li>$a\in \mathbb{H}\iff[a]_\mathbb{H}=\mathbb{H}$</li>
+<li><script type="math/tex; mode=display">[a]_\mathbb{H}=[b]_\mathbb{H}\Leftrightarrow a^{-1}*b\in \mathbb{H}\text{ (或 }b^{-1}*a\in \mathbb{H})</script></li>
+</ul>
+<p>$a\equiv b\pmod {\mathbb{H}}:a和b在同一个(由\mathbb{H}构造的)陪集里\\iff b=a*h,\exists h\in \mathbb{H}\\iff b\in [a]_\mathbb{H}$</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\ [a]_{n\mathbb{Z}}& =\{b\in \mathbb{Z}\mid b\equiv a\pmod{n}\} \\
+&=\{b\in \mathbb{Z}\mid b=a+nz,z\in \mathbb{Z}\} \\
+&=\{b\in \mathbb{Z}\mid b\equiv a\pmod{n}\} \\
+&=[a],[a]\in\mathbb{Z}_n
+\end{aligned}</script><p>$·\equiv ·\pmod {\mathbb{H}}是等价关系$</p>
+<ul>
+<li>自反性</li>
+<li>对称性</li>
+<li>传递性</li>
+</ul>
+<p><strong>性质</strong>：任意两个陪集$[a]_\mathbb{H}$和$[b]_\mathbb{H}$之间存在双射，任意陪集$[a]_\mathbb{H}$和子群$\mathbb{H}$是等势的</p>
+<h3 id="阿贝尔群的陪集"><a href="#阿贝尔群的陪集" class="headerlink" title="阿贝尔群的陪集"></a>阿贝尔群的陪集</h3><p><strong>性质1</strong>：$\mathbb{H}是阿贝尔群\mathbb{G}的子群，对于\forall a\in \mathbb{G}，有a\mathbb{H}=\mathbb{H}a\ ([a]_\mathbb{H})$</p>
+<p>注意：$如果对于\forall a,都有a\mathbb{H}=\mathbb{H}a,则\mathbb{G}未必是阿贝尔群$</p>
+<p><strong>性质2</strong>：阿贝尔群的子群都是正规子群<br><strong>性质3</strong>：阿贝尔群的任意子群都可以构造商群<br><strong>性质4</strong>：阿贝尔群的子群构造的商群也是阿贝尔群</p>
+<hr>
+<h2 id="拉格朗日定理"><a href="#拉格朗日定理" class="headerlink" title="拉格朗日定理"></a>拉格朗日定理</h2><p><strong>定理</strong>：$\mathbb{G}是有限群，\mathbb{H}是\mathbb{G}的任意子群，\则|\mathbb{H}|\mid|\mathbb{G}|$</p>
+<p>$\begin{aligned}&amp;\text{证明:设}\mathbb{H}\text{构造的陪集为}[a_1]_\mathbb{H},…,[a_n]_\mathbb{H}\text{,它们是}\mathbb{G}\text{的}\&amp;\text{划分。所以,}|\mathbb{G}|=\sum_{i=1}^n|[a_i]_\mathbb{H}|=\sum_{i=1}^n|\mathbb{H}|=n|\mathbb{H}|\end{aligned}$</p>
+<hr>
+<h2 id="商群"><a href="#商群" class="headerlink" title="商群"></a>商群</h2><p><strong>定义</strong>：$群(\mathbb{G}/\mathbb{N},*):群\mathbb{G}在模\mathbb{N}下的商群$</p>
+<p>$集合\mathbb{G}/\mathbb{N}={[a]_\mathbb{N}|a\in \mathbb{G}}$</p>
+<p>$\mathbb{N}为正规子群，正规子群是啥？往上翻😾$</p>
+<script type="math/tex; mode=display">二元运算[a]_\mathbb{N}*[b]_\mathbb{N}=[a*b]_\mathbb{N}</script><p>正规子群是其中的<strong>平凡陪集</strong>，商群重点关注其中的非平凡陪集，元素不属于正规子群</p>
+<p>整数群$\mathbb{Z}={0,\pm1,\pm2,…}$</p>
+<p>子群$n\mathbb{Z}={0,\pm n,\pm2n,…}$</p>
+<p>商群$\mathbb{Z}/ n\mathbb{Z}:$ </p>
+<p>$[ 0] _{n\mathbb{Z}}= { 0, \pm n, \pm 2n, . . . }=[0]$<br>$[1]_{n\mathbb{Z}}={1,1\pm n,1\pm2n,…}=[1]$<br>$[2]_{n\mathbb{Z}}={2,2\pm n,2\pm2n,…}=[2]$<br>$\dots$<br>$[n-1]_{n\mathbb{Z}}={n-1,(n-1)\pm n,…}=[n-1]$<br>$[n]_{n\mathbb{Z}}={n,n\pm n,n\pm2n…}=[0]$<br>$[n+1]_{n\mathbb{Z}}={n+1,(n+1)\pm n,…}=[1]$</p>
+<p>$\dots$</p>
+<p>$\mathbb{Z}/ n\mathbb{Z}={[0],[1],\dots \,[n-1]}=\mathbb{Z_n}$</p>
+<p>在整数群里，<strong>陪集</strong>和<strong>剩余类</strong>本质上是同一个东西，都是在等价关系上形成的等价类</p>
+<h3 id="商群的阶"><a href="#商群的阶" class="headerlink" title="商群的阶"></a>商群的阶</h3><p>$[\mathbb{G}:\mathbb{N}]商群\mathbb{G}/\mathbb{N}的阶$</p>
+<p><strong>定理1</strong>：$\mathbb{G}是有限群，\mathbb{N}是\mathbb{G}的正规子群，[\mathbb{G}:\mathbb{N}]=\frac{\mathbb{G}}{\mathbb{N}}$</p>
+<p><strong>定理2</strong>：$\mathbb{G}是有限群，\mathbb{N}是\mathbb{G}的正规子群，\mathbb{K}是\mathbb{N}的正规子群，[\mathbb{G}:\mathbb{K}]=[\mathbb{G}:\mathbb{N}][\mathbb{N}:\mathbb{K}]$</p>
+<hr>
+<h2 id="群同态-group-homomorphism-名字可爱捏😸"><a href="#群同态-group-homomorphism-名字可爱捏😸" class="headerlink" title="群同态(group homomorphism,名字可爱捏😸)"></a>群同态(group homomorphism,名字可爱捏😸)</h2><p><strong>定义</strong>：设群$(\mathbb{G},*)$和群$(\mathbb{G}^\prime,\otimes)$,如果函数 $f:\mathbb{G}\to \mathbb{G}^\prime$ 对于</p>
+<p>$\forall\boldsymbol{a},b\in \mathbb{G}$ ,都有</p>
+<p>$f(a*b)=f(a)\otimes f(b),$</p>
+<p>$f$为$(\mathbb{G},*)$到$(\mathbb{G}^\prime,\otimes)$的群同态。</p>
+<h3 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h3><p>1.$f(e)=e^{\prime}\ (e和e^{\prime}分别是群G和G^{\prime}的单位元)$</p>
+<p>2.$f(a^{-1})=f(a)^{-1},\quad\forall a\in G$</p>
+<p>3.$H是G的子群\Longrightarrow f(H)是G^{\prime}的子群$<br>扩展：$H=G,\Rightarrow f(G)=Imf$</p>
+<p>4.$H^{\prime}是G^{\prime}的子群\Rightarrow f^{-1}(H^{\prime})是G的子群$<br>扩展：$H^{\prime}={e^{\prime}}$</p>
+<p>5.$f(a^m)=f(a)^m,\quad\forall a\in G,\forall m\in \mathbb{Z}$</p>
+<h3 id="同态像-homomorphic-image"><a href="#同态像-homomorphic-image" class="headerlink" title="同态像(homomorphic image)"></a>同态像(homomorphic image)</h3><p>$f:\mathbb{G}\to \mathbb{G}^\prime$ </p>
+<p><strong>同态像</strong>$ Imf:=f(G):={f(a)|a\in G},(同态像Imf是G^{\prime}的子群)$</p>
+<h3 id="同态核"><a href="#同态核" class="headerlink" title="同态核"></a>同态核</h3><p><strong>同态核</strong>$Kerf:={a\in G|f(a)=e^{\prime}},(同态核Kerf是G的子群)$</p>
+<p>$(e^{\prime}$表示$G^\prime$的单位元)</p>
+<p><strong>定理</strong>：$f{:}G\to G^{\prime}\text{ 是群同态,则Ker }f\text{是正规子群}$</p>
+<h3 id="群同态的复合"><a href="#群同态的复合" class="headerlink" title="群同态的复合"></a>群同态的复合</h3><p><strong>定理</strong>：$f$是$(G,*)$到$(G^\prime,\otimes)$的群同态，$f^\prime$是$(G^\prime,\otimes)$到$(G^{\prime\prime}$,田)的群同态，则$f$和$f^\prime$的复合</p>
+<script type="math/tex; mode=display">f^{\prime}\circ f{:}G\to G^{\prime\prime}$$也是群同态
+
+### 判断单一同态
+
+**定理1**：
+
+$$f: G\to G^{\prime}是群同态,\forall a,b\in G,有\\f(a)=f(b)\Leftrightarrow a\equiv b\pmod {Ker f}</script><p><strong>定理2</strong>：</p>
+<script type="math/tex; mode=display">f: G\to G^{\prime}是群同态,有\\f是单射 \Longleftrightarrow Kerf=\{e\}</script><h3 id="判断满同态"><a href="#判断满同态" class="headerlink" title="判断满同态"></a>判断满同态</h3><p>$f\text{是满同态}\Leftrightarrow Imf=G^{\prime}$</p>
+<h3 id="嵌入映射-inclusion-map"><a href="#嵌入映射-inclusion-map" class="headerlink" title="嵌入映射(inclusion map)"></a>嵌入映射(inclusion map)</h3><p>$H \to G$</p>
+<p>$a\to f(a)=a$</p>
+<p>子群元素直接映射到自身</p>
+<p>子群到群的嵌入映射是个群同态<br>原像和像之间是一对一的，单射</p>
+<p><strong>单一同态：$f$是单射</strong></p>
+<h3 id="自然映射-natural-map"><a href="#自然映射-natural-map" class="headerlink" title="自然映射(natural map)"></a>自然映射(natural map)</h3><p>$G \to G/N,(N是G的正规子群)$</p>
+<p>$a\to f(a)=[a]_N$</p>
+<p><strong>自然映射的同态核就是正规子群N</strong></p>
+<p><strong>满同态：$f$是满射</strong></p>
+<h3 id="m次方映射-m-power-map"><a href="#m次方映射-m-power-map" class="headerlink" title="m次方映射(m-power map)"></a>m次方映射(m-power map)</h3><p>$G是阿贝尔群$</p>
+<p>$G \to G$</p>
+<p>$a\to f(a)=a^m$</p>
+<p>$Imf=G^m$</p>
+<p>$Kerf=G{m}$</p>
+<h3 id="雅可比映射-Jacobi-map"><a href="#雅可比映射-Jacobi-map" class="headerlink" title="雅可比映射(Jacobi map)"></a>雅可比映射(Jacobi map)</h3><p>$\mathbb{Z}_n^* \to {\pm 1}$</p>
+<p>$a\to J_n(a)=(\frac an)$</p>
+<hr>
+<h2 id="群同构-group-isomorphism"><a href="#群同构-group-isomorphism" class="headerlink" title="群同构(group isomorphism)"></a>群同构(group isomorphism)</h2><ul>
+<li><p><strong>双射(单射&amp;满射)</strong></p>
+</li>
+<li><p><strong>群同态</strong></p>
+</li>
+</ul>
+<p>$G$与$G^\prime$同构，记为$G\cong G^\prime$<br>$G$与$G$之间的同构：自同构(group automorphism)</p>
+<h3 id="第一同构定理-first-isomorphism-theorem"><a href="#第一同构定理-first-isomorphism-theorem" class="headerlink" title="第一同构定理(first isomorphism theorem)"></a>第一同构定理(first isomorphism theorem)</h3><p>又称：基本同态定理 (FHT, fundamental homomorphism theorem)</p>
+<p>定理：设群<script type="math/tex">(G,*)</script>和群$( G^\prime , \otimes )$, $f{: }G\to G^\prime$ 是群同态($同<br>态核是Kerf，同态像是Imf$),则</p>
+<script type="math/tex; mode=display">G/Kerf\cong Imf</script><script type="math/tex; mode=display">\rho:[a]_{Kerf}\quad f(a)</script><hr>
+<h2 id="循环群-cyclic-group"><a href="#循环群-cyclic-group" class="headerlink" title="循环群(cyclic group)"></a>循环群(cyclic group)</h2><p>孩子们，去往上回忆一下<strong>构造子群·方法3</strong></p>
+<p>定义：设$G$是群，$g\in G$,如果</p>
+<script type="math/tex; mode=display">G=<g>,</script><p>则称$G$是<strong>循环群</strong>，$g$是循环群$G$的<strong>生成元(generator)</strong>(可以有不止一个个生成元)。</p>
+<ul>
+<li><p><strong>有限循环群</strong>：群元素个数是无限的，同构于$\mathbb{Z}$</p>
+<p><strong>任意无限循环群都只有2个生成元</strong></p>
+</li>
+<li><p><strong>无限循环群</strong>：群元素个数是有限的,同构于$\mathbb{Z}_n$</p>
+</li>
+</ul>
+<p><strong>定理</strong>：任意循环群都是阿贝尔群</p>
+<p><strong>定理</strong>：循环群的子群是循环群</p>
+<p><strong>定理</strong>：设$G$是循环群(生成元g)，$H$是其子群，则商群$G/H$是循环群(生成元$[g]_H$)</p>
+<h3 id="循环群的同构"><a href="#循环群的同构" class="headerlink" title="循环群的同构"></a>循环群的同构</h3><p>1.<script type="math/tex">\begin{aligned}\text{对于无限循环群}G\text{的任意子群}H\text{,都存在唯一的非}\text{负整数}m\text{,使得}H=G^m。\end{aligned}</script></p>
+<p>2.<script type="math/tex">对于n阶有限循环群G的任意子群H,都存在n的唯一正因子m,使得H=G^m</script></p>
+<hr>
+<h2 id="元素的阶-order"><a href="#元素的阶-order" class="headerlink" title="元素的阶(order)"></a>元素的阶(order)</h2><p><strong>定义</strong>：设$G$是群，$a\in G$,如果$n$是满足$a^n=e$的<strong>最小正整数</strong>，则称$n$是元素$a$的<strong>阶</strong>。</p>
+<blockquote>
+<p>PS:存在<strong>无限阶</strong>的元素</p>
+</blockquote>
+<p>性质$1:G$是群，元素$a$的阶是$n$ (a$^n=e)$,则$\forall m\in Z$,有$n|m\Leftrightarrow a^m=e_0$</p>
+<p>性质$2:$有限循环群的阶是$n$,则生成元$g$的阶也是$n$,且群里元素 $g,g^2,g^3,…,g^n(=g^0=e)$各不相同。</p>
+<p>性质$3:$正整数$d\mid n$, $n$阶有限循环群恰有唯一的$d$阶子群$<g^\frac nd>$</g^\frac></p>
+<p>性质$4:<script type="math/tex">n$阶有限循环群</script><g><script type="math/tex">,</script>\forall k\in Z<script type="math/tex">,有</script>g^k<script type="math/tex">的阶是</script>\frac n{gcd(n,k)}$$</g></p>
+<p>性质$5:$$n$阶有限循环群有$\phi(n)$ 个生成元。</p>
+<p>性质$6:$$G$是有限群，元素$a$的阶是$|G|$的因子。</p>
+<p>性质$7:$素数阶的群必然是<strong>有限循环群</strong></p>
+<p>性质$8:<script type="math/tex">$\begin{aligned}G\text{是}n\text{阶有限循环群,}d\text{是}n\text{的正因子,}G\text{里的}d\text{阶}\text{元素一共有}\phi(d)\text{个。}\end{aligned}</script></p>
+<hr>
+<h2 id="原根-primitive-root"><a href="#原根-primitive-root" class="headerlink" title="原根(primitive root)"></a>原根(primitive root)</h2><p>不妨先去复习一下<strong>卷一(数论)</strong>中的<strong>乘法阶</strong>概念</p>
+<p>$g一般表示生成元$</p>
+<p><strong>定义</strong>：$g\in\mathbb{Z},gcd(g,n)=1$,如果$ord_n(g)=\phi(n)$,称$g$是模$n$下的<strong>原根</strong>。</p>
+<ul>
+<li>$g$是模$n$下的原根，则$g^{ord_n(g)}\equiv g^{\phi(n)}\equiv1\left({\mathrm{mod~}}n\right)$。</li>
+</ul>
+<p>原根的阶是$\phi(n)$,<script type="math/tex">Z_n^*</script>的阶也是$\phi(n)\Longrightarrow$原根是<script type="math/tex">Z_n^*</script>的生成元<script type="math/tex">\Longrightarrow\mathbb{Z}_n^*</script>是循环群</p>
+<blockquote>
+<script type="math/tex; mode=display">Z_n^*$$里，“元素的阶”就是元素的“乘法阶”
+
+模$n$下存在原根的话，$$Z_n^*$$是循环群，“生成元”就是“原根”
+$$(n=1,2,4,p^e,2p^e)</script></blockquote>
+<p>$\forall k\in\mathbb{Z}\text{,}g^k\text{的乘法阶是 }\frac{\phi(n)}{gcd(\phi(n),k)}$</p>
+<script type="math/tex; mode=display">Z_p^*\text{里,}\forall k\in Z\text{,}g^k\text{的乘法阶是}\frac{p-1}{gcd(p-1,k)}</script><p>模n下原根一共$\phi(\phi(n))$个</p>
+<script type="math/tex; mode=display">\mathbb{Z}_p^*\text{的生成元一共}\phi(p-1)\text{个}</script><h3 id="原根存在的条件"><a href="#原根存在的条件" class="headerlink" title="原根存在的条件"></a>原根存在的条件</h3><p>设$p$是<strong>奇素数</strong>，$e$是<strong>正整数</strong><br>$n=1,2,4,p^e,2p^e$ 时，模$n$下存在原根</p>
+<script type="math/tex; mode=display">Z_p^*\text{里,}\forall k\in Z\text{,}g^k\text{是原根}\Leftrightarrow gcd(p-1,k)</script><h3 id="寻找原根-生成元-的算法"><a href="#寻找原根-生成元-的算法" class="headerlink" title="寻找原根(生成元)的算法"></a>寻找原根(生成元)的算法</h3><script type="math/tex; mode=display">\begin{aligned}&\forall a\in\mathbf{Z}_n^*\Longrightarrow ard_n(a)|\phi(n)\\&a\text{是原根}\Longrightarrow ord_n(a)=\phi(n)\\&\text{设 }\phi(n)=p_1^{e_1}...p_r^{e_r}\\&a\text{不是原根}\Longrightarrow\exists d|\phi(n),d<\phi(n),a^d=1 \pmod n\\&\Longrightarrow\exists p_j,d|\frac{\phi(n)}{p_j} \Longrightarrow\exists q,dq=\frac{\phi(n)}{p_j}\\&a^d\equiv1 \pmod n\Longrightarrow a^{\frac{\phi(n)}{p_j}}\equiv a^{dq}\equiv(a^d)^q\equiv1 \pmod n\end{aligned}</script><p><strong>算法1</strong>：</p>
+<blockquote>
+<p>step1.$因子分解\phi(n),求出其各个素因子 p_1,…,p_r$</p>
+<p>step2.任选$a\in\mathbb{Z}_n^*$</p>
+<p>step3.$if\ a^\frac{\phi(n)}{p_i} \not\equiv1(mod\: n),i=1,…,r$</p>
+<p>​        output a</p>
+<p>else goto step2.</p>
+</blockquote>
+<p><strong>算法2</strong>:<script type="math/tex">\text{如何找}Z_p^*\text{的原根(生成元)}\\\text{设 }p\text{ 是奇素数,}\phi(p)=p-1=p_1^{t_1}...p_r^{t_r}</script></p>
+<blockquote>
+<p>for $i=1$​ to $r$</p>
+<p>{</p>
+<p>do{</p>
+<p>​        任选$a\in Z_p^*$</p>
+<p>} while $(a^{\frac{p-1}{p_i}}\equiv1$ (mod $p))$</p>
+<p>$c_i\equiv a^{p_i{\frac{p-1}{t_i}}}\pmod p$</p>
+<p>}</p>
+<p>output $\prod_{i=1}^rc_i\pmod p$ </p>
+<p><strong>定理1</strong>：设$G$是群，$c\in G$,对于某个素数$p$和整数$t\geq1$,如果<br>$c^{p^t}=e$ 但 $c^{p^{t-1}}\neq e$,则$c$的阶是$p^t$。</p>
+<p><strong>定理2</strong>：设$G$是群，$c_1,c_2\in G$,$c_1,c_2$的阶分别为$m_1,m_2$,且$gcd(\boldsymbol{m}_1,\boldsymbol{m}_2)=1$,则<script type="math/tex">c_1*c_2</script>的阶是$m_1m_2$。</p>
+</blockquote>
+<hr>
+<h2 id="离散对数-discrete-logarithm"><a href="#离散对数-discrete-logarithm" class="headerlink" title="离散对数(discrete logarithm)"></a>离散对数(discrete logarithm)</h2><p>$n=1,2,4,p^e,2p^e$时，存在原根 (设为$g),Z_n^*$是循环群</p>
+<p><strong>定义</strong>：$gcd(a,n)=1$,必存在<strong>唯一整数</strong>$x(0\leq x&lt;\phi(n))$<br>有 $a\equiv g^{x}\pmod n$,则称$x$是以$g$为底的$a$模$n$的<strong>指标</strong><br>(index)或<strong>离散对数(discrete logarithm)</strong>。</p>
+<p>简记为：$x=log_g(a)$</p>
+<script type="math/tex; mode=display">1\equiv g^0(modn)\Longrightarrow log_g(1)=0\\g\equiv g^1(modn)\Longrightarrow log_g(g)=1</script><p><strong>定理</strong>：$a\equiv g^r\pmod n\Leftrightarrow log_g(a)\equiv r\pmod{\phi(n)}$</p>
+<blockquote>
+<script type="math/tex; mode=display">\begin{aligned}
+\text{设 }x=log_g(a), &\text{则 }a\equiv g^x(\mathrm{mod~}n) \\
+a\equiv g^r (mod n) &\Leftrightarrow g^x\equiv g^r\mathrm{~}(mod\mathrm{~}n) \\
+&\Leftrightarrow x\equiv r\pmod{\phi(n)} \\
+&\Leftrightarrow log_g(a)\equiv r\pmod{\phi(n)}
+\end{aligned}</script></blockquote>
+<p><strong>性质1</strong>:$log_g(ab)\equiv log_g(a)+log_g(b)\pmod {\phi(n)}$</p>
+<p><strong>性质2</strong>:$log_g(a^m)\equiv m\times log_g(a)\pmod {\phi(n)}$</p>
+<p><strong>性质3</strong>:$log_h(a)\equiv log_h(g)\times log_g(a)\pmod {\phi(n)}$</p>
+<h3 id="离散对数问题-DLP-discrete-logarithm-problem"><a href="#离散对数问题-DLP-discrete-logarithm-problem" class="headerlink" title="离散对数问题(DLP,discrete logarithm problem)"></a>离散对数问题(DLP,discrete logarithm problem)</h3><p><strong>定义</strong>：设$G$是循环群，$g\in G$是生成元，对于$y\in G$和正<br>整数$x$,有 $y=g^x$,则离散对数问题定义为：<br>给定$y$和$g$,求$x (=log_g(y))$。</p>
+<p>目前无高效算法</p>
+<hr>
+<h2 id="RSA的模数"><a href="#RSA的模数" class="headerlink" title="RSA的模数"></a>RSA的模数</h2><p>RSA的所有计算都是在$\mathbb{Z}_n^*$上进行的</p>
+<p>$n=pq$</p>
+<p>$\phi(n)=\phi(pq)=\phi(p)\phi(q)=(p-1)(q-1)$</p>
+<p>$\forall a\in \mathbb{Z}_n^*,ord_n(a)\mid (p-1)(q-1)$</p>
+<p>$设\lambda(n)=lcm(p-1,q-1)&lt;(p-1)(q-1)$</p>
+<p>$\mathbb{Z}_n^*没有原根（生成元），不是循环群$</p>
+<p><strong>定理</strong>：<script type="math/tex">\mathbb{Z}_n^*中任意元素的阶都是\lambda(n)的因子</script></p>
+<script type="math/tex; mode=display">\mathbb{Z}_n^*$$中没有原根(生成元)，不是循环群
+
+$$Z_p^*$$和$$Z_q^*$$都是循环群 (因为$p$和$q$是素数，满足五种情况之一)
+
+$$\mathbb{Z}_p^*$$里元素最大阶为$p-1$
+
+$$Z_q^*$$里元素最大阶为$q-1$
+
+$$\mathbb{Z}_n^*$$里元素最大阶为$\lambda(n)$
+
+**结论**：$$Z_n^*$$的阶是$\phi(n)$,元素最大阶为$\lambda(n)$
+
+$$\forall a\in Z_n^*$$,由$ord_p(a)$和$ord_\mathfrak{q}(a)$如下计算$ord_n(a):$
+$$ord_n(a)=lcm(ord_p(a),ord_q(a))</script><blockquote>
+<p><strong>注意</strong>：有的<script type="math/tex">a\in\mathbb{Z}_n^*</script>,     $a$的阶$ord_n(\boldsymbol{a})=\lambda(\boldsymbol{n})$,但是<br>$ord_p(a)&lt;p-1$和/或$ord_q(a)&lt;q-1$</p>
+</blockquote>
+<hr>
+<h2 id="补充：群的体系"><a href="#补充：群的体系" class="headerlink" title="补充：群的体系"></a>补充：群的体系</h2><p><strong>广群(groupoid)</strong>：<script type="math/tex">(A,*)</script>，仅满足<strong>封闭性</strong></p>
+<p><strong>半群(semigroup)</strong>：<script type="math/tex">(A,*)</script>，满足封闭性，<strong>结合律</strong></p>
+<p><strong>幺半群(monoid,独异点)</strong>：<script type="math/tex">(A,*)</script>，满足封闭性，结合律，有<strong>单位元(幺元)</strong></p>
+<p><strong>群(group)</strong>：<script type="math/tex">(A,*)</script>，满足封闭性，结合律，有单位元(幺元)，每个元素都有<strong>逆元</strong></p>
+<p><strong>阿贝尔群</strong>：<script type="math/tex">(A,*)</script>，满足封闭性，结合律，有单位元(幺元)，每个元素都有逆元，运算还满足<strong>交换律</strong></p>
+<p><strong>循环群</strong>：具有生成元的<strong>阿贝尔群</strong></p>
+<hr>
+<h1 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h1><p>★,°<em>:.☆(￣▽￣)/$:</em>.°★<em> 。<em>*爱来自😽C.A.T😸喵</em></em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io">Zechariah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io/2024/08/01/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%BE%A4%E8%AE%BA/">https://zechariah-0703.github.io/2024/08/01/筑基篇·抽象代数·群论/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zechariah-0703.github.io" target="_blank">Zechariahの博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a><a class="post-meta__tags" href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/">抽象代数</a><a class="post-meta__tags" href="/tags/%E7%BE%A4%E8%AE%BA/">群论</a></div><div class="post_share"><div class="social-share" data-image="/img/fengmian2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/04/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E7%AF%87%C2%B7AES/" title="密码算法篇·AES"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">密码算法篇·AES</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/30/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E5%88%9D%E7%AD%89%E6%95%B0%E8%AE%BA/" title="筑基篇·初等数论"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">筑基篇·初等数论</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E6%9C%89%E9%99%90%E5%9F%9F/" title="筑基篇·抽象代数·有限域"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-11</div><div class="title">筑基篇·抽象代数·有限域</div></div></a></div><div><a href="/2024/08/09/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%8E%AF%E8%AE%BA/" title="筑基篇·抽象代数·环论"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-09</div><div class="title">筑基篇·抽象代数·环论</div></div></a></div><div><a href="/2023/10/28/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E7%AF%87%C2%B7RSA/" title="密码算法篇·RSA"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-28</div><div class="title">密码算法篇·RSA</div></div></a></div><div><a href="/2024/08/04/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%E7%AF%87%C2%B7AES/" title="密码算法篇·AES"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-04</div><div class="title">密码算法篇·AES</div></div></a></div><div><a href="/2024/07/30/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E5%88%9D%E7%AD%89%E6%95%B0%E8%AE%BA/" title="筑基篇·初等数论"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-30</div><div class="title">筑基篇·初等数论</div></div></a></div><div><a href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" title="筑基篇·椭圆曲线"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-11</div><div class="title">筑基篇·椭圆曲线</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zechariah</div><div class="author-info__description">肘击和送不出去的黄瓜🥒，哪个更痛?😭</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E5%8D%B7%E4%BA%8C%EF%BC%88%E7%BE%A4%E8%AE%BA%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">密码学学习笔记——筑基篇·卷二（群论）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%BE%B7%E4%BF%AE%E4%B8%9A%EF%BC%8C%E5%BF%97%E9%81%93%E9%BC%8E%E6%96%B0-Crypto-dream-it%E2%80%99s-mygo"><span class="toc-number">1.1.</span> <span class="toc-text">进德修业，志道鼎新$Crypto\ dream,it’s\ mygo!!!!!$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%94%E8%80%85"><span class="toc-number">1.2.</span> <span class="toc-text">笔者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.3.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BE%A4%E8%AE%BA"><span class="toc-number"></span> <span class="toc-text">群论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E7%BB%93%E6%9E%84-algebraic-structure"><span class="toc-number">1.</span> <span class="toc-text">代数结构(algebraic structure)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4-Group"><span class="toc-number">2.</span> <span class="toc-text">群(Group)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">一些概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">4.</span> <span class="toc-text">群的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E8%B4%9D%E5%B0%94%E7%BE%A4%EF%BC%88abelian-group%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">阿贝尔群（abelian group）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BE%A4%E7%9A%84%E7%AE%80%E8%AE%B0%E7%AC%A6%E5%8F%B7"><span class="toc-number">5.1.</span> <span class="toc-text">群的简记符号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E7%BE%A4-subgroup"><span class="toc-number">6.</span> <span class="toc-text">子群(subgroup)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mathbb-G-%E7%9A%84%E5%AD%90%E7%BE%A4"><span class="toc-number">6.1.</span> <span class="toc-text">$\mathbb{G}的子群$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%BE%A4%E7%9A%84%E5%8D%95%E4%BD%8D%E5%85%83"><span class="toc-number">6.2.</span> <span class="toc-text">子群的单位元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%BE%A4%E7%9A%84%E9%80%86%E5%85%83"><span class="toc-number">6.3.</span> <span class="toc-text">子群的逆元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%AD%90%E7%BE%A4"><span class="toc-number">6.4.</span> <span class="toc-text">判断子群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%AD%90%E7%BE%A4"><span class="toc-number">6.5.</span> <span class="toc-text">构造子群</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%90%E7%BE%A4%E6%9E%84%E9%80%A0%E5%AD%90%E7%BE%A4"><span class="toc-number">6.5.1.</span> <span class="toc-text">子群构造子群</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E7%BE%A4%E7%9A%84%E5%AD%90%E7%BE%A4"><span class="toc-number">6.6.</span> <span class="toc-text">整数群的子群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%AD%90%E7%BE%A4-normal-subgroup"><span class="toc-number">6.7.</span> <span class="toc-text">正规子群(normal subgroup)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%AA%E9%9B%86-coset"><span class="toc-number">7.</span> <span class="toc-text">陪集(coset)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">7.1.</span> <span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E8%B4%9D%E5%B0%94%E7%BE%A4%E7%9A%84%E9%99%AA%E9%9B%86"><span class="toc-number">7.2.</span> <span class="toc-text">阿贝尔群的陪集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%AE%9A%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">拉格朗日定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%86%E7%BE%A4"><span class="toc-number">9.</span> <span class="toc-text">商群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E7%BE%A4%E7%9A%84%E9%98%B6"><span class="toc-number">9.1.</span> <span class="toc-text">商群的阶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4%E5%90%8C%E6%80%81-group-homomorphism-%E5%90%8D%E5%AD%97%E5%8F%AF%E7%88%B1%E6%8D%8F%F0%9F%98%B8"><span class="toc-number">10.</span> <span class="toc-text">群同态(group homomorphism,名字可爱捏😸)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8-1"><span class="toc-number">10.1.</span> <span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%80%81%E5%83%8F-homomorphic-image"><span class="toc-number">10.2.</span> <span class="toc-text">同态像(homomorphic image)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%80%81%E6%A0%B8"><span class="toc-number">10.3.</span> <span class="toc-text">同态核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BE%A4%E5%90%8C%E6%80%81%E7%9A%84%E5%A4%8D%E5%90%88"><span class="toc-number">10.4.</span> <span class="toc-text">群同态的复合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%BB%A1%E5%90%8C%E6%80%81"><span class="toc-number">10.5.</span> <span class="toc-text">判断满同态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E6%98%A0%E5%B0%84-inclusion-map"><span class="toc-number">10.6.</span> <span class="toc-text">嵌入映射(inclusion map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E6%98%A0%E5%B0%84-natural-map"><span class="toc-number">10.7.</span> <span class="toc-text">自然映射(natural map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#m%E6%AC%A1%E6%96%B9%E6%98%A0%E5%B0%84-m-power-map"><span class="toc-number">10.8.</span> <span class="toc-text">m次方映射(m-power map)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E6%98%A0%E5%B0%84-Jacobi-map"><span class="toc-number">10.9.</span> <span class="toc-text">雅可比映射(Jacobi map)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%A4%E5%90%8C%E6%9E%84-group-isomorphism"><span class="toc-number">11.</span> <span class="toc-text">群同构(group isomorphism)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%90%8C%E6%9E%84%E5%AE%9A%E7%90%86-first-isomorphism-theorem"><span class="toc-number">11.1.</span> <span class="toc-text">第一同构定理(first isomorphism theorem)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%BE%A4-cyclic-group"><span class="toc-number">12.</span> <span class="toc-text">循环群(cyclic group)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%BE%A4%E7%9A%84%E5%90%8C%E6%9E%84"><span class="toc-number">12.1.</span> <span class="toc-text">循环群的同构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%83%E7%B4%A0%E7%9A%84%E9%98%B6-order"><span class="toc-number">13.</span> <span class="toc-text">元素的阶(order)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E6%A0%B9-primitive-root"><span class="toc-number">14.</span> <span class="toc-text">原根(primitive root)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E6%A0%B9%E5%AD%98%E5%9C%A8%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">14.1.</span> <span class="toc-text">原根存在的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E5%8E%9F%E6%A0%B9-%E7%94%9F%E6%88%90%E5%85%83-%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">14.2.</span> <span class="toc-text">寻找原根(生成元)的算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0-discrete-logarithm"><span class="toc-number">15.</span> <span class="toc-text">离散对数(discrete logarithm)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0%E9%97%AE%E9%A2%98-DLP-discrete-logarithm-problem"><span class="toc-number">15.1.</span> <span class="toc-text">离散对数问题(DLP,discrete logarithm problem)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA%E7%9A%84%E6%A8%A1%E6%95%B0"><span class="toc-number">16.</span> <span class="toc-text">RSA的模数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E7%BE%A4%E7%9A%84%E4%BD%93%E7%B3%BB"><span class="toc-number">17.</span> <span class="toc-text">补充：群的体系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8C%E7%BB%93%E6%92%92%E8%8A%B1"><span class="toc-number"></span> <span class="toc-text">完结撒花</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/10/06/lcg/" title="lcg"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lcg"/></a><div class="content"><a class="title" href="/2024/10/06/lcg/" title="lcg">lcg</a><time datetime="2024-10-06T12:58:06.000Z" title="发表于 2024-10-06 20:58:06">2024-10-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="工具篇·z3约束求解器"><img src="/img/loading.gif" data-original="/img/fengmian1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·z3约束求解器"/></a><div class="content"><a class="title" href="/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="工具篇·z3约束求解器">工具篇·z3约束求解器</a><time datetime="2024-08-23T10:44:09.000Z" title="发表于 2024-08-23 18:44:09">2024-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" title="筑基篇·椭圆曲线"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="筑基篇·椭圆曲线"/></a><div class="content"><a class="title" href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" title="筑基篇·椭圆曲线">筑基篇·椭圆曲线</a><time datetime="2024-08-11T05:09:11.000Z" title="发表于 2024-08-11 13:09:11">2024-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E6%9C%89%E9%99%90%E5%9F%9F/" title="筑基篇·抽象代数·有限域"><img src="/img/loading.gif" data-original="/img/fengmian2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="筑基篇·抽象代数·有限域"/></a><div class="content"><a class="title" href="/2024/08/11/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E6%9C%89%E9%99%90%E5%9F%9F/" title="筑基篇·抽象代数·有限域">筑基篇·抽象代数·有限域</a><time datetime="2024-08-11T05:08:43.000Z" title="发表于 2024-08-11 13:08:43">2024-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/09/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%8E%AF%E8%AE%BA/" title="筑基篇·抽象代数·环论"><img src="/img/loading.gif" data-original="/img/fengmian2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="筑基篇·抽象代数·环论"/></a><div class="content"><a class="title" href="/2024/08/09/%E7%AD%91%E5%9F%BA%E7%AF%87%C2%B7%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0%C2%B7%E7%8E%AF%E8%AE%BA/" title="筑基篇·抽象代数·环论">筑基篇·抽象代数·环论</a><time datetime="2024-08-09T11:12:54.000Z" title="发表于 2024-08-09 19:12:54">2024-08-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Zechariah</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
