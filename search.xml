@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title>lcg</title>
-      <link href="/2024/10/06/lcg/"/>
-      <url>/2024/10/06/lcg/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>工具篇·z3约束求解器</title>
       <link href="/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"/>
       <url>/2024/08/23/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7z3%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
@@ -91,11 +78,11 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 筑基篇 </tag>
-            
             <tag> 有限域 </tag>
             
             <tag> 抽象代数 </tag>
+            
+            <tag> 筑基篇 </tag>
             
         </tags>
       
@@ -122,9 +109,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 筑基篇 </tag>
-            
             <tag> 抽象代数 </tag>
+            
+            <tag> 筑基篇 </tag>
             
             <tag> 环论 </tag>
             
@@ -151,9 +138,9 @@
       
         <tags>
             
-            <tag> AES </tag>
-            
             <tag> 密码学 </tag>
+            
+            <tag> AES </tag>
             
         </tags>
       
@@ -180,9 +167,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 筑基篇 </tag>
-            
             <tag> 抽象代数 </tag>
+            
+            <tag> 筑基篇 </tag>
             
             <tag> 群论 </tag>
             
@@ -211,9 +198,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 数论 </tag>
-            
             <tag> 筑基篇 </tag>
+            
+            <tag> 数论 </tag>
             
         </tags>
       
@@ -251,9 +238,9 @@
       
         <tags>
             
-            <tag> 密码学 </tag>
-            
             <tag> RSA </tag>
+            
+            <tag> 密码学 </tag>
             
         </tags>
       
