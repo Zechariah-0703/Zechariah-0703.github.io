@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Zechariahの博客 - CTF小趴菜自进阶</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="不会RE的PWN手不是好密码手">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zechariahの博客">
+<meta property="og:url" content="https://zechariah-0703.github.io/page/3/index.html">
+<meta property="og:site_name" content="Zechariahの博客">
+<meta property="og:description" content="不会RE的PWN手不是好密码手">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/avatar.jpg">
+<meta property="article:author" content="Zechariah">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Zechariahの博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-03-26 01:19:29'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/background.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Zechariahの博客"><span class="site-name">Zechariahの博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Zechariahの博客</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/12/PWN%E5%85%A5%E9%97%A8-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="PWN入门-格式化字符串"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN入门-格式化字符串"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/12/PWN%E5%85%A5%E9%97%A8-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="PWN入门-格式化字符串">PWN入门-格式化字符串</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-12T13:37:20.000Z" title="发表于 2025-02-12 21:37:20">2025-02-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">
+参考漏洞挖掘基础之格式化字符串-CSDN博客
+格式化字符串函数介绍格式化字符串函数将第一个参数作为格式化字符串，根据其来解析之后的参数。一般来说格式化字符串在利用的时候主要分三个部分
+
+格式化字符串函数
+格式化字符串
+后续参数格式化字符串函数输入函数：scanf输出函数：![[Pasted image 20250209201042.png]]格式化字符串基本格式如下%[parameter] [flag] [field width] [.precision] [length] type
+中括号中的属性是可选的，不需要一定都写上，比如%08x，他就只用到了其中的一部分。下面举几个比较重要的属性讲一下：parameter
+n$，获取格式化字符串中的指定参数flagfield width，输出的最小宽度precision，输出的最大长度length，输出的长度
+hh，输出一个字节
+h，输出一个双字节type
+d/i，有符号整数
+u，无符号整数
+x/X，16 进制 unsigned int 。x 使用小写字母；X 使用大写字母。如果指定了精度，则输出的数字不足时在左侧补 0。默认精度为 1。精 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/11/PWN%E5%85%A5%E9%97%A8-%E5%9F%BA%E6%9C%ACROP/" title="PWN入门-基本ROP"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN入门-基本ROP"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/11/PWN%E5%85%A5%E9%97%A8-%E5%9F%BA%E6%9C%ACROP/" title="PWN入门-基本ROP">PWN入门-基本ROP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-11T13:36:13.000Z" title="发表于 2025-02-11 21:36:13">2025-02-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">基本ROP前言在了解栈溢出后，我们再从原理和方法两方面深入理解基本ROP
+什么是ROPROP的全称为Return-oriented programming（返回导向编程），这是一种高级的内存攻击技术可以用来绕过现代操作系统的各种通用防御（比如内存不可执行和代码签名等）。通过上一篇文章栈溢出漏洞原理详解与利用，我们可以发现栈溢出的控制点是ret处，那么ROP的核心思想就是利用以ret结尾的指令序列把栈中的应该返回EIP的地址更改成我们需要的值，从而控制程序的执行流程。
+为什么要ROP探究原因之前，我们先看一下什么是NX(DEP)，NX即No-execute(不可执行)的意思，NX(DEP）的基本原理是将数据所在内存页标识为不可执行，当程序溢出成功转入shellcode时，程序会尝试在数据页面上执行指令，此时CPU就会抛出异常，而不是去执行恶意指令。随着NX保护的开启，以往直接向栈或者堆上直接注入代码的方式难以继续发挥效果。所以就有了各种绕过办法，rop就是一种。
+ROP(Return Oriented Programming)，其主要思想是在栈缓冲区溢出的基础上，利用程序中已有的小片段（ ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/09/PWN%E5%9F%BA%E7%A1%80-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5/" title="PWN基础-动态链接"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-动态链接"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/09/PWN%E5%9F%BA%E7%A1%80-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5/" title="PWN基础-动态链接">PWN基础-动态链接</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-09T13:42:15.000Z" title="发表于 2025-02-09 21:42:15">2025-02-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">什么动态链接（Dynamic linking）动态链接 是指在程序装载时通过 动态链接器 将程序所需的所有 动态链接库(Dynamic linking library) 装载至进程空间中（ 程序按照模块拆分成各个相对独立的部分），当程序运行时才将他们链接在一起形成一个完整程序的过程。它诞生的最主要的原因是 静态链接 太过于浪费内存和磁盘的空间，并且现在的软件开发都是模块化开发，不同的模块都是由不同的厂家开发，在 静态链接 的情况下，一旦其中某一模块发生改变就会导致整个软件都需要重新编译，而通过 动态链接 的方式就推迟这个链接过程到了程序运行时进行。
+优点1、节省内存、磁盘空间    例如磁盘中有两个程序，p1、p2，且他们两个都包含 lib.o 这个模块，在 静态链接 的情况下他们在链接输出可执行文件时都会包含 lib.o 这个模块，这就造成了磁盘空间的浪费。当这两个程序运行时，内存中同样也就包含了这两个相同的模块，这也就使得内存空间被浪费。当系统中包含大量类似 lib.o 这种被多个程序共享的模块时，也就会造成很大空间的浪费。在 动态链接 的情况下，运行 p1 ，当系统发现需要用到  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/09/PWN%E5%9F%BA%E7%A1%80-something-about-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="PWN基础-something_about_操作系统"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-something_about_操作系统"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/09/PWN%E5%9F%BA%E7%A1%80-something-about-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="PWN基础-something_about_操作系统">PWN基础-something_about_操作系统</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-09T13:40:21.000Z" title="发表于 2025-02-09 21:40:21">2025-02-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">操作系统signal机制signal 机制是类 unix 系统中进程之间相互传递信息的一种方法。一般，我们也称其为软中断信号，或者软中断。比如说，进程之间可以通过系统调用 kill 来发送软中断信号。一般分为三大步：
+
+kill并不是字面意思——杀死进程KILL功能描述：用于向任何进程组或进程发送信号
+
+内核向某个进程发送signal机制，该进程会被暂时挂起，进入内核态
+内核会为该进程保存相应的上下文，跳转到之前注册好的signal handler中处理signal
+signal返回
+内核为进程恢复之前保留的上下文，恢复进程的执行内核在保存进程相应上下文阶段主要是将所有寄存器压入栈中，以及压入 signal 信息，以及指向 sigreturn 的系统调用地址。此时栈的结构如下图所示，我们称 ucontext 以及 siginfo 这一段为 Signal Frame。需要注意的是，这一部分是在用户进程的地址空间的。之后会跳转到注册过的 signal handler 中处理相应的 signal。因此，当 signal handler 执行完之后，就会执行 sigreturn 代码。对于 s ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/08/PWN%E5%9F%BA%E7%A1%80-bss%E6%AE%B5%E3%80%81data%E6%AE%B5%E3%80%81text%E6%AE%B5%E3%80%81%E5%A0%86-heap-%E5%92%8C%E6%A0%88-stack/" title="PWN基础-bss段、data段、text段、堆(heap)和栈(stack)"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-bss段、data段、text段、堆(heap)和栈(stack)"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/08/PWN%E5%9F%BA%E7%A1%80-bss%E6%AE%B5%E3%80%81data%E6%AE%B5%E3%80%81text%E6%AE%B5%E3%80%81%E5%A0%86-heap-%E5%92%8C%E6%A0%88-stack/" title="PWN基础-bss段、data段、text段、堆(heap)和栈(stack)">PWN基础-bss段、data段、text段、堆(heap)和栈(stack)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-08T13:41:32.000Z" title="发表于 2025-02-08 21:41:32">2025-02-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">概念bss段bss段（bss segment）通常是指用来存放程序中未初始化的全局变量的一块内存区域。bss段属于静态内存分配。
+data段数据段（data segment）通常是指用来存放程序中已初始化的全局变量的一块内存区域。数据段属于静态内存分配。
+text段代码段（code segment/text segment）通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读(某些架构也允许代码段为可写，即允许修改程序)。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。
+堆(heap)堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）。
+栈(stack)栈又称堆栈，是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/08/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7ROPgadgets-and-One-gadget-RCE/" title="工具篇·ROPgadgets_and_One-gadget_RCE"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·ROPgadgets_and_One-gadget_RCE"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/08/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7ROPgadgets-and-One-gadget-RCE/" title="工具篇·ROPgadgets_and_One-gadget_RCE">工具篇·ROPgadgets_and_One-gadget_RCE</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-08T12:09:47.000Z" title="发表于 2025-02-08 20:09:47">2025-02-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/">解题工具</a></span></div><div class="content">ROPgadget是一种基于代码复用技术的攻击工具，它可以帮助攻击者在二进制文件中找到可利用的代码片段（即ROP链中的gadgets），从而构建出有效的攻击载荷。以下是ROPgadget的基本使用方法：
+查找gadgets使用ROPgadget的基本命令格式是：ROPgadget --binary &lt;文件名&gt; --only &lt;gadgets类型&gt;
+
+其中，&lt;文件名&gt;是你想要分析的二进制文件的路径，是你想要查找的gadgets的类型，比如“pop|ret”表示查找所有包含pop和ret指令的gadgets。
+常用ROPgadget --binary example --string &quot;/bin/sh&quot;ROPgadget --binary example --only &quot;int&quot;例如，如果你想在名为example的二进制文件中查找所有的pop和ret gadgets，你可以使用以下命令：ROPgadget --binary example --only &quot;pop|ret&quot;jmp和retROPga ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/07/PWN%E5%9F%BA%E7%A1%80-%E6%A0%88%E5%B8%A7%E3%80%81C%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/" title="PWN基础-栈帧、C语言函数调用"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-栈帧、C语言函数调用"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/07/PWN%E5%9F%BA%E7%A1%80-%E6%A0%88%E5%B8%A7%E3%80%81C%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/" title="PWN基础-栈帧、C语言函数调用">PWN基础-栈帧、C语言函数调用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-07T13:40:54.000Z" title="发表于 2025-02-07 21:40:54">2025-02-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">在x86的计算机系统中，内存空间中的栈主要用于保存函数的参数，返回值，返回地址，本地变量等。一切的函数调用都要将不同的数据、地址压入或者弹出栈。因此，为了更好地理解函数的调用，我们需要先来看看栈是怎么工作的。
+栈简单来说，栈是一种LIFO形式的数据结构，所有的数据都是后进先出。这种形式的数据结构正好满足我们调用函数的方式: 父函数调用子函数，父函数在前，子函数在后；返回时，子函数先返回，父函数后返回。栈支持两种基本操作，push和pop。push将数据压入栈中，pop将栈中的数据弹出并存储到指定寄存器或者内存中。
+这里是一个push操作的例子。假设我们有一个栈，其中黄色部分是已经写入数据的区域，绿色部分是还未写入数据的区域。现在我们将0x50压入栈中：push $0x50 &#x2F;&#x2F; 将0x50的压入栈我们再来看看pop操作的例子：
+pop &#x2F;&#x2F; 将0x50弹出栈
+
+
+上面例子中栈的生长方向是从高地址到低地址的，这是因为在下文讲的栈帧中，栈就是向下生长的，因此这里也用这种形式的栈第二，pop操作后，栈中的数据并没有被清空，只是该数据我们无法直接访问。有 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/06/ELF%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" title="ELF文件保护机制"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ELF文件保护机制"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/06/ELF%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" title="ELF文件保护机制">ELF文件保护机制</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-06T13:41:44.000Z" title="发表于 2025-02-06 21:41:44">2025-02-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">Linux ELF文件的保护主要有四种：Canary、NX、PIE、RELRO
+1.CanaryStackCanary表示栈的报警保护。在函数返回值之前添加的一串随机数（不超过机器字长）（也叫做cookie），末位为/x00（提供了覆盖最后一字节输出泄露Canary的可能），如果出现缓冲区溢出攻击，覆盖内容覆盖到Canary处，就会改变原本该处的数值，当程序执行到此处时，会检查Canary值是否跟开始的值一样，如果不一样，程序会崩溃，从而达到保护返回地址的目的。
+&#x2F;&#x2F;GCC用法
+gcc -o test test.c &#x2F;&#x2F; 默认情况下，不开启Canary保护
+gcc -fno-stack-protector -o test test.c &#x2F;&#x2F;禁用栈保护
+gcc -fstack-protector -o test test.c &#x2F;&#x2F;启用堆栈保护，不过只为局部变量中含有 char 数组的函数插入保护代码
+gcc -fstack-protector-all -o test test.c &#x2F;&#x2F;启用 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/06/PWN%E5%9F%BA%E7%A1%80-something-about-linux/" title="PWN基础-something_about_linux"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-something_about_linux"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/06/PWN%E5%9F%BA%E7%A1%80-something-about-linux/" title="PWN基础-something_about_linux">PWN基础-something_about_linux</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-06T13:40:36.000Z" title="发表于 2025-02-06 21:40:36">2025-02-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">文件权限‌rwxp分别指Linux虚拟内存权限的不同部分，具体含义如下‌
+
+‌r‌：读权限（Read），表示可以读取内存区域的内容。
+‌w‌：写权限（Write），表示可以修改内存区域的内容。
+‌x‌：执行权限（Execute），表示可以执行内存区域中的代码。
+‌p‌：私有权限（Private），表示该内存区域的内容在进程间是私有的，其他进程无法访问。系统调用号在Linux中，每个系统调用被赋予一个系统调用号。这样，通过独一无二的号就可以关联系统调用。当用户空间的进程执行一个系统调用的时候，这个系统调用号就用来指明到底是要执行哪个系统调用；进程不会提及系统调用的名称。
+
+系统调用号相当重要，一旦分配就不能再又任何变更，否则编译好的应用程序就会崩溃。此外，如果一个系统调用被删除，它所占用的系统调用号也不允许被回收利用，否则，以前编译过的代码会调用这个系统调用，但事实上却调用的是另外一个系统调用。
+
+Linux有一个“未实现”系统调用sys_ni_syscall(),它除了返回-ENOSYS外不做任何其他工作，这个错误号就是专门针对无效的系统调用而设的。虽然很罕见，但如果一个系统调用被删除 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/04/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7objdump/" title="工具篇·objdump"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·objdump"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/04/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7objdump/" title="工具篇·objdump">工具篇·objdump</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-04T12:11:01.000Z" title="发表于 2025-02-04 20:11:01">2025-02-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/">解题工具</a></span></div><div class="content">objdump 命令是 GNU Binutils 二进制工具集的一员，用于查看目标文件或可执行文件的组成信息，以可读的形式打印二进制文件的内容。objdump [options] obj_file #[]表示可选，obj_file表示目标文件
+常用objdump -T libc.so.6 |grep system
+objdump参数-a, --archive-headers
+	显示档案头信息，展示档案每一个成员的文件格式。效果等同于命令 ar -tv
+-b, --target&#x3D;BFDNAME
+	指定目标码格式。这不是必须的，objdump 能自动识别许多格式，比如 objdump -b oasys -m vax -h fu.o 显示 fu.o 的头部摘要信息，明确指出该文件是 Vax 系统下用 Oasys 编译器生成的目标文件。objdump -i 将给出这里可以指定的目标码格式列表
+-C, --demangle[&#x3D;STYLE]
+	目标文件中的符号解码成用户级名称。比如移除符号修饰时在变量与函数名前添加的下划线等。
+-d, --disassemble
+	反汇编目标文 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zechariah</div><div class="author-info__description">不会RE的PWN手不是好密码手</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN刷题笔记（长期更新）"/></a><div class="content"><a class="title" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）">PWN刷题笔记（长期更新）</a><time datetime="2025-03-25T13:39:37.000Z" title="发表于 2025-03-25 21:39:37">2025-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/12/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（寄存器-传参-指令速查）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-汇编（寄存器-传参-指令速查）"/></a><div class="content"><a class="title" href="/2025/03/12/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（寄存器-传参-指令速查）">PWN基础-汇编（寄存器-传参-指令速查）</a><time datetime="2025-03-12T13:42:40.000Z" title="发表于 2025-03-12 21:42:40">2025-03-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/11/Web-PWN%E5%AD%A6%E4%B9%A0/" title="Web-PWN知识"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web-PWN知识"/></a><div class="content"><a class="title" href="/2025/03/11/Web-PWN%E5%AD%A6%E4%B9%A0/" title="Web-PWN知识">Web-PWN知识</a><time datetime="2025-03-11T13:48:48.000Z" title="发表于 2025-03-11 21:48:48">2025-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/11/unlink/" title="unlink"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="unlink"/></a><div class="content"><a class="title" href="/2025/03/11/unlink/" title="unlink">unlink</a><time datetime="2025-03-10T16:25:24.000Z" title="发表于 2025-03-11 00:25:24">2025-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/10/%E5%A0%86%E5%85%A5%E9%97%A8-malloc-hook%E5%92%8C-free-hook%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86/" title="堆入门-__malloc_hook和__free_hook劫持原理"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆入门-__malloc_hook和__free_hook劫持原理"/></a><div class="content"><a class="title" href="/2025/03/10/%E5%A0%86%E5%85%A5%E9%97%A8-malloc-hook%E5%92%8C-free-hook%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86/" title="堆入门-__malloc_hook和__free_hook劫持原理">堆入门-__malloc_hook和__free_hook劫持原理</a><time datetime="2025-03-10T13:44:38.000Z" title="发表于 2025-03-10 21:44:38">2025-03-10</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Crypto%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Crypto数学基础</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/PWN/"><span class="card-category-list-name">PWN</span><span class="card-category-list-count">28</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/"><span class="card-category-list-name">密码算法</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">解题工具</span><span class="card-category-list-count">9</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/HTTP/" style="font-size: 1.1em; color: #999">HTTP</a> <a href="/tags/%E6%95%B0%E8%AE%BA/" style="font-size: 1.1em; color: #999">数论</a> <a href="/tags/PWN/" style="font-size: 1.5em; color: #99a9bf">PWN</a> <a href="/tags/%E7%AD%91%E5%9F%BA%E7%AF%87/" style="font-size: 1.27em; color: #99a0a9">筑基篇</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">操作系统</a> <a href="/tags/RSA/" style="font-size: 1.1em; color: #999">RSA</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.1em; color: #999">格式化字符串漏洞</a> <a href="/tags/IDA/" style="font-size: 1.1em; color: #999">IDA</a> <a href="/tags/z3/" style="font-size: 1.1em; color: #999">z3</a> <a href="/tags/PWN%E6%8A%80%E5%B7%A7/" style="font-size: 1.27em; color: #99a0a9">PWN技巧</a> <a href="/tags/Web-PWN/" style="font-size: 1.1em; color: #999">Web-PWN</a> <a href="/tags/%E7%BE%A4%E8%AE%BA/" style="font-size: 1.1em; color: #999">群论</a> <a href="/tags/%E7%8E%AF%E8%AE%BA/" style="font-size: 1.1em; color: #999">环论</a> <a href="/tags/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" style="font-size: 1.1em; color: #999">椭圆曲线</a> <a href="/tags/%E5%A0%86/" style="font-size: 1.21em; color: #999ea4">堆</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 1.39em; color: #99a4b4">密码学</a> <a href="/tags/%E6%A0%88/" style="font-size: 1.33em; color: #99a2af">栈</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 1.1em; color: #999">汇编</a> <a href="/tags/%E6%9C%89%E9%99%90%E5%9F%9F/" style="font-size: 1.1em; color: #999">有限域</a> <a href="/tags/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/" style="font-size: 1.44em; color: #99a7ba">解题工具</a> <a href="/tags/Linux/" style="font-size: 1.16em; color: #999b9e">Linux</a> <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" style="font-size: 1.16em; color: #999b9e">抽象代数</a> <a href="/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">整数溢出</a> <a href="/tags/AES/" style="font-size: 1.1em; color: #999">AES</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">三月 2025</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">二月 2025</span><span class="card-archive-list-count">27</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">45</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-03-25T17:19:29.048Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Zechariah</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: (str) => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: (subtitleType) => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["我世界的太阳，被月亮吞噬光芒","温暖还在指尖，天黑前，还给你一点点"])
+  } else {
+    document.getElementById("subtitle").textContent = "我世界的太阳，被月亮吞噬光芒"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
