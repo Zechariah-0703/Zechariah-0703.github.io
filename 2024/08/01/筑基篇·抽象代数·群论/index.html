@@ -184,7 +184,7 @@
 <blockquote>
 <p>例：</p>
 <p>$(\mathbb{Z},+)$<br>封闭性：整数相加还是整数<br>结合律：整数相加满足加法结合律<br>单位元：0 (任何整数加0都等于它本身)<br>逆 元：整数的相反数<br><strong>是群😊</strong></p>
-<p>$(\mathbb{Q},\times)$<br>封闭性：有理数相乘还是有理数<br>结合律：有理数相乘满足乘法结合律<br>单位元：1 (任何有理数乘1都等于它本身)<br>逆 元：有理数的倒数(0除外)<br><strong>不是群😭</strong><br>$(\mathbb{Q}\setminus{0},\times)$就是<strong>群</strong>了</p>
+<p>$(\mathbb{Q},\times)$<br>封闭性：有理数相乘还是有理数<br>结合律：有理数相乘满足乘法结合律<br>单位元：1 (任何有理数乘1都等于它本身)<br>逆 元：有理数的倒数(0除外)<br><strong>不是群😭</strong><br>$(\mathbb{Q}\setminus\{0\},\times)$就是<strong>群</strong>了</p>
 <p>$(\mathbb{Z_p^<em>},\times)$<br>封闭性：相乘再模p，还是$\mathbb{Z_p^</em>}$里的元素<br>结合律：模运算下乘法满足乘法结合律<br>单位元：1 <br>逆 元：乘法逆元<br><strong>是群😊</strong></p>
 </blockquote>
 <p>“$(\mathbb{G},*)$是一个群”,通常简写作：“$\mathbb{G}$是一个群”</p>
@@ -193,7 +193,7 @@
 </blockquote>
 <hr>
 <h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p><strong>有限群</strong>：$\mathbb{G}$是有限集，比如 $(\mathbb{Z}_p^*,X)$称$\mathbb{G}$里元素个数为群$\mathbb{G}$的“阶”,记为$|\mathbb{G}|$</p>
-<p><strong>无限群</strong>：$\mathbb{G}$是无限集，比如$(\mathbb{Z},+)$、$(\mathbb{Q}\setminus{0},\times)$，群$\mathbb{G}$的“阶”为<strong>无限阶</strong></p>
+<p><strong>无限群</strong>：$\mathbb{G}$是无限集，比如$(\mathbb{Z},+)$、$(\mathbb{Q}\setminus\{0\},\times)$，群$\mathbb{G}$的“阶”为<strong>无限阶</strong></p>
 <p><strong>单位元、逆元</strong></p>
 <ul>
 <li>封闭性$\Rightarrow$左单位元=右单位元=单位元</li>
@@ -201,7 +201,7 @@
 </ul>
 <p><strong>平凡群</strong>：群里只有一个元素时，称为“平凡群”。唯一元素就是单位元。</p>
 <blockquote>
-<p>如:$({1},\times)$<br>封闭性：1$\times$1=1<br>结合律：乘法结合律<br>单位元：1 <br>逆 元：1$\times$1=1<br></p>
+<p>如:$(\{1\},\times)$<br>封闭性：1$\times$1=1<br>结合律：乘法结合律<br>单位元：1 <br>逆 元：1$\times$1=1<br></p>
 </blockquote>
 <hr>
 <h2 id="群的性质"><a href="#群的性质" class="headerlink" title="群的性质"></a>群的性质</h2><ul>
@@ -221,7 +221,7 @@
 <p>$(a^{-1})^t=(a^t)^{-1}$</p>
 <hr>
 <h2 id="子群-subgroup"><a href="#子群-subgroup" class="headerlink" title="子群(subgroup)"></a>子群(subgroup)</h2><p><strong>定义</strong>：设<script type="math/tex">(\mathbb{G},*)</script>是群，$\mathbb{H}$是$\mathbb{G}$的非空子集，如果<script type="math/tex">(\mathbb{H},*)</script>是一个群，则称<script type="math/tex">(\mathbb{H},*)</script>是<script type="math/tex">(\mathbb{G},*)</script>的子群。</p>
-<h3 id="mathbb-G-的子群"><a href="#mathbb-G-的子群" class="headerlink" title="$\mathbb{G}的子群$"></a>$\mathbb{G}的子群$</h3><p>平凡子群：<script type="math/tex">(\{e\},*)、(\mathbb{G},*)</script><br>非平凡子群：<script type="math/tex">(\mathbb{H},*)</script> 且 $\mathbb{H}\neq { e} , G$ (又称真子群)</p>
+<h3 id="mathbb-G-的子群"><a href="#mathbb-G-的子群" class="headerlink" title="$\mathbb{G}的子群$"></a>$\mathbb{G}的子群$</h3><p>平凡子群：<script type="math/tex">(\{e\},*)、(\mathbb{G},*)</script><br>非平凡子群：<script type="math/tex">(\mathbb{H},*)</script> 且 $\mathbb{H}\neq \{ e\} , G$ (又称真子群)</p>
 <p>阿贝尔群的子群也一定是阿贝尔群</p>
 <h3 id="子群的单位元"><a href="#子群的单位元" class="headerlink" title="子群的单位元"></a>子群的单位元</h3><p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的子群，$e\in \mathbb{G}$是单位元，则$e$ 也是子群$\mathbb{H}$的单位元。(<strong>省流：群的单位元也是其子群的单位元</strong>)</p>
 <h3 id="子群的逆元"><a href="#子群的逆元" class="headerlink" title="子群的逆元"></a>子群的逆元</h3><p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的子群，$a\in \mathbb{H}$是单位元，,则 $a^{-1}\in \mathbb{H}$(<strong>省流:元素在子群中,其逆元也必在该子群中</strong>)</p>
@@ -230,18 +230,18 @@
 <p><strong>判断子群(2)</strong></p>
 <p><strong>定理</strong>：$\mathbb{H}$是群$\mathbb{G}$的非空子集，如果$\mathbb{H}$是有限集，而且$\mathbb{G}$的运算<em>在$\mathbb{H}$上满足封闭性，则$\mathbb{H}$是$\mathbb{G}$的子群。(<em>*省流：$\mathbb{H}$是有限集、封闭，便是子群</em></em>)</p>
 <h3 id="构造子群"><a href="#构造子群" class="headerlink" title="构造子群"></a>构造子群</h3><p><strong>方法1</strong></p>
-<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}^m:={a^m\mid a\in \mathbb{G}}$是$\mathbb{G}$的子群。</p>
+<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}^m:=\{a^m\mid a\in \mathbb{G}\}$是$\mathbb{G}$的子群。</p>
 <script type="math/tex; mode=display">\mathbb{(Z_n^{*}})^2是\mathbb{Z_n^{*}}的子群</script><script type="math/tex; mode=display">\mathbb{(Z_n^{*}})^m是\mathbb{Z_n^{*}}的子群</script><p><strong>方法2</strong></p>
-<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}{m}:={a\in \mathbb{G}\mid a^m=e}$是$\mathbb{G}$的子群。</p>
+<p><strong>定理</strong>：$\mathbb{G}$是阿贝尔群，$m\in\mathbb{Z}$,<br>则$\mathbb{G}\{m\}:=\{a\in \mathbb{G}\mid a^m=e\}$是$\mathbb{G}$的子群。</p>
 <blockquote>
-<p>例:$\mathbb{Z_n}{m}=\mathbb{Z_n}{d}=\frac nd\mathbb{Z_n}\quad d=gcd(m,n),且构造的子群只有d个元素$</p>
+<p>例:$\mathbb{Z_n}\{m\}=\mathbb{Z_n}\{d\}=\frac nd\mathbb{Z_n}\quad d=gcd(m,n),且构造的子群只有d个元素$</p>
 </blockquote>
 <p><strong>方法3</strong></p>
 <p><strong>定理</strong>：<script type="math/tex">\begin{aligned}&\text{设}G\text{是群,}a\in G\text{,则}\\&<a>:=\{a^z\mid z\in Z\}\text{是由}a\text{生成的}G\text{的子群。}\end{aligned}</script></p>
-<h4 id="子群构造子群"><a href="#子群构造子群" class="headerlink" title="子群构造子群"></a>子群构造子群</h4><p><strong>定理1</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是阿贝尔群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\mathbb{H}_2$也是$G$的子群。<br>$H:=\mathbb{H}_1\mathbb{H}_2:={a_1*a_2|a_1\in \mathbb{H}_1,a_2\in \mathbb{H}_2}$</p>
+<h4 id="子群构造子群"><a href="#子群构造子群" class="headerlink" title="子群构造子群"></a>子群构造子群</h4><p><strong>定理1</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是阿贝尔群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\mathbb{H}_2$也是$G$的子群。<br>$H:=\mathbb{H}_1\mathbb{H}_2:=\{a_1*a_2|a_1\in \mathbb{H}_1,a_2\in \mathbb{H}_2\}$</p>
 <p><strong>扩展</strong>：以上定理中的2个子群扩展至<strong>任意多个子群</strong>，结论依然成立</p>
 <hr>
-<p><strong>定理2</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2$<br>也是$\mathbb{G}$的子群。(省流：子群的交集是子群)<br>$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2:={a\mid a\in \mathbb{H}_1,a\in \mathbb{H}_2}$</p>
+<p><strong>定理2</strong>：$\mathbb{H}_1$和$\mathbb{H}_2$是群$\mathbb{G}$的子群，则$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2$<br>也是$\mathbb{G}$的子群。(省流：子群的交集是子群)<br>$\mathbb{H}:=\mathbb{H}_1\cap \mathbb{H}_2:=\{a\mid a\in \mathbb{H}_1,a\in \mathbb{H}_2\}$</p>
 <p><strong>扩展</strong>：以上定理中的2个子群扩展至<strong>任意多个子群</strong>，结论依然成立</p>
 <hr>
 <p><strong>子群的并集未必是子群</strong></p>
@@ -261,7 +261,7 @@
 <script type="math/tex; mode=display">\mathbb{H}a:=\{h*a|h\in \mathbb{H}\}</script><p>称为 $\mathbb{H}$ 关于$a$在$\mathbb{G}$中的右陪集 (right cost)。</p>
 <p>陪集：$[a]_\mathbb{H}$<br>左陪集：$a\mathbb{H}$<br>右陪集：$\mathbb{H}a$</p>
 <p><strong>左右陪集相等不能说明满足交换律，只能说明对于右陪集的一个元素存在左陪集的一个元素使得两者相等</strong></p>
-<p>$b=a<em>h或a=b</em>h，\exist h\in \mathbb{H}\a,b会被分类到同一个陪集$</p>
+<p>$b=a<em>h或a=b</em>h，\exist h\in \mathbb{H}\\a,b会被分类到同一个陪集$</p>
 <p>$a\equiv b \pmod {\mathbb{H}}:a和b在同一个(由\mathbb{H}构造的)陪集里$</p>
 <p>$\iff b\equiv a\pmod{\mathbb{H}}$</p>
 <p>$\iff b \equiv a*h,\exist\ h\in \mathbb{H}$</p>
@@ -273,7 +273,7 @@
 <li>$a\in \mathbb{H}\iff[a]_\mathbb{H}=\mathbb{H}$</li>
 <li><script type="math/tex; mode=display">[a]_\mathbb{H}=[b]_\mathbb{H}\Leftrightarrow a^{-1}*b\in \mathbb{H}\text{ (或 }b^{-1}*a\in \mathbb{H})</script></li>
 </ul>
-<p>$a\equiv b\pmod {\mathbb{H}}:a和b在同一个(由\mathbb{H}构造的)陪集里\\iff b=a*h,\exists h\in \mathbb{H}\\iff b\in [a]_\mathbb{H}$</p>
+<p>$a\equiv b\pmod {\mathbb{H}}:a和b在同一个(由\mathbb{H}构造的)陪集里\\\iff b=a*h,\exists h\in \mathbb{H}\\\iff b\in [a]_\mathbb{H}$</p>
 <script type="math/tex; mode=display">\begin{aligned}
 \ [a]_{n\mathbb{Z}}& =\{b\in \mathbb{Z}\mid b\equiv a\pmod{n}\} \\
 &=\{b\in \mathbb{Z}\mid b=a+nz,z\in \mathbb{Z}\} \\
@@ -290,19 +290,19 @@
 <p>注意：$如果对于\forall a,都有a\mathbb{H}=\mathbb{H}a,则\mathbb{G}未必是阿贝尔群$</p>
 <p><strong>性质2</strong>：阿贝尔群的子群都是正规子群<br><strong>性质3</strong>：阿贝尔群的任意子群都可以构造商群<br><strong>性质4</strong>：阿贝尔群的子群构造的商群也是阿贝尔群</p>
 <hr>
-<h2 id="拉格朗日定理"><a href="#拉格朗日定理" class="headerlink" title="拉格朗日定理"></a>拉格朗日定理</h2><p><strong>定理</strong>：$\mathbb{G}是有限群，\mathbb{H}是\mathbb{G}的任意子群，\则|\mathbb{H}|\mid|\mathbb{G}|$</p>
-<p>$\begin{aligned}&amp;\text{证明:设}\mathbb{H}\text{构造的陪集为}[a_1]_\mathbb{H},…,[a_n]_\mathbb{H}\text{,它们是}\mathbb{G}\text{的}\&amp;\text{划分。所以,}|\mathbb{G}|=\sum_{i=1}^n|[a_i]_\mathbb{H}|=\sum_{i=1}^n|\mathbb{H}|=n|\mathbb{H}|\end{aligned}$</p>
+<h2 id="拉格朗日定理"><a href="#拉格朗日定理" class="headerlink" title="拉格朗日定理"></a>拉格朗日定理</h2><p><strong>定理</strong>：$\mathbb{G}是有限群，\mathbb{H}是\mathbb{G}的任意子群，\\则|\mathbb{H}|\mid|\mathbb{G}|$</p>
+<p>$\begin{aligned}&amp;\text{证明:设}\mathbb{H}\text{构造的陪集为}[a_1]_\mathbb{H},…,[a_n]_\mathbb{H}\text{,它们是}\mathbb{G}\text{的}\\&amp;\text{划分。所以,}|\mathbb{G}|=\sum_{i=1}^n|[a_i]_\mathbb{H}|=\sum_{i=1}^n|\mathbb{H}|=n|\mathbb{H}|\end{aligned}$</p>
 <hr>
 <h2 id="商群"><a href="#商群" class="headerlink" title="商群"></a>商群</h2><p><strong>定义</strong>：$群(\mathbb{G}/\mathbb{N},*):群\mathbb{G}在模\mathbb{N}下的商群$</p>
-<p>$集合\mathbb{G}/\mathbb{N}={[a]_\mathbb{N}|a\in \mathbb{G}}$</p>
+<p>$集合\mathbb{G}/\mathbb{N}=\{[a]_\mathbb{N}|a\in \mathbb{G}\}$</p>
 <p>$\mathbb{N}为正规子群，正规子群是啥？往上翻😾$</p>
 <script type="math/tex; mode=display">二元运算[a]_\mathbb{N}*[b]_\mathbb{N}=[a*b]_\mathbb{N}</script><p>正规子群是其中的<strong>平凡陪集</strong>，商群重点关注其中的非平凡陪集，元素不属于正规子群</p>
-<p>整数群$\mathbb{Z}={0,\pm1,\pm2,…}$</p>
-<p>子群$n\mathbb{Z}={0,\pm n,\pm2n,…}$</p>
+<p>整数群$\mathbb{Z}=\{0,\pm1,\pm2,…\}$</p>
+<p>子群$n\mathbb{Z}=\{0,\pm n,\pm2n,…\}$</p>
 <p>商群$\mathbb{Z}/ n\mathbb{Z}:$ </p>
-<p>$[ 0] _{n\mathbb{Z}}= { 0, \pm n, \pm 2n, . . . }=[0]$<br>$[1]_{n\mathbb{Z}}={1,1\pm n,1\pm2n,…}=[1]$<br>$[2]_{n\mathbb{Z}}={2,2\pm n,2\pm2n,…}=[2]$<br>$\dots$<br>$[n-1]_{n\mathbb{Z}}={n-1,(n-1)\pm n,…}=[n-1]$<br>$[n]_{n\mathbb{Z}}={n,n\pm n,n\pm2n…}=[0]$<br>$[n+1]_{n\mathbb{Z}}={n+1,(n+1)\pm n,…}=[1]$</p>
+<p>$[ 0] _{n\mathbb{Z}}= \{ 0, \pm n, \pm 2n, . . . \}=[0]$<br>$[1]_{n\mathbb{Z}}=\{1,1\pm n,1\pm2n,…\}=[1]$<br>$[2]_{n\mathbb{Z}}=\{2,2\pm n,2\pm2n,…\}=[2]$<br>$\dots$<br>$[n-1]_{n\mathbb{Z}}=\{n-1,(n-1)\pm n,…\}=[n-1]$<br>$[n]_{n\mathbb{Z}}=\{n,n\pm n,n\pm2n…\}=[0]$<br>$[n+1]_{n\mathbb{Z}}=\{n+1,(n+1)\pm n,…\}=[1]$</p>
 <p>$\dots$</p>
-<p>$\mathbb{Z}/ n\mathbb{Z}={[0],[1],\dots \,[n-1]}=\mathbb{Z_n}$</p>
+<p>$\mathbb{Z}/ n\mathbb{Z}=\{[0],[1],\dots \,[n-1]\}=\mathbb{Z_n}$</p>
 <p>在整数群里，<strong>陪集</strong>和<strong>剩余类</strong>本质上是同一个东西，都是在等价关系上形成的等价类</p>
 <h3 id="商群的阶"><a href="#商群的阶" class="headerlink" title="商群的阶"></a>商群的阶</h3><p>$[\mathbb{G}:\mathbb{N}]商群\mathbb{G}/\mathbb{N}的阶$</p>
 <p><strong>定理1</strong>：$\mathbb{G}是有限群，\mathbb{N}是\mathbb{G}的正规子群，[\mathbb{G}:\mathbb{N}]=\frac{\mathbb{G}}{\mathbb{N}}$</p>
@@ -318,8 +318,8 @@
 <p>4.$H^{\prime}是G^{\prime}的子群\Rightarrow f^{-1}(H^{\prime})是G的子群$<br>扩展：$H^{\prime}={e^{\prime}}$</p>
 <p>5.$f(a^m)=f(a)^m,\quad\forall a\in G,\forall m\in \mathbb{Z}$</p>
 <h3 id="同态像-homomorphic-image"><a href="#同态像-homomorphic-image" class="headerlink" title="同态像(homomorphic image)"></a>同态像(homomorphic image)</h3><p>$f:\mathbb{G}\to \mathbb{G}^\prime$ </p>
-<p><strong>同态像</strong>$ Imf:=f(G):={f(a)|a\in G},(同态像Imf是G^{\prime}的子群)$</p>
-<h3 id="同态核"><a href="#同态核" class="headerlink" title="同态核"></a>同态核</h3><p><strong>同态核</strong>$Kerf:={a\in G|f(a)=e^{\prime}},(同态核Kerf是G的子群)$</p>
+<p><strong>同态像</strong>$ Imf:=f(G):=\{f(a)|a\in G\},(同态像Imf是G^{\prime}的子群)$</p>
+<h3 id="同态核"><a href="#同态核" class="headerlink" title="同态核"></a>同态核</h3><p><strong>同态核</strong>$Kerf:=\{a\in G|f(a)=e^{\prime}\},(同态核Kerf是G的子群)$</p>
 <p>$(e^{\prime}$表示$G^\prime$的单位元)</p>
 <p><strong>定理</strong>：$f{:}G\to G^{\prime}\text{ 是群同态,则Ker }f\text{是正规子群}$</p>
 <h3 id="群同态的复合"><a href="#群同态的复合" class="headerlink" title="群同态的复合"></a>群同态的复合</h3><p><strong>定理</strong>：$f$是$(G,*)$到$(G^\prime,\otimes)$的群同态，$f^\prime$是$(G^\prime,\otimes)$到$(G^{\prime\prime}$,田)的群同态，则$f$和$f^\prime$的复合</p>
@@ -344,8 +344,8 @@ $$f: G\to G^{\prime}是群同态,\forall a,b\in G,有\\f(a)=f(b)\Leftrightarrow 
 <p>$G \to G$</p>
 <p>$a\to f(a)=a^m$</p>
 <p>$Imf=G^m$</p>
-<p>$Kerf=G{m}$</p>
-<h3 id="雅可比映射-Jacobi-map"><a href="#雅可比映射-Jacobi-map" class="headerlink" title="雅可比映射(Jacobi map)"></a>雅可比映射(Jacobi map)</h3><p>$\mathbb{Z}_n^* \to {\pm 1}$</p>
+<p>$Kerf=G\{m\}$</p>
+<h3 id="雅可比映射-Jacobi-map"><a href="#雅可比映射-Jacobi-map" class="headerlink" title="雅可比映射(Jacobi map)"></a>雅可比映射(Jacobi map)</h3><p>$\mathbb{Z}_n^* \to \{\pm 1\}$</p>
 <p>$a\to J_n(a)=(\frac an)$</p>
 <hr>
 <h2 id="群同构-group-isomorphism"><a href="#群同构-group-isomorphism" class="headerlink" title="群同构(group isomorphism)"></a>群同构(group isomorphism)</h2><ul>
