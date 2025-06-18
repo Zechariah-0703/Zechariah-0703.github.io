@@ -8,16 +8,105 @@
 <meta property="og:image" content="https://zechariah-0703.github.io/img/avatar.jpg">
 <meta property="article:author" content="Zechariah">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zechariah-0703.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: undefined,
   translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
     success: '复制成功',
-    error: '复制错误',
+    error: '复制失败',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
@@ -33,14 +122,14 @@
     month: '个月前'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
   infinitegrid: {
     js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
     buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
-  islazyload: false,
+  islazyloadPlugin: false,
   isAnchor: false,
   percent: {
     toc: true,
@@ -49,176 +138,100 @@
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Zechariahの博客',
-  isPost: false,
-  isHome: true,
-  isHighlightShrink: flase,
+  isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2025-06-18 16:32:32'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
-
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
-
-        document.head.appendChild(script)
-      })
-    
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/background.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Zechariahの博客"><span class="site-name">Zechariahの博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Zechariahの博客</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2025/03/09/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" title="堆中的off-by-one"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆中的off-by-one"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/03/09/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" title="堆中的off-by-one">堆中的off-by-one</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-03-09T13:44:52.000Z" title="发表于 2025-03-09 21:44:52">2025-03-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">前言off-by-one这种技术不仅仅适用于堆，在栈溢出中也可以得到很好的应用，由于ctf很喜欢在堆中出题。严格来说off-by-one漏洞是一种特殊的溢出漏洞，off-by-one指程序向缓冲区中写入时，写入的字节数超过了这个缓冲区本身所申请的字节数并且只越界了一个字节
-漏洞原理off-by-one这种漏洞的形成和整形溢出很相似，往往都是由于对边界的检查不够严谨，当然也不排除和写入的size正好就只多了一个字节的情况，边界验证不严谨通常有两种情况：
-
-使用循环语句向堆块中写入数据时，循环的次数设置错误，导致多写了一个字节，后面会举例讲解
-对字符串长度判断有误简例1.循环边界不严谨int my_gets(char *ptr,int size)&#123;    int i;    for(i = 0; i &lt;= size; i++)    &#123;        ptr[i] = getchar();    &#125;    return i;&#125;int main()&#123;    char *chunk1,*chunk2;    chunk1 = (char  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/03/03/PWN%E6%8A%80%E5%B7%A7-mprotect%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E6%9D%83%E9%99%90/" title="PWN技巧-mprotect修改内存保护权限"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-mprotect修改内存保护权限"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/03/03/PWN%E6%8A%80%E5%B7%A7-mprotect%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E6%9D%83%E9%99%90/" title="PWN技巧-mprotect修改内存保护权限">PWN技巧-mprotect修改内存保护权限</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-03-03T13:38:16.000Z" title="发表于 2025-03-03 21:38:16">2025-03-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">mprotect 函数用于设置一块内存的保护权限（将从 start 开始、长度为 len 的内存的保护属性修改为 prot 指定的值），函数原型如下所示：#include &lt;sys/mman.h&gt;int mprotect(void *addr, size_t len, int prot);
-
-prot 的取值如下，通过 | 可以将几个属性结合使用（值相加）：
-PROT_READ：可写，值为 1
-PROT_WRITE：可读， 值为 2
-PROT_EXEC：可执行，值为 4
-PROT_NONE：不允许访问，值为 0
-
-
-
-需要注意的是，指定的内存区间必须包含整个内存页（4K），起始地址 start 必须是一个内存页的起始地址，并且区间长度 len 必须是页大小的整数倍。
-如果执行成功，函数返回 0；如果执行失败，函数返回 -1，并且通过 errno 变量表示具体原因。错误的原因主要有以下几个：
-
-EACCES：该内存不能设置为相应权限。这是可能发生的，比如 mmap(2) 映射一个文件为只读的，接着使用 mprotect() 修改为 PROT_WRITE。
-EINVAL：sta ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/26/%E5%A0%86%E7%9B%B8%E5%85%B3%E6%95%B4%E7%90%86/" title="堆相关整理"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆相关整理"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/26/%E5%A0%86%E7%9B%B8%E5%85%B3%E6%95%B4%E7%90%86/" title="堆相关整理">堆相关整理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-26T13:43:42.000Z" title="发表于 2025-02-26 21:43:42">2025-02-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">What is 堆？明确一下堆的概念，堆不同于栈，堆是动态分配的（由操作系统内核或者堆管理器），只有在程序中需要时才会分配。在 CTF 的 pwn 程序中，栈是程序加载进内存后就会出现，而堆是由 malloc、alloc、realloc 函数分配内存后才会出现。
-
-windows 和 linux 下的堆分配、管理方式都不同，这里主要讲到的是 CTF 中常出现的 linux 下的堆分配知识先看看堆在虚拟内存中的位置
-堆的生长方向是从低地址向高地址生长的，而栈是从高地址向低地址生长的。实际上堆可以申请到的内存空间比栈要大很多，在 linux 的 4G 的虚拟内存空间里最高可以达到 2.9 G 的空间
-对堆操作的是由堆管理器（ptmalloc2）来实现的，而不是操作系统内核。因为程序每次申请或者释放堆时都需要进行系统调用，系统调用的开销巨大，当频繁进行堆操作时，就会严重影响程序的性能
-
-
-
-下面的分析都是以 glibc 库下的 ptmalloc2 堆管理器来讲解的。
-一、堆的基本结构先简单的画一个图吧：
-堆的结构malloc_chunk的结构
-malloc_chunk结构每个程序分配的内存（ ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/26/PWN%E6%8A%80%E5%B7%A7-%E7%BB%95%E8%BF%87Canary%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A7%BF%E5%8A%BF%EF%BC%88%E5%BE%85%E5%A1%AB%E5%9D%91%EF%BC%89/" title="PWN技巧-绕过Canary的几种姿势"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-绕过Canary的几种姿势"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/26/PWN%E6%8A%80%E5%B7%A7-%E7%BB%95%E8%BF%87Canary%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A7%BF%E5%8A%BF%EF%BC%88%E5%BE%85%E5%A1%AB%E5%9D%91%EF%BC%89/" title="PWN技巧-绕过Canary的几种姿势">PWN技巧-绕过Canary的几种姿势</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T16:39:28.000Z" title="发表于 2025-02-26 00:39:28">2025-02-26</time></span></div><div class="content">1. 格式化字符串漏洞获取Canarypl1=&#x27;a&#x27;*0x49p.sendafter(&#x27;overflow?\n&#x27;,pl1)data=p.recv()canary=b&#x27;\x00&#x27;+data[0x49:0x49+7]canary = int.from_bytes(canary,&#x27;little&#x27;)success(&#x27;canary:&#x27;)success(hex(canary))
-2. 覆盖截断字符获取Canary3. 逐字节爆破Canary
-适用于有通过fork()函数创建的子进程的程序
-爆破原理
-对于Canary，虽然每次进程重启后Canary不同，但是同一个进程中的不同线程的Cannary是相同的，并且通过fork函数创建的子进程中的canary也是相同的，因为fork函数会直接拷贝父进程的内存。
-最低位为0x00，之后逐次爆破，如果canary爆破不成功，则程序崩溃；爆破成功则程序进行下面的逻辑。由此可判断爆破是否成功。
-我们可以利用这样的特点，彻底逐个字节将Canary爆破出来。通用模板fr ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/25/PWN%E6%8A%80%E5%B7%A7-%E5%85%B6%E4%BB%96/" title="PWN技巧-其他"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-其他"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/25/PWN%E6%8A%80%E5%B7%A7-%E5%85%B6%E4%BB%96/" title="PWN技巧-其他">PWN技巧-其他</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T13:38:27.000Z" title="发表于 2025-02-25 21:38:27">2025-02-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">换库strings libc.so.6 | grep &#x27;ubuntu&#x27;#Ubuntu GLIBC 2.35-0ubuntu3.8#Ubuntu GLIBC 2.23-0ubuntu11.3./download 2.23-0ubuntu11.3_amd64patchelf --set-interpreter /home/zechariah/glibc-all-in-one/libs/2.35-0ubuntu3.9_amd64/ld-linux-x86-64.so.2 filenamepatchelf --replace-needed libc.so.6 ./libc.so.6 filename    
-Capstone字节码转汇编代码from capstone import *shellcode_x86 = b&quot;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73&quot;shellcode_x86 += b&quot;\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0&quot;shellcode_x86 +=  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/25/%E4%B8%80%E8%88%AC%E6%B5%81%E7%A8%8B%E4%B8%8Eexp%E6%9D%BF%E5%AD%90/" title="一般流程与exp板子"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一般流程与exp板子"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/25/%E4%B8%80%E8%88%AC%E6%B5%81%E7%A8%8B%E4%B8%8Eexp%E6%9D%BF%E5%AD%90/" title="一般流程与exp板子">一般流程与exp板子</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T12:14:23.000Z" title="发表于 2025-02-25 20:14:23">2025-02-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">一般流程chmod u+xchecksecsudo -s echo 0 &gt; /proc/sys/kernel/randomize_va_spacesudo vmhgfs-fuse .host:/ /mnt/hgfs -o subtype=vmhgfs-fuse,allow_other
-Chromium OS Docs - Linux System Call Table
-泄露libclibc database search
-系统调用Chromium OS Docs - Linux System Call Table速查源码Glibc source code (glibc-2.41.9000) - Bootlin Elixir Cross Referencer
-编写expfrom pwn import *context(os=&#x27;linux&#x27;, arch=&#x27;amd64&#x27;, log_level=&#x27;debug&#x27;)context.terminal = [&quot;tmux&quot;, &quot;splitw&quot;, &q ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/23/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（字节序寄存器-传参-指令速查）"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-汇编（字节序寄存器-传参-指令速查）"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/23/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（字节序寄存器-传参-指令速查）">PWN基础-汇编（字节序寄存器-传参-指令速查）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-23T13:42:40.000Z" title="发表于 2025-02-23 21:42:40">2025-02-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">寄存器字节序又称 端序 或 尾序（英语中用单词：Endianness 表示）。在计算机领域中，指电脑内存中 占用多个字节的数据的字节 在 内存中的排列顺序。
-
-大端序（Big-Endian）将数据的低位字节存放在内存的高位地址，高位字节存放在低位地址。这种排列方式与数据用字节表示时的书写顺序一致，符合人类的阅读习惯。
-小端序（Little-Endian），将一个多位数的低位放在较小的地址处，高位放在较大的地址处，则称小端序。小端序与人类的阅读习惯相反，但更符合计算机读取内存的方式，因为CPU读取内存中的数据时，是从低地址向高地址方向进行读取的。
-
-
-
-为什么会有字节序，统一用大端序不行吗？答案是，计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。内存中的多字节数据相对于内存地址有大端和小端之分 ， 磁盘文件中的多字节数据相对于文件中的偏移地址也有大端小端之分 。 网络数据流同样有大端小端之分 ， 也就是说,当接收端收到第一个字 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/22/Art-of-shellcode/" title="Art_of_shellcode"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Art_of_shellcode"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/22/Art-of-shellcode/" title="Art_of_shellcode">Art_of_shellcode</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-21T16:33:09.000Z" title="发表于 2025-02-22 00:33:09">2025-02-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">很有用的网址https://www.exploit-db.com/shellcodes
-https://v3rdant.cn/Pwn.The-Art-of-Shellcode/
-PWN:手动编写 x64 基于syscall 的 shell code(TODO)_x64 syscall pwn-CSDN博客
-</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/19/PWN%E5%85%A5%E9%97%A8-%E8%BF%9B%E9%98%B6ROP/" title="进阶ROP"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="进阶ROP"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/19/PWN%E5%85%A5%E9%97%A8-%E8%BF%9B%E9%98%B6ROP/" title="进阶ROP">进阶ROP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-19T13:36:41.000Z" title="发表于 2025-02-19 21:36:41">2025-02-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">进阶ROPret2__libc_csu_init(64位ELF)利用原理在64位程序中，函数的前6个参数是通过寄存器传递的，但是大多数时候，我们很难找到每一个寄存器对应的gadgets。 这时候，我们可以利用x64下的__libc_scu_init中的gadgets。这个函数是用来对libc进行初始化操作的，而一般的程序都会调用libc函数，所以这个函数一定会存在。我们先来看一下这个函数：
-libc_csu_init利用方法：.text:00000000004005C0 ; void _libc_csu_init(void).text:00000000004005C0                 public __libc_csu_init.text:00000000004005C0 __libc_csu_init proc near               ; DATA XREF: _start+16↑o.text:00000000004005C0 ; __unwind &#123;.text:00000000004005C0                 push     ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/18/PWN%E6%8A%80%E5%B7%A7-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="PWN技巧-栈迁移"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-栈迁移"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/18/PWN%E6%8A%80%E5%B7%A7-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="PWN技巧-栈迁移">PWN技巧-栈迁移</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-18T13:37:42.000Z" title="发表于 2025-02-18 21:37:42">2025-02-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">栈迁移原理介绍与应用 - Max1z - 博客园
-介绍我们首先介绍一下Stack pivoting的含义：该技巧就是劫持栈指针指向攻击者所能控制的内存处，然后再在相应的位置进行ROP。一般来说，我们可能在以下情况需要使用stack pivoting:
-
-可以控制的栈溢出的字节数较少，难以构造较长的ROP链
-开启了PIE保护，栈地址未知，我们可以将栈劫持到已知的区域。
-其它漏洞难以利用，我们需要进行转换，比如说将栈劫持到堆空间，从而在堆上写rop及进行堆漏洞利用此外，利用 stack pivoting有以下几个要求：
-可以控制程序执行流
-可以控制sp指针。一般来说，控制栈指针会使用ROP，常见的控制栈指针的gadgets一般是pop rsp/esp当然，还会有一些其它的姿势。比如说libc_csu_init中的gadgets，我们通过偏移就可以得到控制rsp指针上面是正常的，下面是偏移的此外，还有更加高级的 fake frame
-存在可以控制内容的内存，一般有如下
-bss段。由于进程按页分配内存，分配给bss段的内存大小至少一个页(4k，0x1000)大小。然而一般bss段的内容用不了这 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zechariah</div><div class="author-info__description">不会密码的逆向手不是好PWN手</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/06/17/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E6%9C%9F%E6%9C%AB/" title="《计算机网络》期末大题&amp;名词解释（自用）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机网络》期末大题&amp;名词解释（自用）"/></a><div class="content"><a class="title" href="/2025/06/17/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E6%9C%9F%E6%9C%AB/" title="《计算机网络》期末大题&amp;名词解释（自用）">《计算机网络》期末大题&amp;名词解释（自用）</a><time datetime="2025-06-16T16:33:09.000Z" title="发表于 2025-06-17 00:33:09">2025-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fastbin_attack系列"/></a><div class="content"><a class="title" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列">fastbin_attack系列</a><time datetime="2025-04-12T11:20:54.000Z" title="发表于 2025-04-12 19:20:54">2025-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"/></a><div class="content"><a class="title" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）">NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）</a><time datetime="2025-04-08T08:20:38.000Z" title="发表于 2025-04-08 16:20:38">2025-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr"><img src="/img/loading.gif" data-original="/img/fengmian1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·Angr"/></a><div class="content"><a class="title" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr">工具篇·Angr</a><time datetime="2025-03-29T02:54:34.000Z" title="发表于 2025-03-29 10:54:34">2025-03-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN刷题笔记（长期更新）"/></a><div class="content"><a class="title" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）">PWN刷题笔记（长期更新）</a><time datetime="2025-03-25T13:39:37.000Z" title="发表于 2025-03-25 21:39:37">2025-03-25</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/background.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zechariahの博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Zechariahの博客</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2025/03/09/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" title="堆中的off-by-one"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆中的off-by-one"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/03/09/%E5%A0%86%E4%B8%AD%E7%9A%84off-by-one/" title="堆中的off-by-one">堆中的off-by-one</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-03-09T13:44:52.000Z" title="发表于 2025-03-09 21:44:52">2025-03-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">前言off-by-one这种技术不仅仅适用于堆，在栈溢出中也可以得到很好的应用，由于ctf很喜欢在堆中出题。严格来说off-by-one漏洞是一种特殊的溢出漏洞，off-by-one指程序向缓冲区中写入时，写入的字节数超过了这个缓冲区本身所申请的字节数并且只越界了一个字节 漏洞原理off-by-one这种漏洞的形成和整形溢出很相似，往往都是由于对边界的检查不够严谨，当然也不排除和写入的size正好就只多了一个字节的情况，边界验证不严谨通常有两种情况：  使用循环语句向堆块中写入数据时，循环的次数设置错误，导致多写了一个字节，后面会举例讲解 对字符串长度判断有误简例1.循环边界不严谨int my_gets(char *ptr,int size)&#123;    int i;    for(i = 0; i &lt;= size; i++)    &#123;        ptr[i] = getchar();    &#125;    return i;&#125;int main()&#123;    char *chunk1,*chunk2;    chunk1 = (ch...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/03/03/PWN%E6%8A%80%E5%B7%A7-mprotect%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E6%9D%83%E9%99%90/" title="PWN技巧-mprotect修改内存保护权限"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-mprotect修改内存保护权限"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/03/03/PWN%E6%8A%80%E5%B7%A7-mprotect%E4%BF%AE%E6%94%B9%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E6%9D%83%E9%99%90/" title="PWN技巧-mprotect修改内存保护权限">PWN技巧-mprotect修改内存保护权限</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-03-03T13:38:16.000Z" title="发表于 2025-03-03 21:38:16">2025-03-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">mprotect 函数用于设置一块内存的保护权限（将从 start 开始、长度为 len 的内存的保护属性修改为 prot 指定的值），函数原型如下所示：#include &lt;sys/mman.h&gt;int mprotect(void *addr, size_t len, int prot);  prot 的取值如下，通过 | 可以将几个属性结合使用（值相加）： PROT_READ：可写，值为 1 PROT_WRITE：可读， 值为 2 PROT_EXEC：可执行，值为 4 PROT_NONE：不允许访问，值为 0    需要注意的是，指定的内存区间必须包含整个内存页（4K），起始地址 start 必须是一个内存页的起始地址，并且区间长度 len 必须是页大小的整数倍。 如果执行成功，函数返回 0；如果执行失败，函数返回 -1，并且通过 errno 变量表示具体原因。错误的原因主要有以下几个：  EACCES：该内存不能设置为相应权限。这是可能发生的，比如 mmap(2) 映射一个文件为只读的，接着使用 mprotect() 修改为 PROT_WRITE。 EINVAL：...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/26/%E5%A0%86%E7%9B%B8%E5%85%B3%E6%95%B4%E7%90%86/" title="堆相关整理"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆相关整理"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/26/%E5%A0%86%E7%9B%B8%E5%85%B3%E6%95%B4%E7%90%86/" title="堆相关整理">堆相关整理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-26T13:43:42.000Z" title="发表于 2025-02-26 21:43:42">2025-02-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">What is 堆？明确一下堆的概念，堆不同于栈，堆是动态分配的（由操作系统内核或者堆管理器），只有在程序中需要时才会分配。在 CTF 的 pwn 程序中，栈是程序加载进内存后就会出现，而堆是由 malloc、alloc、realloc 函数分配内存后才会出现。  windows 和 linux 下的堆分配、管理方式都不同，这里主要讲到的是 CTF 中常出现的 linux 下的堆分配知识先看看堆在虚拟内存中的位置 堆的生长方向是从低地址向高地址生长的，而栈是从高地址向低地址生长的。实际上堆可以申请到的内存空间比栈要大很多，在 linux 的 4G 的虚拟内存空间里最高可以达到 2.9 G 的空间 对堆操作的是由堆管理器（ptmalloc2）来实现的，而不是操作系统内核。因为程序每次申请或者释放堆时都需要进行系统调用，系统调用的开销巨大，当频繁进行堆操作时，就会严重影响程序的性能    下面的分析都是以 glibc 库下的 ptmalloc2 堆管理器来讲解的。 一、堆的基本结构先简单的画一个图吧： 堆的结构malloc_chunk的结构 malloc_chunk结构每个程序分配的...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/26/PWN%E6%8A%80%E5%B7%A7-%E7%BB%95%E8%BF%87Canary%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A7%BF%E5%8A%BF%EF%BC%88%E5%BE%85%E5%A1%AB%E5%9D%91%EF%BC%89/" title="PWN技巧-绕过Canary的几种姿势"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-绕过Canary的几种姿势"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/26/PWN%E6%8A%80%E5%B7%A7-%E7%BB%95%E8%BF%87Canary%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A7%BF%E5%8A%BF%EF%BC%88%E5%BE%85%E5%A1%AB%E5%9D%91%EF%BC%89/" title="PWN技巧-绕过Canary的几种姿势">PWN技巧-绕过Canary的几种姿势</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T16:39:28.000Z" title="发表于 2025-02-26 00:39:28">2025-02-26</time></span></div><div class="content">1. 格式化字符串漏洞获取Canarypl1=&#x27;a&#x27;*0x49p.sendafter(&#x27;overflow?\n&#x27;,pl1)data=p.recv()canary=b&#x27;\x00&#x27;+data[0x49:0x49+7]canary = int.from_bytes(canary,&#x27;little&#x27;)success(&#x27;canary:&#x27;)success(hex(canary)) 2. 覆盖截断字符获取Canary3. 逐字节爆破Canary 适用于有通过fork()函数创建的子进程的程序 爆破原理 对于Canary，虽然每次进程重启后Canary不同，但是同一个进程中的不同线程的Cannary是相同的，并且通过fork函数创建的子进程中的canary也是相同的，因为fork函数会直接拷贝父进程的内存。 最低位为0x00，之后逐次爆破，如果canary爆破不成功，则程序崩溃；爆破成功则程序进行下面的逻辑。由此可判断爆破是否成功。 我们可以利用这样的特点，彻底逐个字节将Canary爆破出来。通用模...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/25/PWN%E6%8A%80%E5%B7%A7-%E5%85%B6%E4%BB%96/" title="PWN技巧-其他"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-其他"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/25/PWN%E6%8A%80%E5%B7%A7-%E5%85%B6%E4%BB%96/" title="PWN技巧-其他">PWN技巧-其他</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T13:38:27.000Z" title="发表于 2025-02-25 21:38:27">2025-02-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">换库strings libc.so.6 | grep &#x27;ubuntu&#x27;#Ubuntu GLIBC 2.35-0ubuntu3.8#Ubuntu GLIBC 2.23-0ubuntu11.3./download 2.23-0ubuntu11.3_amd64patchelf --set-interpreter /home/zechariah/glibc-all-in-one/libs/2.35-0ubuntu3.9_amd64/ld-linux-x86-64.so.2 filenamepatchelf --replace-needed libc.so.6 ./libc.so.6 filename     Capstone字节码转汇编代码from capstone import *shellcode_x86 = b&quot;\x31\xc9\xf7\xe1\x51\x68\x2f\x2f\x73&quot;shellcode_x86 += b&quot;\x68\x68\x2f\x62\x69\x6e\x89\xe3\xb0&quot;shellcode_x86 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/25/%E4%B8%80%E8%88%AC%E6%B5%81%E7%A8%8B%E4%B8%8Eexp%E6%9D%BF%E5%AD%90/" title="一般流程与exp板子"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一般流程与exp板子"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/25/%E4%B8%80%E8%88%AC%E6%B5%81%E7%A8%8B%E4%B8%8Eexp%E6%9D%BF%E5%AD%90/" title="一般流程与exp板子">一般流程与exp板子</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-25T12:14:23.000Z" title="发表于 2025-02-25 20:14:23">2025-02-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">一般流程chmod u+xchecksecsudo -s echo 0 &gt; /proc/sys/kernel/randomize_va_spacesudo vmhgfs-fuse .host:/ /mnt/hgfs -o subtype=vmhgfs-fuse,allow_other Chromium OS Docs - Linux System Call Table 泄露libclibc database search 系统调用Chromium OS Docs - Linux System Call Table速查源码Glibc source code (glibc-2.41.9000) - Bootlin Elixir Cross Referencer 编写expfrom pwn import *context(os=&#x27;linux&#x27;, arch=&#x27;amd64&#x27;, log_level=&#x27;debug&#x27;)context.terminal = [&quot;tmux&quot;, &quot;splitw&quot;,...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/23/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（字节序寄存器-传参-指令速查）"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN基础-汇编（字节序寄存器-传参-指令速查）"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/23/PWN%E5%9F%BA%E7%A1%80-%E6%B1%87%E7%BC%96%EF%BC%88%E5%AF%84%E5%AD%98%E5%99%A8-%E4%BC%A0%E5%8F%82-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%89/" title="PWN基础-汇编（字节序寄存器-传参-指令速查）">PWN基础-汇编（字节序寄存器-传参-指令速查）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-23T13:42:40.000Z" title="发表于 2025-02-23 21:42:40">2025-02-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">寄存器字节序又称 端序 或 尾序（英语中用单词：Endianness 表示）。在计算机领域中，指电脑内存中 占用多个字节的数据的字节 在 内存中的排列顺序。  大端序（Big-Endian）将数据的低位字节存放在内存的高位地址，高位字节存放在低位地址。这种排列方式与数据用字节表示时的书写顺序一致，符合人类的阅读习惯。 小端序（Little-Endian），将一个多位数的低位放在较小的地址处，高位放在较大的地址处，则称小端序。小端序与人类的阅读习惯相反，但更符合计算机读取内存的方式，因为CPU读取内存中的数据时，是从低地址向高地址方向进行读取的。    为什么会有字节序，统一用大端序不行吗？答案是，计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。内存中的多字节数据相对于内存地址有大端和小端之分 ， 磁盘文件中的多字节数据相对于文件中的偏移地址也有大端小端之分 。 网络数据流同样有大端小端之分 ， 也就是说,当接收端收到第...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/22/Art-of-shellcode/" title="Art_of_shellcode"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Art_of_shellcode"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/22/Art-of-shellcode/" title="Art_of_shellcode">Art_of_shellcode</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-21T16:33:09.000Z" title="发表于 2025-02-22 00:33:09">2025-02-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">很有用的网址https://www.exploit-db.com/shellcodes https://v3rdant.cn/Pwn.The-Art-of-Shellcode/ PWN:手动编写 x64 基于syscall 的 shell code(TODO)_x64 syscall pwn-CSDN博客 </div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/02/19/PWN%E5%85%A5%E9%97%A8-%E8%BF%9B%E9%98%B6ROP/" title="进阶ROP"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="进阶ROP"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/19/PWN%E5%85%A5%E9%97%A8-%E8%BF%9B%E9%98%B6ROP/" title="进阶ROP">进阶ROP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-19T13:36:41.000Z" title="发表于 2025-02-19 21:36:41">2025-02-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">进阶ROPret2__libc_csu_init(64位ELF)利用原理在64位程序中，函数的前6个参数是通过寄存器传递的，但是大多数时候，我们很难找到每一个寄存器对应的gadgets。 这时候，我们可以利用x64下的__libc_scu_init中的gadgets。这个函数是用来对libc进行初始化操作的，而一般的程序都会调用libc函数，所以这个函数一定会存在。我们先来看一下这个函数： libc_csu_init利用方法：.text:00000000004005C0 ; void _libc_csu_init(void).text:00000000004005C0                 public __libc_csu_init.text:00000000004005C0 __libc_csu_init proc near               ; DATA XREF: _start+16↑o.text:00000000004005C0 ; __unwind &#123;.text:00000000004005C0                 push ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/02/18/PWN%E6%8A%80%E5%B7%A7-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="PWN技巧-栈迁移"><img class="post-bg" src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN技巧-栈迁移"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/02/18/PWN%E6%8A%80%E5%B7%A7-%E6%A0%88%E8%BF%81%E7%A7%BB/" title="PWN技巧-栈迁移">PWN技巧-栈迁移</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-02-18T13:37:42.000Z" title="发表于 2025-02-18 21:37:42">2025-02-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PWN/">PWN</a></span></div><div class="content">栈迁移原理介绍与应用 - Max1z - 博客园 介绍我们首先介绍一下Stack pivoting的含义：该技巧就是劫持栈指针指向攻击者所能控制的内存处，然后再在相应的位置进行ROP。一般来说，我们可能在以下情况需要使用stack pivoting:  可以控制的栈溢出的字节数较少，难以构造较长的ROP链 开启了PIE保护，栈地址未知，我们可以将栈劫持到已知的区域。 其它漏洞难以利用，我们需要进行转换，比如说将栈劫持到堆空间，从而在堆上写rop及进行堆漏洞利用此外，利用 stack pivoting有以下几个要求： 可以控制程序执行流 可以控制sp指针。一般来说，控制栈指针会使用ROP，常见的控制栈指针的gadgets一般是pop rsp/esp当然，还会有一些其它的姿势。比如说libc_csu_init中的gadgets，我们通过偏移就可以得到控制rsp指针上面是正常的，下面是偏移的此外，还有更加高级的 fake frame 存在可以控制内容的内存，一般有如下 bss段。由于进程按页分配内存，分配给bss段的内存大小至少一个页(4k，0x1000)大小。然而一般bss段的内容用...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zechariah</div><div class="author-info-description">不会密码的逆向手不是好PWN手</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/06/17/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E6%9C%9F%E6%9C%AB/" title="《计算机网络》期末大题&amp;名词解释（自用）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机网络》期末大题&amp;名词解释（自用）"/></a><div class="content"><a class="title" href="/2025/06/17/%E3%80%8A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%8B%E6%9C%9F%E6%9C%AB/" title="《计算机网络》期末大题&amp;名词解释（自用）">《计算机网络》期末大题&amp;名词解释（自用）</a><time datetime="2025-06-16T16:33:09.000Z" title="发表于 2025-06-17 00:33:09">2025-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fastbin_attack系列"/></a><div class="content"><a class="title" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列">fastbin_attack系列</a><time datetime="2025-04-12T11:20:54.000Z" title="发表于 2025-04-12 19:20:54">2025-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"/></a><div class="content"><a class="title" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）">NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）</a><time datetime="2025-04-08T08:20:38.000Z" title="发表于 2025-04-08 16:20:38">2025-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr"><img src="/img/loading.gif" data-original="/img/fengmian1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·Angr"/></a><div class="content"><a class="title" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr">工具篇·Angr</a><time datetime="2025-03-29T02:54:34.000Z" title="发表于 2025-03-29 10:54:34">2025-03-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PWN刷题笔记（长期更新）"/></a><div class="content"><a class="title" href="/2025/03/25/PWN%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89/" title="PWN刷题笔记（长期更新）">PWN刷题笔记（长期更新）</a><time datetime="2025-03-25T13:39:37.000Z" title="发表于 2025-03-25 21:39:37">2025-03-25</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
-            </div>
-            <ul class="card-category-list" id="aside-cat-list">
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Crypto%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Crypto数学基础</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/PWN/"><span class="card-category-list-name">PWN</span><span class="card-category-list-count">29</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%87%BA%E9%A2%98/"><span class="card-category-list-name">出题</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/"><span class="card-category-list-name">密码算法</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%9C%9F%E6%9C%AB/"><span class="card-category-list-name">期末</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">解题工具</span><span class="card-category-list-count">11</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%95%B0%E8%AE%BA/" style="font-size: 1.1em; color: #999">数论</a> <a href="/tags/HTTP/" style="font-size: 1.1em; color: #999">HTTP</a> <a href="/tags/Ghidra/" style="font-size: 1.1em; color: #999">Ghidra</a> <a href="/tags/Web-PWN/" style="font-size: 1.1em; color: #999">Web-PWN</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.1em; color: #999">格式化字符串漏洞</a> <a href="/tags/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" style="font-size: 1.1em; color: #999">椭圆曲线</a> <a href="/tags/%E5%A0%86/" style="font-size: 1.23em; color: #999ea6">堆</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">操作系统</a> <a href="/tags/%E7%AD%91%E5%9F%BA%E7%AF%87/" style="font-size: 1.23em; color: #999ea6">筑基篇</a> <a href="/tags/IDA/" style="font-size: 1.1em; color: #999">IDA</a> <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" style="font-size: 1.17em; color: #999c9f">抽象代数</a> <a href="/tags/PWN/" style="font-size: 1.5em; color: #99a9bf">PWN</a> <a href="/tags/PWN%E6%8A%80%E5%B7%A7/" style="font-size: 1.23em; color: #999ea6">PWN技巧</a> <a href="/tags/%E7%8E%AF%E8%AE%BA/" style="font-size: 1.1em; color: #999">环论</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 1.37em; color: #99a4b2">密码学</a> <a href="/tags/Angr/" style="font-size: 1.1em; color: #999">Angr</a> <a href="/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">整数溢出</a> <a href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" style="font-size: 1.1em; color: #999">期末复习</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">计算机网络</a> <a href="/tags/%E7%BE%A4%E8%AE%BA/" style="font-size: 1.1em; color: #999">群论</a> <a href="/tags/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/" style="font-size: 1.43em; color: #99a6b9">解题工具</a> <a href="/tags/%E6%9C%89%E9%99%90%E5%9F%9F/" style="font-size: 1.1em; color: #999">有限域</a> <a href="/tags/AES/" style="font-size: 1.1em; color: #999">AES</a> <a href="/tags/RSA/" style="font-size: 1.1em; color: #999">RSA</a> <a href="/tags/%E6%A0%88/" style="font-size: 1.3em; color: #99a1ac">栈</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 1.1em; color: #999">汇编</a> <a href="/tags/z3/" style="font-size: 1.1em; color: #999">z3</a> <a href="/tags/Linux/" style="font-size: 1.17em; color: #999c9f">Linux</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">三月 2025</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/02/"><span class="card-archive-list-date">二月 2025</span><span class="card-archive-list-count">28</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">50</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-06-18T08:32:32.819Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Zechariah</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
-  init: (str) => {
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/PWN/" style="font-size: 1.5em; color: #99a9bf">PWN</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">计算机网络</a> <a href="/tags/%E6%A0%88/" style="font-size: 1.3em; color: #99a1ac">栈</a> <a href="/tags/Angr/" style="font-size: 1.1em; color: #999">Angr</a> <a href="/tags/%E5%A0%86/" style="font-size: 1.23em; color: #999ea6">堆</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 1.37em; color: #99a4b2">密码学</a> <a href="/tags/AES/" style="font-size: 1.1em; color: #999">AES</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 1.1em; color: #999">汇编</a> <a href="/tags/Ghidra/" style="font-size: 1.1em; color: #999">Ghidra</a> <a href="/tags/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" style="font-size: 1.1em; color: #999">椭圆曲线</a> <a href="/tags/Web-PWN/" style="font-size: 1.1em; color: #999">Web-PWN</a> <a href="/tags/%E8%A7%A3%E9%A2%98%E5%B7%A5%E5%85%B7/" style="font-size: 1.43em; color: #99a6b9">解题工具</a> <a href="/tags/PWN%E6%8A%80%E5%B7%A7/" style="font-size: 1.23em; color: #999ea6">PWN技巧</a> <a href="/tags/z3/" style="font-size: 1.1em; color: #999">z3</a> <a href="/tags/%E7%BE%A4%E8%AE%BA/" style="font-size: 1.1em; color: #999">群论</a> <a href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" style="font-size: 1.1em; color: #999">期末复习</a> <a href="/tags/Linux/" style="font-size: 1.17em; color: #999c9f">Linux</a> <a href="/tags/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" style="font-size: 1.1em; color: #999">格式化字符串漏洞</a> <a href="/tags/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" style="font-size: 1.1em; color: #999">整数溢出</a> <a href="/tags/%E6%95%B0%E8%AE%BA/" style="font-size: 1.1em; color: #999">数论</a> <a href="/tags/%E7%AD%91%E5%9F%BA%E7%AF%87/" style="font-size: 1.23em; color: #999ea6">筑基篇</a> <a href="/tags/%E6%9C%89%E9%99%90%E5%9F%9F/" style="font-size: 1.1em; color: #999">有限域</a> <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" style="font-size: 1.17em; color: #999c9f">抽象代数</a> <a href="/tags/%E7%8E%AF%E8%AE%BA/" style="font-size: 1.1em; color: #999">环论</a> <a href="/tags/IDA/" style="font-size: 1.1em; color: #999">IDA</a> <a href="/tags/HTTP/" style="font-size: 1.1em; color: #999">HTTP</a> <a href="/tags/RSA/" style="font-size: 1.1em; color: #999">RSA</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">操作系统</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">9</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">28</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/01/">
+            <span class="card-archive-list-date">
+              一月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/07/">
+            <span class="card-archive-list-date">
+              七月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/10/">
+            <span class="card-archive-list-date">
+              十月 2023
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">50</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-06-18T09:45:51.246Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Zechariah</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 6.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
       startDelay: 300,
@@ -227,30 +240,47 @@ bss段。由于进程按页分配内存，分配给bss段的内存大小至少�
       backSpeed: 50,
     }, null))
   },
-  run: (subtitleType) => {
+  run: subtitleType => {
     if (true) {
       if (typeof Typed === 'function') {
         subtitleType()
       } else {
-        getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
       }
     } else {
       subtitleType()
     }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["我世界的太阳，被月亮吞噬光芒","温暖还在指尖，天黑前，还给你一点点"].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
   }
 }
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
 </script><script>function subtitleType () {
-  if (true) {
-    typedJSFn.init(["我世界的太阳，被月亮吞噬光芒","温暖还在指尖，天黑前，还给你一点点"])
-  } else {
-    document.getElementById("subtitle").textContent = "我世界的太阳，被月亮吞噬光芒"
-  }
+  typedJSFn.processSubtitle(["我世界的太阳，被月亮吞噬光芒","温暖还在指尖，天黑前，还给你一点点"])
 }
 typedJSFn.run(subtitleType)</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
 POWERMODE.shake = true;
 POWERMODE.mobile = true;
 document.body.addEventListener('input', POWERMODE);
-</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div>
         <style>
             [bg-lazy] {
                 background-image: none !important;
