@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>江苏省数据安全技术应用职业技能竞赛决赛_逆向WP | Zechariahの博客</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="关于比赛学生组第2名，498分，离第1就差了4分，略有遗憾。不知道奖金是不是每个组都有，如果每个组都有的话还能喜提2k奖金，保底有个奖杯🏆还是不错的。 听学长说是misc,crypto,re混合赛才参加的，结果今年基本纯 misc + 1道 web 渗透 + 1道re，有一半的实操题要渗透打进去了才能拿到附件，但众所周知我除了 web 什么都会做一点，所以有一半的实操题都没拿到附件，所幸赛后有好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP">
+<meta property="og:url" content="https://zechariah-0703.github.io/2025/08/28/JSDSC-final-RE/index.html">
+<meta property="og:site_name" content="Zechariahの博客">
+<meta property="og:description" content="关于比赛学生组第2名，498分，离第1就差了4分，略有遗憾。不知道奖金是不是每个组都有，如果每个组都有的话还能喜提2k奖金，保底有个奖杯🏆还是不错的。 听学长说是misc,crypto,re混合赛才参加的，结果今年基本纯 misc + 1道 web 渗透 + 1道re，有一半的实操题要渗透打进去了才能拿到附件，但众所周知我除了 web 什么都会做一点，所以有一半的实操题都没拿到附件，所幸赛后有好">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/fengmian3.png">
+<meta property="article:published_time" content="2025-08-28T03:33:59.000Z">
+<meta property="article:modified_time" content="2025-08-28T07:29:11.087Z">
+<meta property="article:author" content="Zechariah">
+<meta property="article:tag" content="RE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/fengmian3.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "江苏省数据安全技术应用职业技能竞赛决赛_逆向WP",
+  "url": "https://zechariah-0703.github.io/2025/08/28/JSDSC-final-RE/",
+  "image": "https://zechariah-0703.github.io/img/fengmian3.png",
+  "datePublished": "2025-08-28T03:33:59.000Z",
+  "dateModified": "2025-08-28T07:29:11.087Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zechariah",
+      "url": "https://zechariah-0703.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/2025/08/28/JSDSC-final-RE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '江苏省数据安全技术应用职业技能竞赛决赛_逆向WP',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/fengmian3.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zechariahの博客</span></a><a class="nav-page-title" href="/"><span class="site-name">江苏省数据安全技术应用职业技能竞赛决赛_逆向WP</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">江苏省数据安全技术应用职业技能竞赛决赛_逆向WP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-28T03:33:59.000Z" title="发表于 2025-08-28 11:33:59">2025-08-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-28T07:29:11.087Z" title="更新于 2025-08-28 15:29:11">2025-08-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/RE/">RE</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="关于比赛"><a href="#关于比赛" class="headerlink" title="关于比赛"></a>关于比赛</h2><p><strong>学生组第2名，498分</strong>，离第1就差了4分，略有遗憾。不知道奖金是不是每个组都有，如果每个组都有的话还能喜提2k奖金，保底有个奖杯🏆还是不错的。</p>
+<p>听学长说是<code>misc</code>,<code>crypto</code>,<code>re</code>混合赛才参加的，结果今年基本纯 misc + 1道 web 渗透 + 1道re，有一半的实操题要渗透打进去了才能拿到附件，但众所周知我除了 web 什么都会做一点，所以有一半的实操题都没拿到附件，所幸赛后有好心选手分享，我也拿到了此次比赛唯一一道逆向题的附件。</p>
+<p>其他题简单描述一下，首先misc大部分是写爬虫，或者用其他手段爬取数据，尽量学会python写爬虫；剩余的则是常见的misc/数据处理；web其实就是一道弱口令，密码是项目的名字，我把我所知的渗透方法都尝试了也没想到是弱口令啊，遗憾离场😭；模型安全需要自己反推一个sigmoid的公式，推出来就很简单了，我应该就是靠的这道题才爬到第2的。</p>
+<p>就简单写一下逆向的wp了</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>校园网管理系统的下载管理模块中，password.zip中的csv文件被可疑程序加密（加密的时间是2025年8月18<br>日上午8-12点），导致部分数据无法正常访问。请下载encrypy.zip，分析该加密程序，恢复被加密的数据。<br>在恢复出的数据中定位用户名为“user2030”的账户记录，提交其password字段的值作为答案。</p>
+<p>csv表头为:id,username,password,hash</p>
+</blockquote>
+<h3 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h3><p>ida直接打开程序发现应该是加壳了<img src="/img/loading.gif" data-original="/2025/08/28/JSDSC-final-RE/image-20250828150304025.png" alt="image-20250828150304025" style="zoom:50%;"></p>
+<p>查壳</p>
+<p><img src="/img/loading.gif" data-original="/2025/08/28/JSDSC-final-RE/image-20250828150346750.png" alt="image-20250828150346750" style="zoom:50%;"></p>
+<p>没有魔改的upx壳，直接脱壳</p>
+<p>脱完壳看main函数，程序比较简单，根据我的理解为其<strong>修改了变量名并添加了注释</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*关键代码如下：*/</span></span><br><span class="line">	srand(key ^ <span class="number">0x9E3779B9</span>);                    <span class="comment">// 设种子</span></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">      *step1_ptr++ ^= rand();                   <span class="comment">// 每个字节与rand()结果异或</span></span><br><span class="line">    <span class="keyword">while</span> ( step1_ptr != end_ptr );</span><br><span class="line">    srand(key ^ <span class="number">0x85EBCA77</span>);                    <span class="comment">// 再设seed</span></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      ls_bit = rand() &amp; <span class="number">7</span>;                      <span class="comment">// 取低3bit</span></span><br><span class="line">      <span class="keyword">if</span> ( ls_bit )</span><br><span class="line">        *step2_ptr = __ROL1__(*step2_ptr, ls_bit);<span class="comment">// 左移bit位</span></span><br><span class="line">      ++step2_ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( step2_ptr != end_ptr );</span><br><span class="line">    <span class="keyword">if</span> ( file_length != <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      key_1 = key;</span><br><span class="line">      table_idx = <span class="number">0</span>;</span><br><span class="line">      srand(key_1 ^ <span class="number">0xC2B2AE3D</span>);                <span class="comment">// 再设seed</span></span><br><span class="line">      step3_table = <span class="built_in">malloc</span>(<span class="number">8</span> * file_length);    <span class="comment">// 置换表 (64bit * n)</span></span><br><span class="line">      table = step3_table;</span><br><span class="line">      <span class="keyword">if</span> ( !step3_table )</span><br><span class="line">        sub_1260(<span class="string">&quot;perm alloc&quot;</span>);</span><br><span class="line">      <span class="keyword">do</span></span><br><span class="line">      &#123;</span><br><span class="line">        step3_table[table_idx] = table_idx;     <span class="comment">//  初始化置换表 [0,1,2,...,n-1]</span></span><br><span class="line">        length = table_idx++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> ( file_length != table_idx );</span><br><span class="line">      step3_idx = length;</span><br><span class="line">      <span class="keyword">do</span></span><br><span class="line">      &#123;</span><br><span class="line">        idx = rand();</span><br><span class="line">        v22 = table[step3_idx];</span><br><span class="line">        v23 = &amp;table[idx % (step3_idx + <span class="number">1</span>)];</span><br><span class="line">        table[step3_idx] = *v23;</span><br><span class="line">        *v23 = v22;</span><br><span class="line">        --step3_idx;                            <span class="comment">// 置换表生成</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> ( step3_idx );</span><br><span class="line">      ptr_4 = <span class="built_in">malloc</span>(table_idx);</span><br><span class="line">      <span class="keyword">if</span> ( !ptr_4 )</span><br><span class="line">        sub_1260(<span class="string">&quot;perm buf alloc&quot;</span>);</span><br><span class="line">      <span class="keyword">do</span></span><br><span class="line">      &#123;</span><br><span class="line">        ptr_4[step3_idx] = file_content[table[step3_idx]];<span class="comment">// 根据置换表打乱字节</span></span><br><span class="line">        v25 = step3_idx++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">while</span> ( length != v25 );</span><br><span class="line">      __memcpy_chk(file_content, ptr_4, table_idx, ptr);</span><br><span class="line">      <span class="built_in">free</span>(ptr_4);</span><br><span class="line">      <span class="built_in">free</span>(table);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>该程序是一个 <strong>加密器</strong>，它的加密步骤是：</p>
+<ol>
+<li><strong>随机异或</strong>：<code>byte ^= rand()</code> （种子 = <code>time ^ 0x9E3779B9</code>）</li>
+<li><strong>随机循环左移</strong>：<code>byte = ROL(byte, rand() &amp; 7)</code> （种子 = <code>time ^ 0x85EBCA77</code>）</li>
+<li><strong>随机置换</strong>：按置换表打乱字节顺序 （种子 = <code>time ^ 0xC2B2AE3D</code>）</li>
+</ol>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li><strong>恢复置换</strong><ul>
+<li>生成相同的置换表（用相同种子 <code>time ^ 0xC2B2AE3D</code>）。</li>
+<li>置换是可逆的，用表恢复原顺序。</li>
+</ul>
+</li>
+<li><strong>逆向循环左移</strong><ul>
+<li>重新生成相同的随机数序列（用种子 <code>time ^ 0x85EBCA77</code>）。</li>
+<li>逐字节执行 <strong>循环右移</strong>（与加密时左移相反）。</li>
+</ul>
+</li>
+<li><strong>逆向异或</strong><ul>
+<li>重新生成相同的随机数序列（用种子 <code>time ^ 0x9E3779B9</code>）。</li>
+<li>再次执行 <code>byte ^= rand()</code>（异或是自逆运算）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="解题脚本"><a href="#解题脚本" class="headerlink" title="解题脚本"></a>解题脚本</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> <span class="title function_">ROR1</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> val, <span class="type">int</span> shift)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (val &gt;&gt; shift) | (val &lt;&lt; (<span class="number">8</span> - shift));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">decrypt_file</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *in_filename, <span class="type">const</span> <span class="type">char</span> *out_filename, <span class="type">int</span> timestamp)</span> &#123;</span><br><span class="line">    FILE *in = fopen(in_filename, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!in) &#123;</span><br><span class="line">        perror(<span class="string">&quot;open input&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fseek(in, <span class="number">0</span>, SEEK_END);</span><br><span class="line">    <span class="type">long</span> n = ftell(in);</span><br><span class="line">    rewind(in);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        fclose(in);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Empty file\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *buf = <span class="built_in">malloc</span>(n);</span><br><span class="line">    <span class="keyword">if</span> (!buf) &#123;</span><br><span class="line">        perror(<span class="string">&quot;malloc&quot;</span>);</span><br><span class="line">        fclose(in);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fread(buf, <span class="number">1</span>, n, in) != (<span class="type">size_t</span>)n) &#123;</span><br><span class="line">        perror(<span class="string">&quot;fread&quot;</span>);</span><br><span class="line">        <span class="built_in">free</span>(buf);</span><br><span class="line">        fclose(in);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(in);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (n &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        srand(timestamp ^ <span class="number">0xC2B2AE3D</span>);</span><br><span class="line">        <span class="type">size_t</span> *perm = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">size_t</span>) * n);</span><br><span class="line">        <span class="keyword">if</span> (!perm) &#123;</span><br><span class="line">            perror(<span class="string">&quot;perm alloc&quot;</span>);</span><br><span class="line">            <span class="built_in">free</span>(buf);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; (<span class="type">size_t</span>)n; i++) &#123;</span><br><span class="line">            perm[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = n - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="type">size_t</span> j = rand() % (i + <span class="number">1</span>);</span><br><span class="line">            <span class="type">size_t</span> tmp = perm[i];</span><br><span class="line">            perm[i] = perm[j];</span><br><span class="line">            perm[j] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">unsigned</span> <span class="type">char</span> *tmpbuf = <span class="built_in">malloc</span>(n);</span><br><span class="line">        <span class="keyword">if</span> (!tmpbuf) &#123;</span><br><span class="line">            perror(<span class="string">&quot;perm buf alloc&quot;</span>);</span><br><span class="line">            <span class="built_in">free</span>(buf);</span><br><span class="line">            <span class="built_in">free</span>(perm);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; (<span class="type">size_t</span>)n; i++) &#123;</span><br><span class="line">            tmpbuf[perm[i]] = buf[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">memcpy</span>(buf, tmpbuf, n);</span><br><span class="line">        <span class="built_in">free</span>(tmpbuf);</span><br><span class="line">        <span class="built_in">free</span>(perm);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    srand(timestamp ^ <span class="number">0x85EBCA77</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">long</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="type">int</span> shift = rand() &amp; <span class="number">7</span>;</span><br><span class="line">        <span class="keyword">if</span> (shift) &#123;</span><br><span class="line">            buf[i] = ROR1(buf[i], shift);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    srand(timestamp ^ <span class="number">0x9E3779B9</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">long</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        buf[i] ^= rand();</span><br><span class="line">    &#125;</span><br><span class="line">    FILE *out = fopen(out_filename, <span class="string">&quot;wb&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!out) &#123;</span><br><span class="line">        perror(<span class="string">&quot;open output&quot;</span>);</span><br><span class="line">        <span class="built_in">free</span>(buf);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (fwrite(buf, <span class="number">1</span>, n, out) != (<span class="type">size_t</span>)n) &#123;</span><br><span class="line">        perror(<span class="string">&quot;fwrite&quot;</span>);</span><br><span class="line">        fclose(out);</span><br><span class="line">        <span class="built_in">free</span>(buf);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fclose(out);</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Decrypted: %s -&gt; %s\n&quot;</span>, in_filename, out_filename);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Usage: %s &lt;input&gt; &lt;output&gt; &lt;timestamp&gt;\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *in_file = argv[<span class="number">1</span>];</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *out_file = argv[<span class="number">2</span>];</span><br><span class="line">    <span class="type">int</span> timestamp = atoi(argv[<span class="number">3</span>]); <span class="comment">// 加密时的 time(0)</span></span><br><span class="line">    <span class="keyword">return</span> decrypt_file(in_file, out_file, timestamp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>想要正确解密需要爆破时间戳，根据加密时间确定爆破范围<img src="/img/loading.gif" data-original="/2025/08/28/JSDSC-final-RE/image-20250828152521491.png" alt="image-20250828152521491" style="zoom:50%;"></p>
+<p><img src="/img/loading.gif" data-original="/2025/08/28/JSDSC-final-RE/image-20250828152635392.png" alt="image-20250828152635392" style="zoom:50%;"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io">Zechariah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io/2025/08/28/JSDSC-final-RE/">https://zechariah-0703.github.io/2025/08/28/JSDSC-final-RE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zechariah-0703.github.io" target="_blank">Zechariahの博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/RE/">RE</a></div><div class="post-share"><div class="social-share" data-image="/img/fengmian3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2025/06/17/Key_Points_for_Computer_Network_Exam/" title="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">《计算机网络》期末大题&名词解释&相关习题（自用）</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zechariah</div><div class="author-info-description">⭐晚安の魔法🪄-🎠睦缇丝🎡</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">晚安，网友</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%AF%94%E8%B5%9B"><span class="toc-text">关于比赛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-text">题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-text">程序分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC"><span class="toc-text">解题脚本</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/08/28/JSDSC-final-RE/" title="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP"><img src="/img/loading.gif" data-original="/img/fengmian3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP"/></a><div class="content"><a class="title" href="/2025/08/28/JSDSC-final-RE/" title="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP">江苏省数据安全技术应用职业技能竞赛决赛_逆向WP</a><time datetime="2025-08-28T03:33:59.000Z" title="发表于 2025-08-28 11:33:59">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/17/Key_Points_for_Computer_Network_Exam/" title="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）"><img src="/img/loading.gif" data-original="/img/fengmian2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）"/></a><div class="content"><a class="title" href="/2025/06/17/Key_Points_for_Computer_Network_Exam/" title="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）">《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）</a><time datetime="2025-06-16T16:33:09.000Z" title="发表于 2025-06-17 00:33:09">2025-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fastbin_attack系列"/></a><div class="content"><a class="title" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列">fastbin_attack系列</a><time datetime="2025-04-12T11:20:54.000Z" title="发表于 2025-04-12 19:20:54">2025-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）"/></a><div class="content"><a class="title" href="/2025/04/08/NPC_final%E5%87%BA%E9%A2%98%E5%B0%8F%E8%AE%B0%EF%BC%88%E9%80%9A%E8%BF%87fmt%E8%BF%9B%E8%A1%8CRSA-CRT%20Fault%20Injection%EF%BC%89/" title="NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）">NPC_final出题小记（通过fmt进行RSA-CRT Fault Injection）</a><time datetime="2025-04-08T08:20:38.000Z" title="发表于 2025-04-08 16:20:38">2025-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr"><img src="/img/loading.gif" data-original="/img/fengmian1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具篇·Angr"/></a><div class="content"><a class="title" href="/2025/03/29/%E5%B7%A5%E5%85%B7%E7%AF%87%C2%B7Angr/" title="工具篇·Angr">工具篇·Angr</a><time datetime="2025-03-29T02:54:34.000Z" title="发表于 2025-03-29 10:54:34">2025-03-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Zechariah</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 6.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
