@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密 | Zechariahの博客</title><meta name="author" content="Zechariah"><meta name="copyright" content="Zechariah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密 暂且先就题论题，后续将把文章扩充为 应急响应之CS流量解密一文通  走马灯其实这次移动的比赛质量很高，极其贴近实际生活中的工作内容，包括服务器安全配置，数据分级，应急响应等。 第二天发布了wp，有太多题目一离开赛场就成千古悬案了，这就是国企的担当啊！对移动好感up！(虽然无图&#x2F;很多步骤一句带过) 可惜去年">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密">
+<meta property="og:url" content="https://zechariah-0703.github.io/2025/09/13/Cobalt-Strike/index.html">
+<meta property="og:site_name" content="Zechariahの博客">
+<meta property="og:description" content="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密 暂且先就题论题，后续将把文章扩充为 应急响应之CS流量解密一文通  走马灯其实这次移动的比赛质量很高，极其贴近实际生活中的工作内容，包括服务器安全配置，数据分级，应急响应等。 第二天发布了wp，有太多题目一离开赛场就成千古悬案了，这就是国企的担当啊！对移动好感up！(虽然无图&#x2F;很多步骤一句带过) 可惜去年">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zechariah-0703.github.io/img/fengmian3.png">
+<meta property="article:published_time" content="2025-09-13T05:47:00.000Z">
+<meta property="article:modified_time" content="2025-09-16T10:50:23.070Z">
+<meta property="article:author" content="Zechariah">
+<meta property="article:tag" content="Misc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zechariah-0703.github.io/img/fengmian3.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密",
+  "url": "https://zechariah-0703.github.io/2025/09/13/Cobalt-Strike/",
+  "image": "https://zechariah-0703.github.io/img/fengmian3.png",
+  "datePublished": "2025-09-13T05:47:00.000Z",
+  "dateModified": "2025-09-16T10:50:23.070Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zechariah",
+      "url": "https://zechariah-0703.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zechariah-0703.github.io/2025/09/13/Cobalt-Strike/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/fengmian3.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Zechariahの博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-13T05:47:00.000Z" title="发表于 2025-09-13 13:47:00">2025-09-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-16T10:50:23.070Z" title="更新于 2025-09-16 18:50:23">2025-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Misc/">Misc</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Cobalt-Strike-无-cobaltstrike-beacon-keys-流量解密"><a href="#Cobalt-Strike-无-cobaltstrike-beacon-keys-流量解密" class="headerlink" title="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密"></a>Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密</h1><blockquote>
+<p><em>暂且先就题论题，后续将把文章扩充为 <strong>应急响应之CS流量解密一文通</strong></em></p>
+</blockquote>
+<h2 id="走马灯"><a href="#走马灯" class="headerlink" title="走马灯"></a>走马灯</h2><p>其实这次移动的比赛质量很高，极其贴近实际生活中的工作内容，包括<strong>服务器安全配置，数据分级，应急响应</strong>等。</p>
+<p>第二天发布了wp，有太多题目一离开赛场就成千古悬案了，这就是国企的担当啊！对移动好感up！(虽然无图/很多步骤一句带过)</p>
+<p>可惜去年在 湖南大学参加比赛 导致开学要缓考，等考试结束比赛只剩下一小时出头，把题目都扫了一遍，发现这道应急响应工作中出现的cs流量解密，很有意思</p>
+<p><a target="_blank" rel="noopener" href="https://5ime.cn/cobaltstrike-decrypt.html">https://5ime.cn/cobaltstrike-decrypt.html</a></p>
+<h2 id="知识学爆（正在施工中）"><a href="#知识学爆（正在施工中）" class="headerlink" title="知识学爆（正在施工中）"></a>知识学爆（正在施工中）</h2><p>在做题之前，先来了解一下<code>cobalt_Strike</code></p>
+<p>Cobalt Strike 是一款很常用的GUI的框架式渗透工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等。</p>
+<h3 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h3><p><code>Cobalt Strike</code> 服务端和客户端是通过 <code>SSL</code> 加密通讯的 (默认证书对 <code>cobaltstrike.store</code> )。</p>
+<p><code>Beacon</code> 的元数据传输过程中虽然使用的是 <code>RSA</code> 算法，但是 <code>Beacon</code> 任务的传输使用的却是 <code>AES</code> 算法加密的，而 <code>AES</code> 密钥则是 <code>Beacon</code> 随机生成的然后通过 <code>RSA</code> 交换 <code>AES</code>密钥。加解密算法为 <code>AES</code> ，密钥位长 <code>128</code> ，<code>CBC</code> 模式，填充标准 <code>PKCS7</code> ，其通信具体流程如下。<img src="/img/loading.gif" data-original="/2025/09/13/Cobalt-Strike/image-20230930201229567.webp" alt="image-20230930201229567"></p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><blockquote>
+<p>题目描述：</p>
+<p>财务部的小张收到一封标题为《关于2025年部分节假日安排的通知》的邮件。小张未经验证便双击执行，随后电脑突然蓝屏重启。重启后，公司内部监控系统检测到异常外联流量，疑似财务数据泄露。作为应急响应专家的你，请你分析出黑客的攻击行为。</p>
+</blockquote>
+<p>一般国内考cs流量分析的题目都<strong>只给一个流量包</strong>，同时会给<code>.cobaltstrike.beacon_keys</code>文件，提出来就能用<code>CTF-NetA</code>工具一把梭了，但是这道题是没给。</p>
+<p>这里就需要一些tricks来获取AES 和 HMAC 密钥</p>
+<p>理论可行的做法有两种：</p>
+<ol>
+<li>解析<strong>stage</strong>文件 (非常吃时间和计算资源，但仅需流量文件，优点是不需要受害机的内存镜像)</li>
+<li>从<strong>内存镜像中提取Beacon进程的数据</strong> (本题给了受害者的电脑内存镜像，预期解也正是这样)</li>
+</ol>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="共通线"><a href="#共通线" class="headerlink" title="共通线"></a>共通线</h3><h4 id="内存分析"><a href="#内存分析" class="headerlink" title="内存分析"></a>内存分析</h4><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">#以下均为调用volatility的指令，具体写法根据自己本地环境来</span><br><span class="line">-f XiaoZhang-PC-DESKTOP.raw imageinfo</span><br><span class="line">-f XiaoZhang-PC-DESKTOP.raw --profile=Win10x64_19041 filescan|grep Desktop</span><br><span class="line">-f XiaoZhang-PC-DESKTOP.raw windows.netscan</span><br></pre></td></tr></table></figure>
+<p>用各种取证工具都可以非常轻松的发现 <code>关于2025年部分节假日安排的通知.exe</code> 的外联地址是<code>192.168.27.132</code>，端口为<code>12580</code></p>
+<h4 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h4><p>分析pcap流量包，发现很明显的CobalStrike流量特征，找通信数据</p>
+<h3 id="解法1（理论可行）"><a href="#解法1（理论可行）" class="headerlink" title="解法1（理论可行）"></a>解法1（理论可行）</h3><p>本题提供的内存镜像</p>
+<p>通过<code>http.request.uri matches &quot;/....$&quot;</code>筛选cs木马上线时所发送的stage文件</p>
+<p>接着通过<a target="_blank" rel="noopener" href="https://blog.didierstevens.com/2021/10/11/update-1768-py-version-0-0-8/">1768.py</a>解密该文件，将publickey多余0去除得到公钥</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">python3 cs_dec_stage.py TJvI</span><br></pre></td></tr></table></figure>
+<p><img src="/img/loading.gif" data-original="/2025/09/13/Cobalt-Strike/image-20250913135800316.png" alt="image-20250913135800316" style="zoom:50%;"></p>
+<p>之后用<code>cs_invert_pub.py</code>将公钥转为pem格式，并提取其中的n和e</p>
+<p><img src="/img/loading.gif" data-original="/2025/09/13/Cobalt-Strike/image-20250913135712326.png" alt="image-20250913135712326" style="zoom:50%;"></p>
+<p>将n进行模数分解，得到p和q</p>
+<p>这里可以选用<code>yafu</code>或<code>RsaCtfTool</code></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">.\yafu-x64.exe “factor(<span class="number">110209881007357893823335805800713195851127501725957565233140927957700204009298219831317940655870344979959172203765131703915110847527123581538957802617902884782216119145118127834057251159376653146542095451104320803312070357977411524497260098391204298785177487587770308799475139763729699721645361283357313642349</span>)“</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最吃时间和计算资源的一步，笔者这里尝试了yafu，2个小时没跑出来，</p>
+<p>后续我将再尝试RsaCtfTool，如果分出来了会再更新</p>
+</blockquote>
+<h4 id="进入某一条神奇的世界线"><a href="#进入某一条神奇的世界线" class="headerlink" title="进入某一条神奇的世界线"></a>进入某一条神奇的世界线</h4><p>通过对公网暴露的 Cobalt Strike 服务器进行分析识别，发现许多服务器使用相同的公钥，这意味着他们使用的 <code>.cobaltstrike.beacon_keys</code> 文件相同，公私钥都相同。</p>
+<p>因为这些人使用的都是 Cobalt Strike 的破解版，而在第一次使用时生成的 <code>.cobaltstrike.beacon_keys</code> 文件也被包含在破解版中共享出去了。</p>
+<p>通过 VirusTotal 进行样本检索，发现了 10 个破解版 Cobalt Strike 的 ZIP 压缩包，这些压缩包中根据 <code>.cobaltstrike.beacon_keys</code> 提取了 6 个 RSA 密钥对。其中有 2 个密钥对被广泛使用，发现的 Cobalt Strike 服务器中有 <strong>25%</strong>（1500 余个）使用的都是这二者之一。</p>
+<p>通过 <code>1768.py</code> 提取 Cobalt Strike Beacon 的配置时会显示是否为已知的私钥。</p>
+<p><strong>如果运气好——攻击者使用了破解版的Cobalt Strike，就可以使用已知的私钥</strong></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">python3 cs_dec_stage.py -V TJvI #会显示已知的私钥</span><br></pre></td></tr></table></figure>
+<h4 id="回到常规世界线"><a href="#回到常规世界线" class="headerlink" title="回到常规世界线"></a>回到常规世界线</h4><p>用cs_calc_pri.py通过p和q计算<strong>私钥</strong>，接着跳转至<code>穷哥们打法-通过私钥解密Cookie</code></p>
+<h3 id="解法2（实际解法）"><a href="#解法2（实际解法）" class="headerlink" title="解法2（实际解法）"></a>解法2（实际解法）</h3><p><strong>利用内存镜像中的Beacon进程文件</strong></p>
+<p>使用procdump或者volatility等工具，提取beacon进程为dmp文件</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">CTF</span>\<span class="title">misc</span>\<span class="title">lovelymem</span>\<span class="title">Tools</span>\<span class="title">python27</span>\<span class="title">python27.exe</span> <span class="title">D</span>:\<span class="title">CTF</span>\<span class="title">misc</span>\<span class="title">lovelymem</span>\<span class="title">Tools</span>\<span class="title">volatility2_python</span>\<span class="title">vol.py</span> -<span class="title">f</span> <span class="title">D</span>:/<span class="title">CTF</span>/<span class="title">misc</span>/<span class="title">vol2</span>/财务小张/<span class="title">XiaoZhang</span>-<span class="title">PC</span>-<span class="title">DESKTOP.raw</span> --<span class="title">profile</span>=<span class="title">Win10x64_19041</span> <span class="title">memdump</span> -<span class="title">p</span> 6492 --<span class="title">dump</span>-<span class="title">dir</span>=./</span></span><br></pre></td></tr></table></figure>
+<p>此时可以尝试直接使用<a target="_blank" rel="noopener" href="https://github.com/DidierStevens/Beta/blob/master/cs-extract-key.py">cs-extract-key.py</a>去提取<code>AES Key</code>和<code>HMAC Key</code></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">python .\cs_extract_key.py .\<span class="number">6492</span>.dmp </span><br></pre></td></tr></table></figure>
+<p>但是其原理是查找<code>0x0000BEEF</code>序列号头，这个序列号头是未被加密的元数据的头部，<strong>很有可能不正确</strong></p>
+<p>如果此时有包含加密数据的流量包，可以用<a target="_blank" rel="noopener" href="https://github.com/DidierStevens/Beta/blob/master/cs-parse-http-traffic.py">cs-parse-http-traffic.py</a>提取加密流量中的raw data</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python3 cs-parse-http-traffic.py -k unknown XiaoZhang-PC.pcapng</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">Packet number: <span class="number">47</span></span><br><span class="line">HTTP response (<span class="keyword">for</span> request <span class="number">44</span> GET)</span><br><span class="line">Length raw data: <span class="number">48</span></span><br><span class="line"><span class="number">9</span>ea8c274326a1db1e25142558f2bac154d8139bc18a19f5d772786e8075d6d8fca4d82ed8a7253e3e2c17110e911ff16</span><br><span class="line"></span><br><span class="line">Packet number: <span class="number">83</span></span><br><span class="line">HTTP response (<span class="keyword">for</span> request <span class="number">80</span> GET)</span><br><span class="line">Length raw data: <span class="number">48</span></span><br><span class="line">ac4cb985c04d084b0f77ed1b7745b23123abb198370ffcaedebf12c1f9de9b6fb6094a50a93af84cacd11a30b468dfbd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Packet number: <span class="number">103</span></span><br><span class="line">HTTP response (<span class="keyword">for</span> request <span class="number">100</span> GET)</span><br><span class="line">Length raw data: <span class="number">80</span></span><br><span class="line"><span class="number">0253784</span>ee86d3fc54693bb7ee14f40d64700446a4604ca0054103ba84e1a831d2a369c501e2a2522abdd9f5fe7652a16fd242669f6b10fb52e8b2b032a7ae00f6b25a8cecdffde72dadf1a18c1225f92</span><br><span class="line"></span><br><span class="line">Packet number: <span class="number">110</span></span><br><span class="line">HTTP request POST</span><br><span class="line"><span class="function">http://192.168.27.132:12580/<span class="title">submit.php</span>?<span class="title">id</span>=1389642286</span></span><br><span class="line"><span class="function"><span class="title">Length</span> <span class="title">raw</span> <span class="title">data</span>: 84</span></span><br><span class="line"><span class="function">00000050350<span class="title">ca7f4379f30cc9d6d671db886d360691c74467156e60e8356725ae2f3b880b302ea8b5556df10324e86e53ecb84046646a1758e9cb8c7fca42d660617be467627abcc3c0ce3bd3e93c02fffcb4d3a</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Packet</span> <span class="title">number</span>: 130</span></span><br><span class="line"><span class="function"><span class="title">HTTP</span> <span class="title">request</span> <span class="title">POST</span></span></span><br><span class="line"><span class="function"><span class="title">http</span>://192.168.27.132:12580/<span class="title">submit.php</span>?<span class="title">id</span>=1389642286</span></span><br><span class="line"><span class="function"><span class="title">Length</span> <span class="title">raw</span> <span class="title">data</span>: 100</span></span><br><span class="line"><span class="function">00000060294<span class="title">b8d8d29d7e6f1828cfcb7a4d8d71d78bb4af4ce390949a4d93a4a65de656154e44ccd58b942e08d2151bbbd1c199fe416b3d302c2974f61517a37c46a3029db7ad08f58164edbb09d9d8be91597013514eac810d84d3e5e06afe0c8068e74</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Packet</span> <span class="title">number</span>: 144</span></span><br><span class="line"><span class="function"><span class="title">HTTP</span> <span class="title">response</span> (<span class="title">for</span> <span class="title">request</span> 141 <span class="title">GET</span>)</span></span><br><span class="line"><span class="function"><span class="title">Length</span> <span class="title">raw</span> <span class="title">data</span>: 48</span></span><br><span class="line"><span class="function"><span class="title">ecfff639c9a79bbb3c59bbec390fa070335fa6d5b33c7ba752fe9803ee2082296233a5dcd7f76c8adb3a1e404df09447</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Packet</span> <span class="title">number</span>: 151</span></span><br><span class="line"><span class="function"><span class="title">HTTP</span> <span class="title">request</span> <span class="title">POST</span></span></span><br><span class="line"><span class="function"><span class="title">http</span>://192.168.27.132:12580/<span class="title">submit.php</span>?<span class="title">id</span>=1389642286</span></span><br><span class="line"><span class="function"><span class="title">Length</span> <span class="title">raw</span> <span class="title">data</span>: 68</span></span><br><span class="line"><span class="function">000000407<span class="title">e50b7dc157b92f5226f7c46eb149abe64bccfd1e3f84bab9159692604763ebe64c2d55ae8aebdf0300a17515571834d5bab66fbf79ece4897243fe9522520ac</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Packet</span> <span class="title">number</span>: 176</span></span><br><span class="line"><span class="function"><span class="title">HTTP</span> <span class="title">request</span> <span class="title">POST</span></span></span><br><span class="line"><span class="function"><span class="title">http</span>://192.168.27.132:12580/<span class="title">submit.php</span>?<span class="title">id</span>=1389642286</span></span><br><span class="line"><span class="function"><span class="title">Length</span> <span class="title">raw</span> <span class="title">data</span>: 68</span></span><br><span class="line"><span class="function">00000040<span class="title">ad0baebef6f64a60ecffdb0594a6f24f90e979d9b5cdecc44649cb939883b77fb1b5e021d59f9234d97ba8384f808f631e6acf73a17b1cb579651454a261ecac</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">#利用Beacon进程和流量重点数据</span><br><span class="line">PS C:\Users\zhang\Desktop\<span class="number">1</span>\zhang&gt; python cs_extract_key.py -t <span class="number">9</span>ea8c274326a1db1e25142558f2bac154d8139bc18a19f5d772786e8075d6d8fca4d82ed8a7253e3e2c17110e911ff16 <span class="number">6492</span>.dmp</span><br><span class="line">######################################</span><br><span class="line"><span class="function">File: 6492.<span class="title">dmp</span></span></span><br><span class="line"><span class="function"><span class="title">Searching</span> <span class="title">for</span> <span class="title">AES</span> <span class="title">and</span> <span class="title">HMAC</span> <span class="title">keys</span></span></span><br><span class="line"><span class="function"><span class="title">Searching</span> <span class="title">after</span> <span class="title">sha256</span>\<span class="title">x00</span> <span class="title">string</span> (0<span class="title">x61a44</span>)</span></span><br><span class="line"><span class="function">######################################</span></span><br><span class="line"><span class="function"><span class="title">AES</span> <span class="title">key</span> <span class="title">position</span>: 0<span class="title">x00068c60</span></span></span><br><span class="line"><span class="function"><span class="title">AES</span> <span class="title">Key</span>:  <span class="title">a6f4a04f8a6aa5ff27a5bcdd5ef3b9a7</span></span></span><br><span class="line"><span class="function"><span class="title">HMAC</span> <span class="title">key</span> <span class="title">position</span>: 0<span class="title">x00068c70</span></span></span><br><span class="line"><span class="function"><span class="title">HMAC</span> <span class="title">Key</span>: 35<span class="title">d34ac8778482751682514436d71e09</span></span></span><br><span class="line"><span class="function">######################################</span></span><br><span class="line"><span class="function"><span class="title">SHA256</span> <span class="title">raw</span> <span class="title">key</span>: 35<span class="title">d34ac8778482751682514436d71e09:a6f4a04f8a6aa5ff27a5bcdd5ef3b9a7</span></span></span><br></pre></td></tr></table></figure>
+<p>再来解密CobalStrike流量</p>
+<p>通过<code>CS_Task_And_Return_AES_Decrypt.py</code>解密数据</p>
+<p><img src="/img/loading.gif" data-original="/2025/09/13/Cobalt-Strike/image-20250916175107830.png" alt="image-20250916175107830"></p>
+<p>👆找到读取敏感信息secret.txt的请求包</p>
+<p>👇一个就是被窃取的敏感信息</p>
+<p><img src="/img/loading.gif" data-original="/2025/09/13/Cobalt-Strike/image-20250916175225730.png" alt="image-20250916175225730"></p>
+<p><code>5c1eb2c4-0b85-491f-8d50-4e96</code></p>
+<h2 id="如果题目简单些，给了-cobaltstrike-beacon-keys？"><a href="#如果题目简单些，给了-cobaltstrike-beacon-keys？" class="headerlink" title="如果题目简单些，给了.cobaltstrike.beacon_keys？"></a>如果题目简单些，给了.cobaltstrike.beacon_keys？</h2><h3 id="富哥打法"><a href="#富哥打法" class="headerlink" title="富哥打法"></a>富哥打法</h3><p>导入key文件后<strong>CTF-NetA一把梭</strong>：但是我记得购买这个工具要快100块</p>
+<h3 id="穷哥们打法"><a href="#穷哥们打法" class="headerlink" title="穷哥们打法"></a>穷哥们打法</h3><h4 id="私钥获取"><a href="#私钥获取" class="headerlink" title="私钥获取"></a>私钥获取</h4><p><strong>利用 .cobaltstrike.beacon_keys 文件</strong></p>
+<p><code>.cobaltstrike.beacon_keys</code>文件本质上为KeyPair的Java对象，Python的javaobj可以直接读取其中存储的数据</p>
+<p>利用<code>parse_beacon_keys.py</code>读取公钥和私钥（如果是python3环境装的是 javaobj-py3 ）</p>
+<h4 id="通过私钥解密Cookie"><a href="#通过私钥解密Cookie" class="headerlink" title="通过私钥解密Cookie"></a>通过私钥解密Cookie</h4><p>用<code>Beacon_metadata_RSA_Decrypt.py</code>通过私钥解密心跳包中的Cookie数据，拿到<code>AES Key</code>和<code>HMAC Key</code></p>
+<p>用<code>Beacon_metadata_moreInfo_RSA_Decrypt.py</code>可以获得<code>host</code>、<code>PC name</code>、<code>username</code>、<code>AES key</code>、<code>HMAC key</code>等更多信息</p>
+<p>有key了就通过<code>CS_Task_And_Return_AES_Decrypt.py</code>解密数据</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://www.s1mh0.cn/blog/index.php/2025/01/27/cobaltstrike_dec/#cobaltstrikebeacon_keys">CobaltStrike流量解密 – S1mh0’s Blog</a>（脚本出处）</p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1861">https://forum.butian.net/share/1861</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fleurs/p/19007755">https://www.cnblogs.com/fleurs/p/19007755</a></p>
+<p>西湖论剑<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/gXYLwdup6HYd_rETUSb9aA">https://mp.weixin.qq.com/s/gXYLwdup6HYd_rETUSb9aA</a></p>
+<p>西湖论剑<a target="_blank" rel="noopener" href="https://www.cnblogs.com/alexander17/p/18737592">https://www.cnblogs.com/alexander17/p/18737592</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io">Zechariah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zechariah-0703.github.io/2025/09/13/Cobalt-Strike/">https://zechariah-0703.github.io/2025/09/13/Cobalt-Strike/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zechariah-0703.github.io" target="_blank">Zechariahの博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Misc/">Misc</a></div><div class="post-share"><div class="social-share" data-image="/img/fengmian3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/30/ret2all/" title="「ret2all」有关栈的一切"><img class="cover" src="/img/loading.gif" data-original="/img/fengmian3.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">「ret2all」有关栈的一切</div></div><div class="info-2"><div class="info-item-1">  诚如出题人评价「一件完美的艺术品，葬下了整个栈时代」 用到的所有技巧都是入门阶段应知应会的栈上技巧，完全不涉及更高阶的技法。 本题几乎已经把栈上可用的技巧穷尽，于是笔者拿来作为复健练习 复现完笔者已经猪脑过载了，尽可能在基于出题人的思维上，也阐述了笔者”这里为什么要这样做“的思考   分析checksec除canary其余保护全开  init函数 设置缓冲区，然后将rread函数的rbp和ret数值存储到了bss段，再输出出来，最后mprotect将bss段权限改为只读防止更改 seccomp line  CODE  JT   JF      K================================= 0000: 0x20 0x00 0x00 0x00000004  A = arch 0001: 0x15 0x00 0x27 0xc000003e  if (A != ARCH_X86_64) goto 0041 0002: 0x20 0x00 0x00 0x00000000  A = sys_number 0003: 0x35 0x00 0x01 0x4000000...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zechariah</div><div class="author-info-description">⭐晚安の魔法🪄-🎠睦缇丝🎡</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">53</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Zechariah-0703"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">晚安，网友</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cobalt-Strike-%E6%97%A0-cobaltstrike-beacon-keys-%E6%B5%81%E9%87%8F%E8%A7%A3%E5%AF%86"><span class="toc-text">Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B0%E9%A9%AC%E7%81%AF"><span class="toc-text">走马灯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%AD%A6%E7%88%86%EF%BC%88%E6%AD%A3%E5%9C%A8%E6%96%BD%E5%B7%A5%E4%B8%AD%EF%BC%89"><span class="toc-text">知识学爆（正在施工中）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-text">加密算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B"><span class="toc-text">解题流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E9%80%9A%E7%BA%BF"><span class="toc-text">共通线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="toc-text">内存分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">流量分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%951%EF%BC%88%E7%90%86%E8%AE%BA%E5%8F%AF%E8%A1%8C%EF%BC%89"><span class="toc-text">解法1（理论可行）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E6%9F%90%E4%B8%80%E6%9D%A1%E7%A5%9E%E5%A5%87%E7%9A%84%E4%B8%96%E7%95%8C%E7%BA%BF"><span class="toc-text">进入某一条神奇的世界线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0%E5%B8%B8%E8%A7%84%E4%B8%96%E7%95%8C%E7%BA%BF"><span class="toc-text">回到常规世界线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%952%EF%BC%88%E5%AE%9E%E9%99%85%E8%A7%A3%E6%B3%95%EF%BC%89"><span class="toc-text">解法2（实际解法）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E9%A2%98%E7%9B%AE%E7%AE%80%E5%8D%95%E4%BA%9B%EF%BC%8C%E7%BB%99%E4%BA%86-cobaltstrike-beacon-keys%EF%BC%9F"><span class="toc-text">如果题目简单些，给了.cobaltstrike.beacon_keys？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%8C%E5%93%A5%E6%89%93%E6%B3%95"><span class="toc-text">富哥打法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%B7%E5%93%A5%E4%BB%AC%E6%89%93%E6%B3%95"><span class="toc-text">穷哥们打法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%81%E9%92%A5%E8%8E%B7%E5%8F%96"><span class="toc-text">私钥获取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%A7%81%E9%92%A5%E8%A7%A3%E5%AF%86Cookie"><span class="toc-text">通过私钥解密Cookie</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/09/13/Cobalt-Strike/" title="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密"><img src="/img/loading.gif" data-original="/img/fengmian3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密"/></a><div class="content"><a class="title" href="/2025/09/13/Cobalt-Strike/" title="Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密">Cobalt_Strike 无 .cobaltstrike.beacon_keys 流量解密</a><time datetime="2025-09-13T05:47:00.000Z" title="发表于 2025-09-13 13:47:00">2025-09-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/30/ret2all/" title="「ret2all」有关栈的一切"><img src="/img/loading.gif" data-original="/img/fengmian3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="「ret2all」有关栈的一切"/></a><div class="content"><a class="title" href="/2025/08/30/ret2all/" title="「ret2all」有关栈的一切">「ret2all」有关栈的一切</a><time datetime="2025-08-30T10:58:13.000Z" title="发表于 2025-08-30 18:58:13">2025-08-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/28/JSDSC-final-RE/" title="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP"><img src="/img/loading.gif" data-original="/img/fengmian3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP"/></a><div class="content"><a class="title" href="/2025/08/28/JSDSC-final-RE/" title="江苏省数据安全技术应用职业技能竞赛决赛_逆向WP">江苏省数据安全技术应用职业技能竞赛决赛_逆向WP</a><time datetime="2025-08-28T03:33:59.000Z" title="发表于 2025-08-28 11:33:59">2025-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/17/Key_Points_for_Computer_Network_Exam/" title="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）"><img src="/img/loading.gif" data-original="/img/fengmian2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）"/></a><div class="content"><a class="title" href="/2025/06/17/Key_Points_for_Computer_Network_Exam/" title="《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）">《计算机网络》期末大题&amp;名词解释&amp;相关习题（自用）</a><time datetime="2025-06-16T16:33:09.000Z" title="发表于 2025-06-17 00:33:09">2025-06-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列"><img src="/img/loading.gif" data-original="/img/fengmian.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="fastbin_attack系列"/></a><div class="content"><a class="title" href="/2025/04/12/fastbin-attack%E7%B3%BB%E5%88%97/" title="fastbin_attack系列">fastbin_attack系列</a><time datetime="2025-04-12T11:20:54.000Z" title="发表于 2025-04-12 19:20:54">2025-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Zechariah</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 6.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
