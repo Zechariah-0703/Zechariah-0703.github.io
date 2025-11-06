@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>国密 - SM系列 &amp; ZUC 整理</title>
-      <link href="/2025/10/18/sm/"/>
-      <url>/2025/10/18/sm/</url>
-      
-        <content type="html"><![CDATA[<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul><li><a href="https://cn-sec.com/archives/4310135.html">揭秘国密算法：11种国密算法（SM1~10、祖冲之）已成为守护信息安全的中国力量！ | CN-SEC 中文网</a></li><li><a href="https://cloud.tencent.com/developer/article/2421525">PKI - 一文读懂SM1、SM2、SM3、SM4等国密算法-腾讯云开发者社区-腾讯云</a></li><li><a href="https://www.zhihu.com/question/402353104/answer/2646461267">(2 条消息) 截止至目前，对国密算法支持的较好的密码算法库都有哪些？ - 知乎</a></li><li><a href="http://www.freeoa.net/scheme/manual/gsm-algorithm-intro_958.html">SM系列国密算法简介-FreeOA</a></li></ul><h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>我国国家密码管理局自主研发了一套国产密码学算法，即国密（又称商用加密算法，即商密SM，SM就是ShangMi的简写）</p><p><img src="/2025/10/18/sm/image-20251021161637915.png" alt="6-1753890490" style="zoom:50%;"></p><p><img src="/2025/10/18/sm/6-1753890490.png" alt="6-1753890490"></p><ul><li><p><strong>核心密码、普通密码</strong>用于保护国家秘密信息，核心密码保护信息的最高密级为<strong>绝密级</strong>，普通密码保护信息的最高密级为<strong>机密级</strong>。</p></li><li><p><strong>商用密码</strong>用于保护不属于国家秘密的信息。公民、法人和其他组织可以依法使用商用密码保护网络与信息安全。</p><hr></li><li><p>SM2、SM9等属于公钥密码 (非对称加密)</p></li><li><p>SM3属于单向散列函数</p></li></ul><h2 id="公开标准"><a href="#公开标准" class="headerlink" title="公开标准"></a>公开标准</h2><h3 id="SM2"><a href="#SM2" class="headerlink" title="SM2"></a>SM2</h3><p>SM2为非对称加密，基于<a href="https://zhida.zhihu.com/search?content_id=511261236&amp;content_type=Answer&amp;match_order=1&amp;q=ECC&amp;zhida_source=entity">ECC</a>。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC 256位（SM2采用的就是ECC 256位的一种）安全强度比RSA 2048位高，但运算速度快于RSA。它是一种先进安全的公钥密码算法，在我们国家商用密码体系中被用来替换RSA算法。SM2算法就是ECC椭圆曲线密码机制，但在签名、密钥交换方面不同于ECDSA、ECDH等国际标准，而是采取了更为安全的机制。另外，SM2推荐了一条256位的曲线作为标准曲线。</p><p>可以理解为国产RSA。非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。</p><p>SM2椭圆曲线公钥密码算法是我国自主设计的公钥密码算法，包括：</p><ul><li><p><strong>SM2-1</strong>椭圆曲线<strong>数字签名</strong>算法</p></li><li><p><strong>SM2-2</strong>椭圆曲线<strong>密钥交换</strong>协议</p></li><li><p><strong>SM2-3</strong>椭圆曲线<strong>公钥加密</strong>算法</p><p>分别用于实现数字签名密钥协商和数据加密等功能。SM2算法与RSA算法不同的是，SM2算法是基于椭圆曲线上点群离散对数难题，相对于RSA算法，256位的SM2密码强度已经比2048位的RSA密码强度要高，但运算速度快于RSA。</p><p>SM2算法的密码一般使用<strong>192－256位</strong>，RSA算法密码一般需要使用2048－4096位。这意味着SM2算法的证书字节数更少，在高并发的情况下消耗资源更少，速度更快。SM2在私钥运算上，速度远比RSA快得多。</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#公私钥生成代码</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> gmssl.utils <span class="keyword">import</span> PrivateKey</span><br><span class="line">priKey = PrivateKey()</span><br><span class="line">pubKey = priKey.publicKey()</span><br><span class="line"><span class="built_in">print</span>(priKey.toString())</span><br><span class="line"><span class="built_in">print</span>(pubKey.toString(compressed = <span class="literal">False</span>))</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> gmssl <span class="keyword">import</span> sm2</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64encode, b64decode</span><br><span class="line"> </span><br><span class="line"><span class="comment"># SM2 的公私钥</span></span><br><span class="line">SM2_PRIVATE_KEY = <span class="string">&#x27;00B9AB0B828FF68872F21A837FC303668428DEA11DCD1B24429D0C99E24EED83D5&#x27;</span></span><br><span class="line">SM2_PUBLIC_KEY = <span class="string">&#x27;B9C9A6E04E9C91F7BA880429273747D7EF5DDEB0BB2FF6317EB00BEF331A83081A6994B8993F3F5D6EADDDB81872266C87C018FB4162F5AF347B483E24620207&#x27;</span></span><br><span class="line"> </span><br><span class="line">sm2_crypt = sm2.CryptSM2(public_key=SM2_PUBLIC_KEY, private_key=SM2_PRIVATE_KEY)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加密函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">info</span>):</span><br><span class="line">encode_info = sm2_crypt.encrypt(info.encode(encoding=<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">encode_info = b64encode(encode_info).decode() <span class="comment"># 将二进制 bytes 通过 base64 编码</span></span><br><span class="line"><span class="keyword">return</span> encode_info</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 解密函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">info</span>):</span><br><span class="line">decode_info = b64decode(info.encode()) <span class="comment"># 通过 base64 解码成二进制 bytes</span></span><br><span class="line">decode_info = sm2_crypt.decrypt(decode_info).decode(encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="keyword">return</span> decode_info</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">origin_pwd = <span class="string">&#x27;123456&#x27;</span></span><br><span class="line"><span class="comment"># 加密</span></span><br><span class="line">encrypted_pwd = encrypt(origin_pwd)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;加密后的密码: <span class="subst">&#123;encrypted_pwd&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># 解密</span></span><br><span class="line">decrypted_pwd = decrypt(encrypted_pwd)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;解密后的密码: <span class="subst">&#123;decrypted_pwd&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure></li></ul><h3 id="SM3"><a href="#SM3" class="headerlink" title="SM3"></a>SM3</h3><p>SM3密码杂凑(哈希、散列)算法给出了杂凑函数算法的计算方法和计算步骤，并给出了运算示例。此算法适用于商用密码应用中的数字签名和验证，消息认证码的生成与验证以及随机数的生成，可满足多种密码应用的安全需求。在<strong>SM2，SM9标准中</strong>使用。它用于<strong>替代MD5/SHA-1/SHA-2</strong>等国际算法，适用于数字签名和验证、消息认证码的生成与验证以及随机数的生成，可以满足电子认证服务系统等应用需求，于2010年12月17日发布。它是在SHA-256基础上改进实现的一种算法，采用<strong>Merkle-Damgard</strong>结构，消息分组长度为512bit，输出的摘要值长度为256bit。</p><p>此算法对输入长度小于2的64次方的比特消息，经过填充和迭代压缩，生成长度为256比特的杂凑值，其中使用了异或，模，模加，移位，与，或，非运算，由填充，迭代过程，消息扩展和压缩函数所构成。具体算法及运算示例见SM3标准。2005年王教授等人给出了MD5算法和SHA-1算法的碰撞攻击方法，现今被广泛应用的MD5算法和SHA-1算法不再是安全的算法。</p><p>SM3密码摘要算法适用于商用密码应用中的数字签名和验证，是在SHA-256基础上改进实现的一种算法。SM3算法采用Merkle-Damgard结构，消息分组长度为512位，摘要值长度为256位。</p><p>SM3算法的压缩函数与SHA-256的压缩函数具有相似的结构，但是SM3算法的设计更加复杂，比如压缩函数的每一轮都使用2个消息字；压缩函数状态256位，共64步操作步骤。SM3密码杂凑算法压缩函数整体结构与SHA-256相似，但是增加了多种新的设计技术，包括增加16步全异或操作、消息双字介入、增加快速雪崩效应的P置换等。能够有效地避免高概率的局部碰撞，有效的抵抗强碰撞性的差分分析、若碰撞性的线性分析和比特追踪法等密码分析。算法合理使用字加运算，构成进位加4级流水，在不显著增加硬件开销的情况下，采用P置换，加速了算法的雪崩效应，提高了运算效率。同时还采用了适合32位微处理器和8位智能卡实现的基本运算，具有跨平台实现的高效性和广泛的适用性。现今为止，SM3算法的安全性相对较高。</p><p>密码杂凑算法，确保数据完整性验证。能够计算出256比特的散列值的单向散列函数，主要用于数字签名和消息认证码</p><p>其安全性主要体现在以下几个方面：</p><ol><li>输出长度：SM3算法的输出长度为256比特，相比MD5（128比特）和SHA-1（160比特）算法，其输出长度更长，因此具有更高的安全性。 </li><li>碰撞攻击：SM3算法在设计时考虑了碰撞攻击的问题，并采用了相应的防护措施。目前，尚未有公开的针对SM3算法的碰撞攻击方法。 </li><li>雪崩效应：SM3算法具有雪崩效应，即输入数据的微小变化会导致输出结果的巨大差异。这一特性使得攻击者难以通过猜测或穷举的方式来破解SM3算法。</li></ol><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> gmssl <span class="keyword">import</span> sm3</span><br><span class="line"><span class="comment"># SM3哈希</span></span><br><span class="line">data = <span class="string">b&#x27;hello world&#x27;</span></span><br><span class="line">hashed_data = sm3.sm3_hash(<span class="built_in">list</span>(data))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;哈希后的数据:&quot;</span>, hashed_data)</span><br></pre></td></tr></table></figure><h3 id="SM4"><a href="#SM4" class="headerlink" title="SM4"></a>SM4</h3><p><img src="/2025/10/18/sm/image-20251021162239909.png" alt="image-20251021162239909" style="zoom:50%;"></p><p>算法公开，适合软件和硬件实现，属于对称密码的一种分组密码算法，分组长度和密钥长度均为128比特。用于无限局域网产品，加密算法与密钥扩展算法都采用32轮非线性迭代结构。解密算法与加密算法的结构相同，只是轮密钥的使用顺序相反，解密轮密钥是加密轮密钥的逆序。</p><p>0x0004</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> gmssl <span class="keyword">import</span> sm4</span><br><span class="line"> </span><br><span class="line"><span class="comment"># SM4 CBC模式加密解密</span></span><br><span class="line">key = <span class="string">b&#x27;1234567890abcdef&#x27;</span></span><br><span class="line">iv = <span class="string">b&#x27;abcdef1234567890&#x27;</span></span><br><span class="line">data = <span class="string">b&#x27;hello world&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加密</span></span><br><span class="line">cipher = sm4.CryptSM4()</span><br><span class="line">cipher.set_key(key, sm4.SM4_ENCRYPT)</span><br><span class="line">encrypted_data = cipher.crypt_cbc(iv, data)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 解密</span></span><br><span class="line">cipher = sm4.CryptSM4()</span><br><span class="line">cipher.set_key(key, sm4.SM4_DECRYPT)</span><br><span class="line">decrypted_data = cipher.crypt_cbc(iv, encrypted_data)</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;原始数据:&quot;</span>, data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;加密后的数据:&quot;</span>, encrypted_data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;解密后的数据:&quot;</span>, decrypted_data)</span><br></pre></td></tr></table></figure><h3 id="SM9"><a href="#SM9" class="headerlink" title="SM9"></a>SM9</h3><p>为了降低公开密钥系统中密钥和证书管理的复杂性，以色列科学家、RSA算法发明人之一Adi Shamir在1984年提出了标识密码（Identity-Based Cryptography）的理念。标识密码将用户的标识（如邮件地址、手机号码、QQ号码等）作为公钥，<strong>省略了交换数字证书和公钥过程</strong>，使得安全系统变得易于部署和管理，非常适合端对端离线安全通讯、云端数据加密、基于属性加密、基于策略加密的各种场合。</p><p>SM9算法不需要申请数字证书，一种标识密码(IBE)算法，由国家密码管理局于2016年3月28日发布，相关标准为“GM/T 0044-2016 SM9标识密码算法”。主要用于用户的身份认证。SM9的加密强度等同于3072位密钥的RSA加密算法。</p><h3 id="ZUC"><a href="#ZUC" class="headerlink" title="ZUC"></a>ZUC</h3><p>祖冲之序列密码算法是中国自主研究的流密码算法,是运用于移动通信4G网络中的国际标准密码算法,该算法包括祖冲之算法(ZUC)、加密算法(128-EEA3)和完整性算法(128-EIA3)三个部分。目前已有对ZUC算法的优化实现，有专门针对128-EEA3和128-EIA3的硬件实现与优化。</p><h2 id="未公开标准"><a href="#未公开标准" class="headerlink" title="未公开标准"></a>未公开标准</h2><h3 id="SM1"><a href="#SM1" class="headerlink" title="SM1"></a>SM1</h3><p>国密SM1算法是由国家密码管理局编制的商用密码分组标准对称算法，其<strong>分组长度</strong>和<strong>密钥长度</strong>均为<strong>128比特</strong>，技术实现上仅以IP核形式存在于芯片中。 <strong>机密性</strong></p><p>采用该算法已经研制了系列芯片、智能IC卡、智能密码钥匙、加密卡、加密机等安全产品，广泛应用于电子政务、电子商务及国民经济的各个应用领域（包括国家政务通、警务通等重要领域）。</p><blockquote><ul><li><strong>与AES对比</strong>：SM1算法在安全性、运算速度等方面与AES相当，但在国际通用算法中，AES更受青睐。</li><li><strong>与DES对比</strong>：SM1算法在安全性方面优于DES，但DES的运算速度更快。</li></ul></blockquote><h3 id="SM7"><a href="#SM7" class="headerlink" title="SM7"></a>SM7</h3><p>SM7算法是一种分组密码算法，其分组长度和密钥长度均为128比特。该算法由国家密码管理局于2007年颁布，是中国自主研发的密码技术之一。SM7适用于非接触式IC卡，应用包括身份识别类应用(门禁卡、工作证、参赛证)，票务类应用(大型赛事门票、展会门票)，支付与通卡类应用（积分消费卡、校园一卡通、企业一卡通等）。</p><p>安全特性</p><ul><li><strong>真随机数发生器</strong>：SM7算法采用真随机数发生器，确保了密钥的随机性和不可预测性。</li><li><strong>三重相互安全认证机制</strong>：通过三重相互认证机制，增强了数据交互的安全性。</li><li><strong>独立的128位密码</strong>：每张卡具有8个相互独立的128位密码，支持一卡一密和一卡多用。</li><li><strong>唯一序列号</strong>：每张卡具有4字节的唯一序列号，增强了卡的唯一性和安全性。</li></ul><p>SM7算法的实现</p><p>SM7算法的实现涉及一系列的加密和解密函数，包括初始化、加密、解密和关闭模块等。这些函数确保了算法的正确执行和数据的安全处理。例如，SM7_Init()用于初始化SM7模块，SM7_Crypto()用于执行加密或解密操作，而SM7_Close()则用于关闭SM7模块。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 密码算法 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 密码学 </tag>
-            
-            <tag> 国密 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>异构PWN(2)-ARM（2025领航杯_arm-ret2libc）</title>
       <link href="/2025/10/16/yigou-pwn2/"/>
       <url>/2025/10/16/yigou-pwn2/</url>
@@ -1359,11 +1332,11 @@
             
             <tag> 密码学 </tag>
             
+            <tag> 筑基篇 </tag>
+            
             <tag> 有限域 </tag>
             
             <tag> 抽象代数 </tag>
-            
-            <tag> 筑基篇 </tag>
             
         </tags>
       
@@ -1390,9 +1363,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 抽象代数 </tag>
-            
             <tag> 筑基篇 </tag>
+            
+            <tag> 抽象代数 </tag>
             
             <tag> 环论 </tag>
             
@@ -1448,9 +1421,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 抽象代数 </tag>
-            
             <tag> 筑基篇 </tag>
+            
+            <tag> 抽象代数 </tag>
             
             <tag> 群论 </tag>
             
@@ -1479,9 +1452,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 筑基篇 </tag>
-            
             <tag> 数论 </tag>
+            
+            <tag> 筑基篇 </tag>
             
         </tags>
       
