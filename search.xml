@@ -1108,7 +1108,7 @@
       <link href="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
       <url>/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/</url>
       
-        <content type="html"><![CDATA[<h1 id="缓冲区溢出之栈溢出（strcpy）"><a href="#缓冲区溢出之栈溢出（strcpy）" class="headerlink" title="缓冲区溢出之栈溢出（strcpy）"></a>缓冲区溢出之栈溢出（strcpy）</h1><h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="缓冲区溢出简单介绍"><a href="#缓冲区溢出简单介绍" class="headerlink" title="缓冲区溢出简单介绍"></a>缓冲区溢出简单介绍</h3><p>缓冲区溢出：简单的说，缓冲区溢出就是超长的数据向小缓冲区复制，导致数据超出了小缓冲区，导致缓冲区其他的数据遭到破坏，这就是缓冲区溢出。<em>而栈溢出是缓冲区溢出的一种</em>，也是最常见的。只不过栈溢出发生在栈，堆溢出发生在堆，其实都是一样的。</p><h3 id="栈的简单介绍"><a href="#栈的简单介绍" class="headerlink" title="栈的简单介绍"></a>栈的简单介绍</h3><p>栈是一种计算机系统中的数据结构，它按照先进后出的原则存储数据，先进入的数据被压入栈底，最后的数据在栈顶，需要读数据的时候从栈顶开始弹出数据（最后一个数据被第一个读出来），是一种特殊的线性表。栈的操作常用的有进栈（PUSH），出栈（POP），还有常用的标识栈顶和栈底。</p><ul><li><strong>进栈</strong>（PUSH）：将一个数据放入栈里叫进栈（PUSH）</li><li><strong>出栈</strong>（POP）：将一个数据从栈里取出叫出栈（POP）</li><li><strong>栈顶</strong>：常用寄存器ESP，ESP是栈指针寄存器，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的栈顶。</li><li><strong>栈底</strong>：常用寄存器EBP，EBP是基址指针寄存器，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的底部。<br><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121143258.png" alt="Pasted image 20250121143258"><h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2></li></ul><p><strong>源代码：</strong></p><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PASSWORD <span class="string">&quot;12345&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">test</span><span class="params">(<span class="type">char</span> *password)</span>&#123;</span><br><span class="line">    <span class="type">int</span> ret_num;</span><br><span class="line">    <span class="type">char</span> buffer[<span class="number">8</span>];</span><br><span class="line">    ret_num=<span class="built_in">strcmp</span>(password,PASSWORD);<span class="comment">//相同返回0</span></span><br><span class="line">    <span class="built_in">strcpy</span>(buffer,password);</span><br><span class="line">    <span class="keyword">return</span> ret_num;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> flag=<span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> password[<span class="number">88</span>];</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;plz input your password:\n&quot;</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,password);</span><br><span class="line">        flag=test(password);</span><br><span class="line">        <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;incorrect password!\n\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;Success!You are right!\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="分析exe文件"><a href="#分析exe文件" class="headerlink" title="分析exe文件"></a>分析exe文件</h4><p>搜索字符串<code>plz input your password</code>,并在scanf处下断点<br><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121150226.png" alt="Pasted image 20250121150226"></p><p><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121151019.png" alt="Pasted image 20250121151019"><br><em>0C-04=8个字节</em></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="缓冲区溢出之栈溢出（strcpy）"><a href="#缓冲区溢出之栈溢出（strcpy）" class="headerlink" title="缓冲区溢出之栈溢出（strcpy）"></a>缓冲区溢出之栈溢出（strcpy）</h1><h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="缓冲区溢出简单介绍"><a href="#缓冲区溢出简单介绍" class="headerlink" title="缓冲区溢出简单介绍"></a>缓冲区溢出简单介绍</h3><p>缓冲区溢出：简单的说，缓冲区溢出就是超长的数据向小缓冲区复制，导致数据超出了小缓冲区，导致缓冲区其他的数据遭到破坏，这就是缓冲区溢出。<em>而栈溢出是缓冲区溢出的一种</em>，也是最常见的。只不过栈溢出发生在栈，堆溢出发生在堆，其实都是一样的。</p><h3 id="栈的简单介绍"><a href="#栈的简单介绍" class="headerlink" title="栈的简单介绍"></a>栈的简单介绍</h3><p>栈是一种计算机系统中的数据结构，它按照先进后出的原则存储数据，先进入的数据被压入栈底，最后的数据在栈顶，需要读数据的时候从栈顶开始弹出数据（最后一个数据被第一个读出来），是一种特殊的线性表。栈的操作常用的有进栈（PUSH），出栈（POP），还有常用的标识栈顶和栈底。</p><ul><li><strong>进栈</strong>（PUSH）：将一个数据放入栈里叫进栈（PUSH）</li><li><strong>出栈</strong>（POP）：将一个数据从栈里取出叫出栈（POP）</li><li><strong>栈顶</strong>：常用寄存器ESP，ESP是栈指针寄存器，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的栈顶。</li><li><strong>栈底</strong>：常用寄存器EBP，EBP是基址指针寄存器，其内存放着一个指针，该指针永远指向系统栈最上面一个栈帧的底部。<br><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121143258.png" alt="Pasted image 20250121143258"><h2 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h2></li></ul><p><strong>源代码：</strong></p><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PASSWORD <span class="string">&quot;12345&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">test</span><span class="params">(<span class="type">char</span> *password)</span>&#123;</span><br><span class="line">    <span class="type">int</span> ret_num;</span><br><span class="line">    <span class="type">char</span> buffer[<span class="number">8</span>];</span><br><span class="line">    ret_num=<span class="built_in">strcmp</span>(password,PASSWORD);<span class="comment">//相同返回0</span></span><br><span class="line">    <span class="built_in">strcpy</span>(buffer,password);</span><br><span class="line">    <span class="keyword">return</span> ret_num;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">int</span> flag=<span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> password[<span class="number">88</span>];</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;plz input your password:\n&quot;</span>);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,password);</span><br><span class="line">        flag=test(password);</span><br><span class="line">        <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;incorrect password!\n\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="built_in">printf</span>(<span class="string">&quot;Success!You are right!\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="分析exe文件"><a href="#分析exe文件" class="headerlink" title="分析exe文件"></a>分析exe文件</h4><p>搜索字符串<code>plz input your password</code>,并在scanf处下断点<br><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121150226.png" alt="Pasted image 20250121150226"></p><p><img src="/2025/02/03/PWN%E5%85%A5%E9%97%A8-%E6%A0%88%E6%BA%A2%E5%87%BA/Pasted image 20250121151019.png" alt="Pasted image 20250121151019"></p><p>可以看到<code>Dest</code>的空间为<code>0C-04=8</code>个字节，当<code>strcpy</code>为8个字节时，程序会导致栈溢出覆盖掉返回值<code>ret_num</code>。具体点来说就是我们输入的“qqqqqqqq”为8个字节，但是c语言中字符串后面还有“字符串截断符<code>\x00</code>”，这个截断符<code>\x00</code>将<code>var_4</code>由原来的<code>01</code>覆盖为<code>00</code>，这样就输出了最终的<code>“Success!You are right!”</code></p>]]></content>
       
       
       <categories>
@@ -1332,11 +1332,11 @@
             
             <tag> 密码学 </tag>
             
+            <tag> 筑基篇 </tag>
+            
             <tag> 有限域 </tag>
             
             <tag> 抽象代数 </tag>
-            
-            <tag> 筑基篇 </tag>
             
         </tags>
       
@@ -1363,9 +1363,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 抽象代数 </tag>
-            
             <tag> 筑基篇 </tag>
+            
+            <tag> 抽象代数 </tag>
             
             <tag> 环论 </tag>
             
@@ -1421,9 +1421,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 抽象代数 </tag>
-            
             <tag> 筑基篇 </tag>
+            
+            <tag> 抽象代数 </tag>
             
             <tag> 群论 </tag>
             
@@ -1452,9 +1452,9 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 筑基篇 </tag>
-            
             <tag> 数论 </tag>
+            
+            <tag> 筑基篇 </tag>
             
         </tags>
       
