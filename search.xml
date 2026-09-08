@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>ciscn_ccb_semi-final</title>
+      <link href="/2026/03/27/ciscn-ccb-semi-final/"/>
+      <url>/2026/03/27/ciscn-ccb-semi-final/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CISCN-×-CCB-semi-final-杂记"><a href="#CISCN-×-CCB-semi-final-杂记" class="headerlink" title="CISCN × CCB semi final 杂记"></a>CISCN × CCB semi final 杂记</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本来想了很多要写的东西，但事情太多只写一点吧。</p><p>大概要封笔了，毕业后再接着写？</p><h2 id="赛前"><a href="#赛前" class="headerlink" title="赛前"></a>赛前</h2><blockquote><p>That snowflake once fell on my nose</p><p>那片雪花曾落在我的鼻尖</p><p>now flying backwards to last winter</p><p>现在正倒飞回往年冬天</p></blockquote><h3 id="初赛晋级：一波三折"><a href="#初赛晋级：一波三折" class="headerlink" title="初赛晋级：一波三折"></a>初赛晋级：一波三折</h3><p>2025年12月，初赛赛区排名很落后，半决赛晋级无望。准备退役了。</p><p>但今年检查的很严，把每个选手的一天的录像都完整看了一遍，ban了很多队，省内某985在晋级线上的4个队伍全被取消参赛资格了，有点神秘。</p><p>于是我们成功晋级。</p><h3 id="赛前准备：不吃压力"><a href="#赛前准备：不吃压力" class="headerlink" title="赛前准备：不吃压力"></a>赛前准备：不吃压力</h3><p>因为准备退役，学校此前也从未晋级决赛，打算只是去走个过场，打完就退役，准备起来也没什么压力，随便看点大佬的博客。</p><p>但我还是认真学习了awdp，此前我主要做静态题，对半决赛交互性强的内容不太擅长，希望可以发挥更强的作用。</p><h2 id="赛中"><a href="#赛中" class="headerlink" title="赛中"></a>赛中</h2><blockquote><p>I’m well aware that all snowflakes melt in the end</p><p>我深知所有雪花最终都会融化</p><p>Which is sign of warmth and hope of spring</p><p>这也是开春温暖与希望的信号</p></blockquote><h3 id="AWDP：高开高走"><a href="#AWDP：高开高走" class="headerlink" title="AWDP：高开高走"></a>AWDP：高开高走</h3><p>第一轮我在awdp pwn拿了个二血，吃满八轮分，随后队友也发挥很好，最终取得了很好的成绩。</p><p>这是我人生第一个国赛二血，很激动。</p><h3 id="ISW：厚积薄发"><a href="#ISW：厚积薄发" class="headerlink" title="ISW：厚积薄发"></a>ISW：厚积薄发</h3><p>渗透提权居然用的是我2024年网鼎杯准备的exp，可谓厚积薄发</p><h2 id="赛后"><a href="#赛后" class="headerlink" title="赛后"></a>赛后</h2><blockquote><p>So I’ll dance flamboyantly into that good night</p><p>所以我将明艳地舞进那良夜</p></blockquote><h3 id="比赛结果"><a href="#比赛结果" class="headerlink" title="比赛结果"></a>比赛结果</h3><p><strong>江浙沪皖赛区第4，江苏第1</strong></p><p>是<strong>学校有史以来第一次</strong>晋级决赛，也是<strong>今年江苏唯一</strong>晋级ciscn决赛的队伍。</p><p><img src="/2026/03/27/ciscn-ccb-semi-final/IMG_20260327_145017.jpg" alt="IMG_20260327_145017"></p><p><img src="/2026/03/27/ciscn-ccb-semi-final/IMG_20260329_164117.jpg" alt="IMG_20260329_164117"></p><blockquote><p>Those who trace starlight on their lonely roads</p><p>因为那些在孤独道路上追寻星光的人</p><p>Will find their destinations in the cosmos</p><p>终将在宇宙中寻找到他们的归处</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 杂记 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>异构PWN(2)-ARM（2025领航杯_arm-ret2libc）</title>
       <link href="/2025/10/16/yigou-pwn2/"/>
       <url>/2025/10/16/yigou-pwn2/</url>
@@ -1332,11 +1351,11 @@
             
             <tag> 密码学 </tag>
             
-            <tag> 有限域 </tag>
-            
             <tag> 抽象代数 </tag>
             
             <tag> 筑基篇 </tag>
+            
+            <tag> 有限域 </tag>
             
         </tags>
       
@@ -1363,11 +1382,11 @@
             
             <tag> 密码学 </tag>
             
+            <tag> 环论 </tag>
+            
             <tag> 抽象代数 </tag>
             
             <tag> 筑基篇 </tag>
-            
-            <tag> 环论 </tag>
             
         </tags>
       
